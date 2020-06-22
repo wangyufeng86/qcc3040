@@ -1,0 +1,3661 @@
+
+/home/svc-audio-dspsw/kymera_builds/builds/2020/kymera_2005191628/kalimba/kymera/tools/KCSMaker/out/7120/streplus_rom_release/download/debugbin/download_switched_passthrough_consumer.elf:     file format elf32-littlekalimba
+
+Disassembly of section .text_minim:
+
+84200000 <Lc_spc_process_data_1>:
+}
+
+
+/* Data processing function */
+static void spc_process_data(OPERATOR_DATA *op_data, TOUCHED_TERMINALS *touched)
+{
+84200000:	f5 1e       	pushm <FP(=SP), r4, r5, r6, r7, r8, rLink>, SP = SP + 0x20;
+84200002:	19 09       	r7 = r1 + Null;
+MAP_INSTANCE_DATA(CAP_ID_DOWNLOAD_SWITCHED_PASSTHROUGH_CONSUMER, SPC_OP_DATA)
+#endif /* CAPABILITY_DOWNLOAD_BUILD */
+
+static inline SPC_OP_DATA *get_instance_data(OPERATOR_DATA *op_data)
+{
+    return (SPC_OP_DATA *) base_op_get_instance_data(op_data);
+84200004:	ff fd 02 f0 	call (m) 0x4e6;
+84200008:	23 e7 
+8420000a:	10 09       	r6 = r0 + Null;
+    unsigned input_num;
+    unsigned out0, out1;
+    unsigned aptx0=0, aptx1=0;
+    bool mode_switch_ok = TRUE;
+
+    if (opx_data->current_mode != opx_data->next_mode)
+8420000c:	81 f0 28 80 	rMAC = MBS[r6 + 40];
+84200010:	82 f0 29 80 	r0 = MBS[r6 + 41];
+84200014:	88 04       	Null = rMAC - r0;
+84200016:	35 60       	if EQ jump (m) Lc_spc_process_data_11;
+
+84200018 <Lc_spc_process_data_2>:
+    {
+        bool transition_at_next_kick = FALSE;
+84200018:	06 00       	r4 = Null + Null;
+
+        if (spc1_transition(opx_data))
+8420001a:	42 08       	r0 = r6 + Null;
+8420001c:	05 f0 39 ee 	call (m) Lc_spc1_transition_1;
+84200020:	10 04       	Null = r0 - Null;
+84200022:	0e 60       	if EQ jump (m) Lc_spc_process_data_5;
+
+84200024 <Lc_spc_process_data_3>:
+        {
+            opx_data->wait_kicks++;
+84200024:	81 f0 0e 88 	rMAC = M[r6 + 56];
+84200028:	49 20       	rMAC = rMAC + 1;
+8420002a:	81 f0 0e 8e 	M[r6 + 56] = rMAC;
+            if (spc1_is_empty_opbuffer(opx_data, touched))
+8420002e:	4b 08       	r1 = r7 + Null;
+84200030:	42 08       	r0 = r6 + Null;
+84200032:	06 f0 33 e2 	call (m) Lc_spc1_is_empty_opbuffer_1;
+84200036:	10 04       	Null = r0 - Null;
+84200038:	00 f0 a3 e5 	if EQ jump (m) Lc_spc_process_data_85;
+
+8420003c <Lc_spc_process_data_4>:
+            {
+                transition_at_next_kick = TRUE;
+8420003c:	46 20       	r4 = Null + 1;
+
+8420003e <Lc_spc_process_data_5>:
+            {
+                return;
+            }
+        }
+
+        if (spc2_transition(opx_data))
+8420003e:	42 08       	r0 = r6 + Null;
+84200040:	06 f0 27 e0 	call (m) Lc_spc2_transition_1;
+84200044:	10 04       	Null = r0 - Null;
+84200046:	07 60       	if EQ jump (m) Lc_spc_process_data_7;
+
+84200048 <Lc_spc_process_data_6>:
+        {
+            mode_switch_ok = spc2_is_empty_ipbuffer(opx_data, touched);
+84200048:	4b 08       	r1 = r7 + Null;
+8420004a:	42 08       	r0 = r6 + Null;
+8420004c:	06 f0 3b e4 	call (m) Lc_spc2_is_empty_ipbuffer_1;
+        }
+
+        if (mode_switch_ok)
+84200050:	10 04       	Null = r0 - Null;
+84200052:	17 60       	if EQ jump (m) Lc_spc_process_data_11;
+
+84200054 <Lc_spc_process_data_7>:
+        {
+            /* We need to transition. Either between inputs, or between an 
+               input and consume all */
+            opx_data->current_mode = opx_data->next_mode;
+84200054:	83 f0 29 80 	r1 = MBS[r6 + 41];
+84200058:	83 f0 28 8a 	MB[r6 + 40] = r1;
+
+            L2_DBG_MSG2("*** SPC transition success. Current now %d [wait %d].",
+                             opx_data->current_mode, opx_data->wait_kicks);
+8420005c:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+84200060:	88 24       	Null = rMAC - 2;
+84200062:	09 68       	if LT jump (m) Lc_spc_process_data_9;
+
+84200064 <Lc_spc_process_data_8>:
+84200064:	84 f0 0e 88 	r2 = M[r6 + 56];
+84200068:	55 f1 02 f0 	r0 = Null + 357564749;
+8420006c:	4d 41 
+8420006e:	ff fd 06 f0 	call (m) 0xcf2;
+84200072:	25 e4 
+
+84200074 <Lc_spc_process_data_9>:
+
+            if (transition_at_next_kick) return;
+84200074:	30 04       	Null = r4 - Null;
+84200076:	01 f0 e5 e4 	if NE jump (m) Lc_spc_process_data_85;
+
+8420007a <Lc_spc_process_data_10>:
+
+            spc1_reset_transition_state(opx_data);
+8420007a:	42 08       	r0 = r6 + Null;
+8420007c:	05 f0 3d ef 	call (m) Lc_spc1_reset_transition_state_1;
+
+84200080 <Lc_spc_process_data_11>:
+        }
+    }
+
+    if (opx_data->current_mode > SPC_MODE_CONSUME)
+84200080:	82 f0 28 80 	r0 = MBS[r6 + 40];
+84200084:	10 24       	Null = r0 - 0;
+84200086:	1a 6c       	if LE jump (m) Lc_spc_process_data_22;
+
+84200088 <Lc_spc_process_data_12>:
+    return FALSE;
+}
+
+static inline SPC_MODE adjust_mode_to_buffers(SPC_MODE mode, tCbuffer* buffers[], bool inout)
+{
+    SPC_MODE map_mode = mode;
+84200088:	16 00       	r4 = r0 + Null;
+
+    switch (mode)
+8420008a:	11 00       	rMAC = r0 + Null;
+8420008c:	08 2c       	Null = rMAC - 16;
+8420008e:	c2 60       	if EQ jump (m) Lc_spc_process_data_51;
+
+84200090 <Lc_spc_process_data_13>:
+84200090:	48 2c       	Null = rMAC - 17;
+84200092:	c9 60       	if EQ jump (m) Lc_spc_process_data_53;
+
+84200094 <Lc_spc_process_data_14>:
+84200094:	88 2c       	Null = rMAC - 18;
+84200096:	07 60       	if EQ jump (m) Lc_spc_process_data_18;
+
+84200098 <Lc_spc_process_data_15>:
+84200098:	08 34       	Null = rMAC - 32;
+8420009a:	e0 60       	if EQ jump (m) Lc_spc_process_data_64;
+
+8420009c <Lc_spc_process_data_16>:
+8420009c:	48 34       	Null = rMAC - 33;
+8420009e:	c3 60       	if EQ jump (m) Lc_spc_process_data_53;
+
+842000a0 <Lc_spc_process_data_17>:
+842000a0:	88 34       	Null = rMAC - 34;
+842000a2:	ea 62       	if NE jump (m) Lc_spc_process_data_68;
+
+842000a4 <Lc_spc_process_data_18>:
+            break;
+        }
+        case SPC_MODE_SPC1_TAGSYNC_1:
+        case SPC_MODE_SPC2_TAGSYNC_1:
+        {
+            if (buffers[1] == NULL)
+842000a4:	81 f0 01 88 	rMAC = M[r6 + 4];
+842000a8:	c1 60       	if EQ jump (m) Lc_spc_process_data_54;
+
+842000aa <Lc__ite_15>:
+842000aa:	c1 6e       	jump (m) Lc_spc_process_data_55;
+
+842000ac <Lc_spc_process_data_19>:
+            break;
+        }
+        case SPC_MODE_SPC1_TAGSYNC_0:
+        case SPC_MODE_SPC2_TAGSYNC_0:
+        {
+            if (buffers[0] == NULL)
+842000ac:	12 e8       	r0 = M[r0 + Null];
+842000ae:	02 62       	if NE jump (m) Lc_spc_process_data_21;
+
+842000b0 <Lc_spc_process_data_20>:
+        case SPC_MODE_SPC1_TAGSYNC_DUAL:
+        {
+            if ((buffers[0] == NULL) &&
+                (buffers[1] == NULL)    )
+            {
+                map_mode = SPC_MODE_CONSUME;
+842000b0:	01 00       	rMAC = Null + Null;
+
+842000b2 <Lc_spc_process_data_21>:
+    if (opx_data->current_mode > SPC_MODE_CONSUME)
+    {
+        SPC_MODE mode = opx_data->current_mode;
+        mode = adjust_mode_to_buffers(mode, opx_data->ip_buffers, 1);
+        mode = adjust_mode_to_buffers(mode, opx_data->op_buffers, 0);
+        opx_data->current_mode = opx_data->next_mode = mode;
+842000b2:	81 f0 29 8a 	MB[r6 + 41] = rMAC;
+842000b6:	81 f0 28 8a 	MB[r6 + 40] = rMAC;
+
+842000ba <Lc_spc_process_data_22>:
+    }
+
+    if (is_sync_spc2_tag_mode(opx_data->current_mode, &out0, &out1))
+842000ba:	82 f0 28 80 	r0 = MBS[r6 + 40];
+    }
+}
+
+static inline bool is_sync_spc2_tag_mode(SPC_MODE mode, unsigned *out0, unsigned *out1)
+{
+    switch (mode)
+842000be:	11 00       	rMAC = r0 + Null;
+842000c0:	08 34       	Null = rMAC - 32;
+842000c2:	07 60       	if EQ jump (m) Lc_spc_process_data_26;
+
+842000c4 <Lc_spc_process_data_23>:
+842000c4:	48 34       	Null = rMAC - 33;
+842000c6:	f9 60       	if EQ jump (m) Lc_spc_process_data_78;
+
+842000c8 <Lc_spc_process_data_24>:
+842000c8:	88 34       	Null = rMAC - 34;
+842000ca:	fa 62       	if NE jump (m) Lc_spc_process_data_79;
+
+842000cc <Lc_spc_process_data_25>:
+        case SPC_MODE_SPC2_TAGSYNC_0:
+            *out0 = 0;
+            *out1 = 0;
+            return TRUE;
+        case SPC_MODE_SPC2_TAGSYNC_1:
+            *out0 = 1;
+842000cc:	44 20       	r2 = Null + 1;
+842000ce:	02 6e       	jump (m) Lc_spc_process_data_27;
+
+842000d0 <Lc_spc_process_data_26>:
+            *out1 = 1;
+            return TRUE;
+        case SPC_MODE_SPC2_TAGSYNC_DUAL:
+            *out0 = 0;
+842000d0:	04 00       	r2 = Null + Null;
+
+842000d2 <Lc_spc_process_data_27>:
+            *out0 = 0;
+            *out1 = 0;
+            return TRUE;
+        case SPC_MODE_SPC2_TAGSYNC_1:
+            *out0 = 1;
+            *out1 = 1;
+842000d2:	47 20       	r5 = Null + 1;
+
+842000d4 <Lc_spc_process_data_28>:
+    }
+
+    if (is_sync_spc2_tag_mode(opx_data->current_mode, &out0, &out1))
+    {
+        unsigned complete_data, complete_data0, complete_data1;
+        bool passthrough0 = FALSE, passthrough1 = FALSE, transition = FALSE;
+842000d4:	38 de       	M[FP + 28] = Null;
+842000d6:	40 de       	M[FP + 32] = Null;
+842000d8:	02 09       	r8 = Null + Null;
+
+        complete_data0 = bufferdata_len(opx_data, 0, out0, &passthrough0);
+842000da:	c5 11       	r3 = FP + 28;
+842000dc:	03 00       	r1 = Null + Null;
+842000de:	42 08       	r0 = r6 + Null;
+842000e0:	03 f0 2f ef 	call (m) Lc_bufferdata_len_1;
+842000e4:	16 00       	r4 = r0 + Null;
+        complete_data1 = bufferdata_len(opx_data, 1, out1, &passthrough1);
+842000e6:	05 12       	r3 = FP + 32;
+842000e8:	43 20       	r1 = Null + 1;
+842000ea:	3c 00       	r2 = r5 + Null;
+842000ec:	42 08       	r0 = r6 + Null;
+842000ee:	03 f0 21 ef 	call (m) Lc_bufferdata_len_1;
+        if (complete_data0 > complete_data1) complete_data = complete_data1;
+842000f2:	b0 04       	Null = r4 - r0;
+842000f4:	09 f0 89 e0 	if LS jump (m) Lc_spc_process_data_30;
+
+842000f8 <Lc_spc_process_data_29>:
+842000f8:	16 00       	r4 = r0 + Null;
+842000fa:	01 6e       	jump (m) Lc_spc_process_data_30;
+
+842000fc <Lc_spc_process_data_30>:
+        else complete_data = complete_data0;
+        if (complete_data != 0)
+842000fc:	30 04       	Null = r4 - Null;
+842000fe:	ee 60       	if EQ jump (m) Lc_spc_process_data_85;
+
+84200100 <Lc_spc_process_data_32>:
+        {
+            if (!passthrough0 || !passthrough1) transition = 1;
+84200100:	39 d8       	rMAC = M[FP + 28];
+84200102:	03 60       	if EQ jump (m) Lc_spc_process_data_34;
+
+84200104 <Lc_spc_process_data_33>:
+84200104:	40 d8       	Null = M[FP + 32];
+84200106:	02 62       	if NE jump (m) Lc_spc_process_data_35;
+
+84200108 <Lc_spc_process_data_34>:
+84200108:	0a 71       	r8 = Null + 1;
+
+8420010a <Lc_spc_process_data_35>:
+            aptx0 = process_data_spc2(opx_data, complete_data, 0, 0, passthrough0, transition, touched);
+8420010a:	60 f0 40 e0 	pushm <r7, r8>;
+8420010e:	09 1c       	pushm <rMAC>;
+84200110:	05 00       	r3 = Null + Null;
+84200112:	04 00       	r2 = Null + Null;
+84200114:	33 00       	r1 = r4 + Null;
+84200116:	42 08       	r0 = r6 + Null;
+84200118:	04 f0 3b eb 	call (m) Lc_process_data_spc2_1;
+8420011c:	7d 4c       	SP = SP + -12;
+8420011e:	17 00       	r5 = r0 + Null;
+            aptx1 = process_data_spc2(opx_data, complete_data, 1, 1, passthrough1, transition, touched);
+84200120:	60 f0 40 e0 	pushm <r7, r8>;
+84200124:	41 d8       	rMAC = M[FP + 32];
+84200126:	09 1c       	pushm <rMAC>;
+84200128:	45 20       	r3 = Null + 1;
+8420012a:	33 00       	r1 = r4 + Null;
+8420012c:	2c 00       	r2 = r3 + Null;
+8420012e:	42 08       	r0 = r6 + Null;
+84200130:	04 f0 23 eb 	call (m) Lc_process_data_spc2_1;
+84200134:	7d 4c       	SP = SP + -12;
+84200136:	14 00       	r2 = r0 + Null;
+            if (aptx0 != aptx1)
+84200138:	38 05       	Null = r5 - r2;
+8420013a:	d0 60       	if EQ jump (m) Lc_spc_process_data_85;
+
+8420013c <Lc_spc_process_data_36>:
+            {
+                L2_DBG_MSG3("SPC#2: possible sync loss (processed %d on 0, %d on 1, mode %d", aptx0, aptx1, opx_data->current_mode);
+8420013c:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+84200140:	88 24       	Null = rMAC - 2;
+84200142:	cc 68       	if LT jump (m) Lc_spc_process_data_85;
+
+84200144 <Lc_spc_process_data_37>:
+84200144:	85 f0 28 80 	r3 = MBS[r6 + 40];
+84200148:	55 f1 02 f0 	r0 = Null + 357564803;
+8420014c:	83 41 
+8420014e:	3b 00       	r1 = r5 + Null;
+84200150:	ff fd 05 f0 	call (m) 0xd08;
+84200154:	39 ed 
+84200156:	c2 6e       	jump (m) Lc_spc_process_data_85;
+
+84200158 <Lc_spc_process_data_38>:
+        case SPC_MODE_SPC1_TAGSYNC_1:
+            *out0 = 1;
+            *out1 = 1;
+            return TRUE;
+        case SPC_MODE_SPC1_TAGSYNC_DUAL:
+            *out0 = 0;
+84200158:	04 00       	r2 = Null + Null;
+
+8420015a <Lc_spc_process_data_39>:
+            *out0 = 0;
+            *out1 = 0;
+            return TRUE;
+        case SPC_MODE_SPC1_TAGSYNC_1:
+            *out0 = 1;
+            *out1 = 1;
+8420015a:	47 20       	r5 = Null + 1;
+
+8420015c <Lc_spc_process_data_40>:
+    }
+    else
+    if (is_sync_tag_mode(opx_data->current_mode, &out0, &out1))
+    {
+        unsigned complete_data, complete_data0, complete_data1, blocks;
+        bool passthrough0 = FALSE, passthrough1 = FALSE;
+8420015c:	48 de       	M[FP + 36] = Null;
+8420015e:	50 de       	M[FP + 40] = Null;
+
+        complete_data0 = mtag_len(opx_data, 0, out0, &passthrough0);
+84200160:	45 12       	r3 = FP + 36;
+84200162:	03 00       	r1 = Null + Null;
+84200164:	42 08       	r0 = r6 + Null;
+84200166:	03 f0 29 e0 	call (m) Lc_mtag_len_1;
+8420016a:	16 00       	r4 = r0 + Null;
+        complete_data1 = mtag_len(opx_data, 1, out1, &passthrough1);
+8420016c:	85 12       	r3 = FP + 40;
+8420016e:	43 20       	r1 = Null + 1;
+84200170:	3c 00       	r2 = r5 + Null;
+84200172:	42 08       	r0 = r6 + Null;
+84200174:	02 f0 3b ef 	call (m) Lc_mtag_len_1;
+        if (complete_data0 > complete_data1) complete_data = complete_data1;
+84200178:	b0 04       	Null = r4 - r0;
+8420017a:	09 f0 87 e0 	if LS jump (m) Lc_spc_process_data_42;
+
+8420017e <Lc_spc_process_data_41>:
+8420017e:	02 6e       	jump (m) Lc_spc_process_data_43;
+
+84200180 <Lc_spc_process_data_42>:
+        else complete_data = complete_data0;
+84200180:	32 00       	r0 = r4 + Null;
+
+84200182 <Lc_spc_process_data_43>:
+        blocks = complete_data / opx_data->frame_size;
+84200182:	86 f0 11 88 	r4 = M[r6 + 68];
+84200186:	33 00       	r1 = r4 + Null;
+84200188:	ff fd d0 f0 	call (m) 0x1a290;
+8420018c:	29 e8 
+        complete_data = blocks * opx_data->frame_size;
+        if (complete_data != 0)
+8420018e:	b6 1a       	r4 = r4 * r0 (int);
+84200190:	a5 60       	if EQ jump (m) Lc_spc_process_data_85;
+
+84200192 <Lc_spc_process_data_44>:
+        {
+            aptx0 = process_data(opx_data, complete_data, 0, 0, passthrough0, touched);
+84200192:	18 1c       	pushm <r7>;
+84200194:	49 d8       	rMAC = M[FP + 36];
+84200196:	09 1c       	pushm <rMAC>;
+84200198:	05 00       	r3 = Null + Null;
+8420019a:	04 00       	r2 = Null + Null;
+8420019c:	33 00       	r1 = r4 + Null;
+8420019e:	42 08       	r0 = r6 + Null;
+842001a0:	03 f0 2f ee 	call (m) Lc_process_data_1;
+842001a4:	7e 4c       	SP = SP + -8;
+842001a6:	17 00       	r5 = r0 + Null;
+            aptx1 = process_data(opx_data, complete_data, 1, 1, passthrough1, touched);
+842001a8:	18 1c       	pushm <r7>;
+842001aa:	51 d8       	rMAC = M[FP + 40];
+842001ac:	09 1c       	pushm <rMAC>;
+842001ae:	45 20       	r3 = Null + 1;
+842001b0:	33 00       	r1 = r4 + Null;
+842001b2:	2c 00       	r2 = r3 + Null;
+842001b4:	42 08       	r0 = r6 + Null;
+842001b6:	03 f0 39 ed 	call (m) Lc_process_data_1;
+842001ba:	7e 4c       	SP = SP + -8;
+842001bc:	14 00       	r2 = r0 + Null;
+            if (aptx0 != aptx1)
+842001be:	38 05       	Null = r5 - r2;
+842001c0:	8d 60       	if EQ jump (m) Lc_spc_process_data_85;
+
+842001c2 <Lc_spc_process_data_45>:
+            {
+                L2_DBG_MSG3("SPC#1: possible sync loss (processed %d on 0, %d on 1, mode %d", aptx0, aptx1, opx_data->current_mode);
+842001c2:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+842001c6:	88 24       	Null = rMAC - 2;
+842001c8:	89 68       	if LT jump (m) Lc_spc_process_data_85;
+
+842001ca <Lc_spc_process_data_46>:
+842001ca:	85 f0 28 80 	r3 = MBS[r6 + 40];
+842001ce:	55 f1 02 f0 	r0 = Null + 357564866;
+842001d2:	c2 41 
+842001d4:	3b 00       	r1 = r5 + Null;
+842001d6:	ff fd 05 f0 	call (m) 0xd08;
+842001da:	33 e9 
+842001dc:	7f 6e       	jump (m) Lc_spc_process_data_85;
+
+842001de <Lc_spc_process_data_47>:
+    {
+        /* Now process all inputs, consuming or passing through as relevant */
+        for (input_num = 0; input_num < SPC_NUMBER_INPUTS; input_num++)
+        {
+            unsigned complete_data;
+            bool passthrough = FALSE;
+842001de:	58 de       	M[FP + 44] = Null;
+
+            if (!opx_data->ip_buffers[input_num])
+842001e0:	39 e8       	rMAC = M[r5 + Null];
+842001e2:	13 60       	if EQ jump (m) Lc_spc_process_data_50;
+
+842001e4 <Lc_spc_process_data_48>:
+                /* This input is disconnected. */
+                /* Nothing more to do with this */
+                continue;
+            }
+
+            complete_data = mtag_len(opx_data, input_num, 0, &passthrough);
+842001e4:	c5 12       	r3 = FP + 44;
+842001e6:	04 00       	r2 = Null + Null;
+842001e8:	33 00       	r1 = r4 + Null;
+842001ea:	42 08       	r0 = r6 + Null;
+842001ec:	02 f0 23 ec 	call (m) Lc_mtag_len_1;
+            if (complete_data != 0)
+842001f0:	10 04       	Null = r0 - Null;
+842001f2:	0b 60       	if EQ jump (m) Lc_spc_process_data_50;
+
+842001f4 <Lc_spc_process_data_49>:
+            {
+                process_data(opx_data, complete_data, input_num, 0, passthrough, touched);
+842001f4:	18 1c       	pushm <r7>;
+842001f6:	59 d8       	rMAC = M[FP + 44];
+842001f8:	09 1c       	pushm <rMAC>;
+842001fa:	05 00       	r3 = Null + Null;
+842001fc:	34 00       	r2 = r4 + Null;
+842001fe:	13 00       	r1 = r0 + Null;
+84200200:	42 08       	r0 = r6 + Null;
+84200202:	03 f0 2d eb 	call (m) Lc_process_data_1;
+84200206:	7e 4c       	SP = SP + -8;
+
+84200208 <Lc_spc_process_data_50>:
+        }
+    }
+    else
+    {
+        /* Now process all inputs, consuming or passing through as relevant */
+        for (input_num = 0; input_num < SPC_NUMBER_INPUTS; input_num++)
+84200208:	76 20       	r4 = r4 + 1;
+8420020a:	3f 21       	r5 = r5 + 4;
+8420020c:	30 26       	Null = r4 - 8;
+8420020e:	e8 65       	if NC jump (m) Lc_spc_process_data_47;
+
+84200210 <Lc__ite_16>:
+84200210:	65 6e       	jump (m) Lc_spc_process_data_85;
+
+84200212 <Lc_spc_process_data_51>:
+    switch (mode)
+    {
+        case SPC_MODE_SPC1_TAGSYNC_DUAL:
+        {
+            if ((buffers[0] == NULL) &&
+                (buffers[1] == NULL)    )
+84200212:	81 f0 00 e8 	rMAC = M[r6 + Null];
+84200216:	1d 62       	if NE jump (m) Lc_spc_process_data_62;
+
+84200218 <Lc_spc_process_data_52>:
+                map_mode = SPC_MODE_CONSUME;
+            }
+            else
+            if (buffers[0] == NULL)
+            {
+                map_mode = SPC_MODE_SPC1_TAGSYNC_1;
+84200218:	86 28       	r4 = Null + 18;
+8420021a:	81 f0 01 88 	rMAC = M[r6 + 4];
+8420021e:	00 f0 06 c0 	if EQ r4 = Null + Null;
+84200222:	05 6e       	jump (m) Lc_spc_process_data_55;
+
+84200224 <Lc_spc_process_data_53>:
+            break;
+        }
+        case SPC_MODE_SPC1_TAGSYNC_0:
+        case SPC_MODE_SPC2_TAGSYNC_0:
+        {
+            if (buffers[0] == NULL)
+84200224:	81 f0 00 e8 	rMAC = M[r6 + Null];
+84200228:	02 62       	if NE jump (m) Lc_spc_process_data_55;
+
+8420022a <Lc_spc_process_data_54>:
+        case SPC_MODE_SPC1_TAGSYNC_DUAL:
+        {
+            if ((buffers[0] == NULL) &&
+                (buffers[1] == NULL)    )
+            {
+                map_mode = SPC_MODE_CONSUME;
+8420022a:	06 00       	r4 = Null + Null;
+
+8420022c <Lc_spc_process_data_55>:
+
+    if (opx_data->current_mode > SPC_MODE_CONSUME)
+    {
+        SPC_MODE mode = opx_data->current_mode;
+        mode = adjust_mode_to_buffers(mode, opx_data->ip_buffers, 1);
+        mode = adjust_mode_to_buffers(mode, opx_data->op_buffers, 0);
+8420022c:	82 f0 20 20 	r0 = r6 + 32;
+    return FALSE;
+}
+
+static inline SPC_MODE adjust_mode_to_buffers(SPC_MODE mode, tCbuffer* buffers[], bool inout)
+{
+    SPC_MODE map_mode = mode;
+84200230:	31 00       	rMAC = r4 + Null;
+
+    switch (mode)
+84200232:	30 2c       	Null = r4 - 16;
+84200234:	2b 60       	if EQ jump (m) Lc_spc_process_data_70;
+
+84200236 <Lc_spc_process_data_56>:
+84200236:	70 2c       	Null = r4 - 17;
+84200238:	3a 61       	if EQ jump (m) Lc_spc_process_data_19;
+
+8420023a <Lc_spc_process_data_57>:
+8420023a:	b0 2c       	Null = r4 - 18;
+8420023c:	07 60       	if EQ jump (m) Lc_spc_process_data_61;
+
+8420023e <Lc_spc_process_data_58>:
+8420023e:	30 34       	Null = r4 - 32;
+84200240:	30 60       	if EQ jump (m) Lc_spc_process_data_74;
+
+84200242 <Lc_spc_process_data_59>:
+84200242:	70 34       	Null = r4 - 33;
+84200244:	34 61       	if EQ jump (m) Lc_spc_process_data_19;
+
+84200246 <Lc_spc_process_data_60>:
+84200246:	b0 34       	Null = r4 - 34;
+84200248:	32 63       	if NE jump (m) Lc_spc_process_data_19;
+
+8420024a <Lc_spc_process_data_61>:
+            break;
+        }
+        case SPC_MODE_SPC1_TAGSYNC_1:
+        case SPC_MODE_SPC2_TAGSYNC_1:
+        {
+            if (buffers[1] == NULL)
+8420024a:	52 88       	r0 = M[r0 + 4];
+8420024c:	32 61       	if EQ jump (m) Lc_spc_process_data_20;
+
+8420024e <Lc__ite_17>:
+8420024e:	32 6f       	jump (m) Lc_spc_process_data_21;
+
+84200250 <Lc_spc_process_data_62>:
+            if (buffers[0] == NULL)
+            {
+                map_mode = SPC_MODE_SPC1_TAGSYNC_1;
+            }
+            else
+            if (buffers[1] == NULL)
+84200250:	81 f0 01 88 	rMAC = M[r6 + 4];
+84200254:	ec 63       	if NE jump (m) Lc_spc_process_data_55;
+
+84200256 <Lc_spc_process_data_63>:
+            {
+                map_mode = SPC_MODE_SPC1_TAGSYNC_0;
+84200256:	46 28       	r4 = Null + 17;
+84200258:	ea 6f       	jump (m) Lc_spc_process_data_55;
+
+8420025a <Lc_spc_process_data_64>:
+            break;
+        }
+        case SPC_MODE_SPC2_TAGSYNC_DUAL:
+        {
+            if ((buffers[0] == NULL) &&
+                (buffers[1] == NULL)    )
+8420025a:	81 f0 00 e8 	rMAC = M[r6 + Null];
+8420025e:	07 62       	if NE jump (m) Lc_spc_process_data_66;
+
+84200260 <Lc_spc_process_data_65>:
+                map_mode = SPC_MODE_CONSUME;
+            }
+            else
+            if (buffers[0] == NULL)
+            {
+                map_mode = SPC_MODE_SPC2_TAGSYNC_1;
+84200260:	86 30       	r4 = Null + 34;
+84200262:	81 f0 01 88 	rMAC = M[r6 + 4];
+84200266:	00 f0 06 c0 	if EQ r4 = Null + Null;
+8420026a:	e1 6f       	jump (m) Lc_spc_process_data_55;
+
+8420026c <Lc_spc_process_data_66>:
+            }
+            else
+            if (buffers[1] == NULL)
+8420026c:	81 f0 01 88 	rMAC = M[r6 + 4];
+84200270:	de 63       	if NE jump (m) Lc_spc_process_data_55;
+
+84200272 <Lc_spc_process_data_67>:
+            {
+                map_mode = SPC_MODE_SPC2_TAGSYNC_0;
+84200272:	46 30       	r4 = Null + 33;
+84200274:	dc 6f       	jump (m) Lc_spc_process_data_55;
+
+84200276 <Lc_spc_process_data_68>:
+        default:
+        {
+            unsigned port = 0;
+            if (inout)
+            {
+                port = MAP_MODE_TO_PORT(mode);
+84200276:	02 f0 39 e4 	call (m) Lc_MAP_MODE_TO_PORT_1;
+            }
+            if ((port >= SPC_MODE_SIZE) ||
+                (buffers[port] == NULL)    )
+8420027a:	50 26       	Null = r0 - 9;
+8420027c:	f2 ff af ef 	if C jump (m) Lc_spc_process_data_54;
+
+84200280 <Lc_spc_process_data_69>:
+84200280:	52 54       	r0 = r0 LSHIFT 2;
+84200282:	81 f0 02 e8 	rMAC = M[r6 + r0];
+84200286:	d2 61       	if EQ jump (m) Lc_spc_process_data_54;
+
+84200288 <Lc__ite_18>:
+84200288:	d2 6f       	jump (m) Lc_spc_process_data_55;
+
+8420028a <Lc_spc_process_data_70>:
+    switch (mode)
+    {
+        case SPC_MODE_SPC1_TAGSYNC_DUAL:
+        {
+            if ((buffers[0] == NULL) &&
+                (buffers[1] == NULL)    )
+8420028a:	13 e8       	r1 = M[r0 + Null];
+8420028c:	06 62       	if NE jump (m) Lc_spc_process_data_72;
+
+8420028e <Lc_spc_process_data_71>:
+                map_mode = SPC_MODE_CONSUME;
+            }
+            else
+            if (buffers[0] == NULL)
+            {
+                map_mode = SPC_MODE_SPC1_TAGSYNC_1;
+8420028e:	81 28       	rMAC = Null + 18;
+84200290:	52 88       	r0 = M[r0 + 4];
+84200292:	00 f0 01 c0 	if EQ rMAC = Null + Null;
+84200296:	0e 6f       	jump (m) Lc_spc_process_data_21;
+
+84200298 <Lc_spc_process_data_72>:
+            }
+            else
+            if (buffers[1] == NULL)
+84200298:	52 88       	r0 = M[r0 + 4];
+8420029a:	0c 63       	if NE jump (m) Lc_spc_process_data_21;
+
+8420029c <Lc_spc_process_data_73>:
+            {
+                map_mode = SPC_MODE_SPC1_TAGSYNC_0;
+8420029c:	41 28       	rMAC = Null + 17;
+8420029e:	0a 6f       	jump (m) Lc_spc_process_data_21;
+
+842002a0 <Lc_spc_process_data_74>:
+            break;
+        }
+        case SPC_MODE_SPC2_TAGSYNC_DUAL:
+        {
+            if ((buffers[0] == NULL) &&
+                (buffers[1] == NULL)    )
+842002a0:	13 e8       	r1 = M[r0 + Null];
+842002a2:	06 62       	if NE jump (m) Lc_spc_process_data_76;
+
+842002a4 <Lc_spc_process_data_75>:
+                map_mode = SPC_MODE_CONSUME;
+            }
+            else
+            if (buffers[0] == NULL)
+            {
+                map_mode = SPC_MODE_SPC2_TAGSYNC_1;
+842002a4:	81 30       	rMAC = Null + 34;
+842002a6:	52 88       	r0 = M[r0 + 4];
+842002a8:	00 f0 01 c0 	if EQ rMAC = Null + Null;
+842002ac:	03 6f       	jump (m) Lc_spc_process_data_21;
+
+842002ae <Lc_spc_process_data_76>:
+            }
+            else
+            if (buffers[1] == NULL)
+842002ae:	52 88       	r0 = M[r0 + 4];
+842002b0:	01 63       	if NE jump (m) Lc_spc_process_data_21;
+
+842002b2 <Lc_spc_process_data_77>:
+            {
+                map_mode = SPC_MODE_SPC2_TAGSYNC_0;
+842002b2:	41 30       	rMAC = Null + 33;
+842002b4:	ff ff ff eb 	jump (m) Lc_spc_process_data_21;
+
+842002b8 <Lc_spc_process_data_78>:
+static inline bool is_sync_spc2_tag_mode(SPC_MODE mode, unsigned *out0, unsigned *out1)
+{
+    switch (mode)
+    {
+        case SPC_MODE_SPC2_TAGSYNC_0:
+            *out0 = 0;
+842002b8:	04 00       	r2 = Null + Null;
+            *out1 = 0;
+842002ba:	07 00       	r5 = Null + Null;
+842002bc:	0c 6f       	jump (m) Lc_spc_process_data_28;
+
+842002be <Lc_spc_process_data_79>:
+    return map_mode;
+}
+
+static inline bool is_sync_tag_mode(SPC_MODE mode, unsigned *out0, unsigned *out1)
+{
+    switch (mode)
+842002be:	10 2c       	Null = r0 - 16;
+842002c0:	4c 61       	if EQ jump (m) Lc_spc_process_data_38;
+
+842002c2 <Lc_spc_process_data_80>:
+842002c2:	50 2c       	Null = r0 - 17;
+842002c4:	05 60       	if EQ jump (m) Lc_spc_process_data_83;
+
+842002c6 <Lc_spc_process_data_81>:
+842002c6:	90 2c       	Null = r0 - 18;
+842002c8:	06 62       	if NE jump (m) Lc_spc_process_data_84;
+
+842002ca <Lc_spc_process_data_82>:
+        case SPC_MODE_SPC1_TAGSYNC_0:
+            *out0 = 0;
+            *out1 = 0;
+            return TRUE;
+        case SPC_MODE_SPC1_TAGSYNC_1:
+            *out0 = 1;
+842002ca:	44 20       	r2 = Null + 1;
+842002cc:	47 6f       	jump (m) Lc_spc_process_data_39;
+
+842002ce <Lc_spc_process_data_83>:
+static inline bool is_sync_tag_mode(SPC_MODE mode, unsigned *out0, unsigned *out1)
+{
+    switch (mode)
+    {
+        case SPC_MODE_SPC1_TAGSYNC_0:
+            *out0 = 0;
+842002ce:	04 00       	r2 = Null + Null;
+            *out1 = 0;
+842002d0:	07 00       	r5 = Null + Null;
+842002d2:	45 6f       	jump (m) Lc_spc_process_data_40;
+
+842002d4 <Lc_spc_process_data_84>:
+        }
+    }
+    else
+    {
+        /* Now process all inputs, consuming or passing through as relevant */
+        for (input_num = 0; input_num < SPC_NUMBER_INPUTS; input_num++)
+842002d4:	06 00       	r4 = Null + Null;
+842002d6:	47 08       	r5 = r6 + Null;
+842002d8:	83 6f       	jump (m) Lc_spc_process_data_47;
+
+842002da <Lc_spc_process_data_85>:
+            {
+                process_data(opx_data, complete_data, input_num, 0, passthrough, touched);
+            }
+        }
+    }
+}
+842002da:	f5 4a       	SP = SP - 0x20, popm <FP, r4, r5, r6, r7, r8, rLink>;
+842002dc:	d8 4c       	rts;
+
+842002de <Lc_spc_op_create_1>:
+    return TRUE;
+}
+
+static bool spc_op_create(OPERATOR_DATA *op_data, void *message_data,
+                          unsigned *response_id, void **response_data)
+{
+842002de:	f5 1c       	pushm <FP(=SP), r4, r5, r6, r7, r8, rLink>;
+842002e0:	16 00       	r4 = r0 + Null;
+842002e2:	1a 09       	r8 = r1 + Null;
+842002e4:	27 00       	r5 = r2 + Null;
+842002e6:	29 09       	r7 = r3 + Null;
+MAP_INSTANCE_DATA(CAP_ID_DOWNLOAD_SWITCHED_PASSTHROUGH_CONSUMER, SPC_OP_DATA)
+#endif /* CAPABILITY_DOWNLOAD_BUILD */
+
+static inline SPC_OP_DATA *get_instance_data(OPERATOR_DATA *op_data)
+{
+    return (SPC_OP_DATA *) base_op_get_instance_data(op_data);
+842002e8:	ff fd 00 f0 	call (m) 0x4e6;
+842002ec:	3f ef 
+842002ee:	10 09       	r6 = r0 + Null;
+                          unsigned *response_id, void **response_data)
+{
+    SPC_OP_DATA *opx_data = get_instance_data(op_data);
+
+    /* call base_op create, which also allocates and fills response message */
+    if (!base_op_create(op_data, message_data, response_id, response_data))
+842002f0:	4d 08       	r3 = r7 + Null;
+842002f2:	3c 00       	r2 = r5 + Null;
+842002f4:	53 08       	r1 = r8 + Null;
+842002f6:	32 00       	r0 = r4 + Null;
+842002f8:	ff fd 00 f0 	call (m) 0x35a;
+842002fc:	23 e3 
+842002fe:	10 04       	Null = r0 - Null;
+84200300:	03 62       	if NE jump (m) Lc_spc_op_create_3;
+
+84200302 <Lc_spc_op_create_2>:
+    {
+        return FALSE;
+84200302:	02 00       	r0 = Null + Null;
+84200304:	06 6e       	jump (m) Lc_spc_op_create_4;
+
+84200306 <Lc_spc_op_create_3>:
+    }
+
+    opx_data->frame_size = 64;
+84200306:	01 f0 40 40 	rMAC = Null + 64;
+8420030a:	81 f0 11 8e 	M[r6 + 68] = rMAC;
+
+    return TRUE;
+8420030e:	42 20       	r0 = Null + 1;
+
+84200310 <Lc_spc_op_create_4>:
+}
+84200310:	f5 48       	popm <FP, r4, r5, r6, r7, r8, rLink>;
+84200312:	d8 4c       	rts;
+
+84200314 <Lc_spc_connect_1>:
+
+    return TRUE;
+}
+
+static bool spc_connect(OPERATOR_DATA *op_data, void *message_data, unsigned *response_id, void **response_data)
+{
+84200314:	f4 1c       	pushm <FP(=SP), r4, r5, r6, r7, rLink>;
+84200316:	10 09       	r6 = r0 + Null;
+84200318:	2f 00       	r5 = r3 + Null;
+    unsigned terminal_id = OPMGR_GET_OP_CONNECT_TERMINAL_ID(message_data);
+8420031a:	39 f0 00 e8 	r7 = M[r1 + Null];
+    tCbuffer *buffer = OPMGR_GET_OP_CONNECT_BUFFER(message_data);
+8420031e:	5e 88       	r4 = M[r1 + 4];
+
+    if (!base_op_connect(op_data, message_data, response_id, response_data))
+84200320:	ff fd 00 f0 	call (m) 0x3e8;
+84200324:	29 e6 
+84200326:	10 04       	Null = r0 - Null;
+84200328:	03 62       	if NE jump (m) Lc_spc_connect_3;
+
+8420032a <Lc_spc_connect_2>:
+    {
+        /* Shouldn't change anything if there is not enough memory for the response.*/
+        return FALSE;
+8420032a:	02 00       	r0 = Null + Null;
+8420032c:	0d 6e       	jump (m) Lc_spc_connect_6;
+
+8420032e <Lc_spc_connect_3>:
+    }
+
+    if (!spc_connect_disconnect_common(op_data, terminal_id, buffer))
+8420032e:	34 00       	r2 = r4 + Null;
+84200330:	4b 08       	r1 = r7 + Null;
+84200332:	42 08       	r0 = r6 + Null;
+84200334:	01 f0 2d e8 	call (m) Lc_spc_connect_disconnect_common_1;
+84200338:	10 04       	Null = r0 - Null;
+8420033a:	05 62       	if NE jump (m) Lc_spc_connect_5;
+
+8420033c <Lc_spc_connect_4>:
+ * \param  response_data Pointer to the pointer to message that is allocated in the function.
+ * \param  new_status  A status ID that is to be sent in the message.
+ */
+inline static void base_op_change_response_status(void **response_data, STATUS_KYMERA new_status)
+{
+    (((OP_STD_RSP *)(*response_data))->status = new_status);
+8420033c:	01 f0 00 60 	rMAC = Null + 4096;
+84200340:	3a e8       	r0 = M[r5 + Null];
+84200342:	51 8e       	M[r0 + 4] = rMAC;
+
+84200344 <Lc_spc_connect_5>:
+    {
+         base_op_change_response_status(response_data, STATUS_CMD_FAILED);
+         return TRUE;
+84200344:	42 20       	r0 = Null + 1;
+
+84200346 <Lc_spc_connect_6>:
+    }
+
+    return TRUE;
+}
+84200346:	f4 48       	popm <FP, r4, r5, r6, r7, rLink>;
+84200348:	d8 4c       	rts;
+
+8420034a <Lc_spc_disconnect_1>:
+
+static bool spc_disconnect(OPERATOR_DATA *op_data, void *message_data, unsigned *response_id, void **response_data)
+{
+8420034a:	f3 1c       	pushm <FP(=SP), r4, r5, r6, rLink>;
+8420034c:	17 00       	r5 = r0 + Null;
+8420034e:	2e 00       	r4 = r3 + Null;
+    unsigned terminal_id = OPMGR_GET_OP_DISCONNECT_TERMINAL_ID(message_data);
+84200350:	38 f0 00 e8 	r6 = M[r1 + Null];
+
+    if (!base_op_disconnect(op_data, message_data, response_id, response_data))
+84200354:	ff fd 00 f0 	call (m) 0x3f4;
+84200358:	21 e5 
+8420035a:	10 04       	Null = r0 - Null;
+8420035c:	03 62       	if NE jump (m) Lc_spc_disconnect_3;
+
+8420035e <Lc_spc_disconnect_2>:
+    {
+        /* Shouldn't change anything if there is not enough memory for the response.*/
+        return FALSE;
+8420035e:	02 00       	r0 = Null + Null;
+84200360:	0d 6e       	jump (m) Lc_spc_disconnect_6;
+
+84200362 <Lc_spc_disconnect_3>:
+    }
+
+    if (!spc_connect_disconnect_common(op_data, terminal_id, NULL))
+84200362:	04 00       	r2 = Null + Null;
+84200364:	43 08       	r1 = r6 + Null;
+84200366:	3a 00       	r0 = r5 + Null;
+84200368:	01 f0 39 e6 	call (m) Lc_spc_connect_disconnect_common_1;
+8420036c:	10 04       	Null = r0 - Null;
+8420036e:	05 62       	if NE jump (m) Lc_spc_disconnect_5;
+
+84200370 <Lc_spc_disconnect_4>:
+84200370:	01 f0 00 60 	rMAC = Null + 4096;
+84200374:	32 e8       	r0 = M[r4 + Null];
+84200376:	51 8e       	M[r0 + 4] = rMAC;
+
+84200378 <Lc_spc_disconnect_5>:
+    {
+         base_op_change_response_status(response_data, STATUS_CMD_FAILED);
+         return TRUE;
+84200378:	42 20       	r0 = Null + 1;
+
+8420037a <Lc_spc_disconnect_6>:
+    }
+
+    return TRUE;
+}
+8420037a:	f3 48       	popm <FP, r4, r5, r6, rLink>;
+8420037c:	d8 4c       	rts;
+
+8420037e <Lc_spc_buffer_details_1>:
+
+    return TRUE;
+}
+
+static bool spc_buffer_details(OPERATOR_DATA *op_data, void *message_data, unsigned *response_id, void **response_data)
+{
+8420037e:	f5 1c       	pushm <FP(=SP), r4, r5, r6, r7, r8, rLink>;
+84200380:	10 09       	r6 = r0 + Null;
+84200382:	19 09       	r7 = r1 + Null;
+84200384:	27 00       	r5 = r2 + Null;
+84200386:	2e 00       	r4 = r3 + Null;
+MAP_INSTANCE_DATA(CAP_ID_DOWNLOAD_SWITCHED_PASSTHROUGH_CONSUMER, SPC_OP_DATA)
+#endif /* CAPABILITY_DOWNLOAD_BUILD */
+
+static inline SPC_OP_DATA *get_instance_data(OPERATOR_DATA *op_data)
+{
+    return (SPC_OP_DATA *) base_op_get_instance_data(op_data);
+84200388:	ff fd 00 f0 	call (m) 0x4e6;
+8420038c:	3f ea 
+8420038e:	12 09       	r8 = r0 + Null;
+}
+
+static bool spc_buffer_details(OPERATOR_DATA *op_data, void *message_data, unsigned *response_id, void **response_data)
+{
+    SPC_OP_DATA *opx_data = get_instance_data(op_data);
+    bool result = base_op_buffer_details(op_data, message_data, response_id, response_data);
+84200390:	35 00       	r3 = r4 + Null;
+84200392:	3c 00       	r2 = r5 + Null;
+84200394:	4b 08       	r1 = r7 + Null;
+84200396:	42 08       	r0 = r6 + Null;
+84200398:	ef fd ff ff 	call (m) 0x37c;
+8420039c:	25 ef 
+
+    if (result)
+8420039e:	10 04       	Null = r0 - Null;
+842003a0:	11 60       	if EQ jump (m) Lc_spc_buffer_details_5;
+
+842003a2 <Lc_spc_buffer_details_2>:
+    {
+        unsigned terminal_id = OPMGR_GET_OP_BUF_DETAILS_TERMINAL_ID(message_data);
+842003a2:	91 f0 00 e8 	rMAC = M[r7 + Null];
+        OP_BUF_DETAILS_RSP *resp = *response_data;
+842003a6:	33 e8       	r1 = M[r4 + Null];
+
+        if (0 == (terminal_id & TERMINAL_SINK_MASK))
+842003a8:	40 f0 11 f0 	rMAC = rMAC AND 0x800000;
+842003ac:	00 00 
+842003ae:	04 62       	if NE jump (m) Lc_spc_buffer_details_4;
+
+842003b0 <Lc_spc_buffer_details_3>:
+        {
+            /* Output, use the output buffer size */
+            resp->b.buffer_size = opx_data->output_buffer_size;
+842003b0:	a1 f0 0c 88 	rMAC = M[r8 + 48];
+842003b4:	19 8f       	M[r1 + 16] = rMAC;
+
+842003b6 <Lc_spc_buffer_details_4>:
+        }
+        resp->metadata_buffer = NULL;
+842003b6:	d8 8e       	M[r1 + 12] = Null;
+        resp->supports_metadata = TRUE;
+842003b8:	19 92       	rMAC = MBU[r1 + 8];
+842003ba:	11 ff ef 1f 	rMAC = rMAC AND 0xffffffef;
+842003be:	c9 c9       	rMAC = rMAC OR 0x10;
+842003c0:	19 9a       	MB[r1 + 8] = rMAC;
+
+842003c2 <Lc_spc_buffer_details_5>:
+    }
+    return result;
+842003c2:	f5 48       	popm <FP, r4, r5, r6, r7, r8, rLink>;
+842003c4:	d8 4c       	rts;
+
+842003c6 <Lc_spc_get_sched_info_1>:
+}
+
+static bool spc_get_sched_info(OPERATOR_DATA *op_data, void *message_data, unsigned *response_id, void **response_data)
+{
+842003c6:	f2 1c       	pushm <FP(=SP), r4, r5, rLink>;
+842003c8:	17 00       	r5 = r0 + Null;
+842003ca:	2e 00       	r4 = r3 + Null;
+    OP_SCHED_INFO_RSP* resp;
+
+    resp = base_op_get_sched_info_ex(op_data, message_data, response_id);
+842003cc:	ff fd 00 f0 	call (m) 0x41c;
+842003d0:	31 e2 
+    if (resp == NULL)
+842003d2:	10 04       	Null = r0 - Null;
+842003d4:	09 62       	if NE jump (m) Lc_spc_get_sched_info_3;
+
+842003d6 <Lc_spc_get_sched_info_2>:
+    {
+        return base_op_build_std_response_ex(op_data, STATUS_CMD_FAILED, response_data);
+842003d6:	03 f0 00 60 	r1 = Null + 4096;
+842003da:	34 00       	r2 = r4 + Null;
+842003dc:	3a 00       	r0 = r5 + Null;
+842003de:	ff fd 00 f0 	call (m) 0x4bc;
+842003e2:	3f e6 
+842003e4:	05 6e       	jump (m) Lc_spc_get_sched_info_4;
+
+842003e6 <Lc_spc_get_sched_info_3>:
+    }
+    *response_data = resp;
+842003e6:	32 ee       	M[r4 + Null] = r0;
+
+    resp->block_size = SPC_DEFAULT_BLOCK_SIZE;
+842003e8:	41 20       	rMAC = Null + 1;
+842003ea:	91 8e       	M[r0 + 8] = rMAC;
+
+    return TRUE;
+842003ec:	0a 00       	r0 = rMAC + Null;
+
+842003ee <Lc_spc_get_sched_info_4>:
+}
+842003ee:	f2 48       	popm <FP, r4, r5, rLink>;
+842003f0:	d8 4c       	rts;
+
+842003f2 <Lc_spc_get_data_format_1>:
+
+static bool spc_get_data_format(OPERATOR_DATA *op_data, void *message_data, unsigned *response_id, void **response_data)
+{
+842003f2:	f5 1c       	pushm <FP(=SP), r4, r5, r6, r7, r8, rLink>;
+842003f4:	10 09       	r6 = r0 + Null;
+842003f6:	1a 09       	r8 = r1 + Null;
+842003f8:	27 00       	r5 = r2 + Null;
+842003fa:	2e 00       	r4 = r3 + Null;
+MAP_INSTANCE_DATA(CAP_ID_DOWNLOAD_SWITCHED_PASSTHROUGH_CONSUMER, SPC_OP_DATA)
+#endif /* CAPABILITY_DOWNLOAD_BUILD */
+
+static inline SPC_OP_DATA *get_instance_data(OPERATOR_DATA *op_data)
+{
+    return (SPC_OP_DATA *) base_op_get_instance_data(op_data);
+842003fc:	ff fd 00 f0 	call (m) 0x4e6;
+84200400:	2b e7 
+84200402:	11 09       	r7 = r0 + Null;
+}
+
+static bool spc_get_data_format(OPERATOR_DATA *op_data, void *message_data, unsigned *response_id, void **response_data)
+{
+    SPC_OP_DATA *opx_data = get_instance_data(op_data);
+    bool result = base_op_get_data_format(op_data, message_data, response_id, response_data);
+84200404:	35 00       	r3 = r4 + Null;
+84200406:	3c 00       	r2 = r5 + Null;
+84200408:	53 08       	r1 = r8 + Null;
+8420040a:	42 08       	r0 = r6 + Null;
+8420040c:	ff fd 00 f0 	call (m) 0x43a;
+84200410:	2f e1 
+
+    if (result)
+84200412:	10 04       	Null = r0 - Null;
+84200414:	05 60       	if EQ jump (m) Lc_spc_get_data_format_3;
+
+84200416 <Lc_spc_get_data_format_2>:
+    {
+        ((OP_STD_RSP*)*response_data)->resp_data.data = opx_data->data_format;
+84200416:	91 f0 0b 88 	rMAC = M[r7 + 44];
+8420041a:	33 e8       	r1 = M[r4 + Null];
+8420041c:	99 8e       	M[r1 + 8] = rMAC;
+
+8420041e <Lc_spc_get_data_format_3>:
+    }
+    return result;
+8420041e:	f5 48       	popm <FP, r4, r5, r6, r7, r8, rLink>;
+84200420:	d8 4c       	rts;
+
+84200422 <Lc_spc_opmsg_transition_request_1>:
+}
+
+static bool spc_opmsg_transition_request(OPERATOR_DATA *op_data, void *message_data, 
+                                            unsigned *resp_length, OP_OPMSG_RSP_PAYLOAD **resp_data)
+{
+84200422:	f2 1c       	pushm <FP(=SP), r4, r5, rLink>;
+84200424:	16 00       	r4 = r0 + Null;
+84200426:	1f 00       	r5 = r1 + Null;
+MAP_INSTANCE_DATA(CAP_ID_DOWNLOAD_SWITCHED_PASSTHROUGH_CONSUMER, SPC_OP_DATA)
+#endif /* CAPABILITY_DOWNLOAD_BUILD */
+
+static inline SPC_OP_DATA *get_instance_data(OPERATOR_DATA *op_data)
+{
+    return (SPC_OP_DATA *) base_op_get_instance_data(op_data);
+84200428:	ff fd 00 f0 	call (m) 0x4e6;
+8420042c:	3f e5 
+
+static bool spc_opmsg_transition_request(OPERATOR_DATA *op_data, void *message_data, 
+                                            unsigned *resp_length, OP_OPMSG_RSP_PAYLOAD **resp_data)
+{
+    SPC_OP_DATA *opx_data = get_instance_data(op_data);
+    OPMSG_SPC_MODE new_mode = (OPMSG_SPC_MODE) OPMSG_FIELD_GET(message_data, OPMSG_SPC_CHANGE_MODE, NEW_MODE);
+8420042e:	f9 88       	rMAC = M[r5 + 12];
+84200430:	89 c6       	rMAC = rMAC AND 0xffff;
+84200432:	09 08       	rMAC = SE8 rMAC;
+
+    if (new_mode == OPMSG_SPC_MODE_SPC2_DATASYNC_DUAL)
+84200434:	08 26       	Null = rMAC - 8;
+84200436:	05 62       	if NE jump (m) Lc_spc_opmsg_transition_request_3;
+
+84200438 <Lc_spc_opmsg_transition_request_2>:
+    {
+        opx_data->next_mode = SPC_MODE_SPC2_TAGSYNC_DUAL;
+84200438:	01 30       	rMAC = Null + 32;
+8420043a:	21 f0 29 8a 	MB[r0 + 41] = rMAC;
+8420043e:	3c 6e       	jump (m) Lc_spc_opmsg_transition_request_21;
+
+84200440 <Lc_spc_opmsg_transition_request_3>:
+        return TRUE;
+    } 
+    else if (new_mode == OPMSG_SPC_MODE_SPC2_DATASYNC_1)
+84200440:	c8 25       	Null = rMAC - 7;
+84200442:	05 62       	if NE jump (m) Lc_spc_opmsg_transition_request_5;
+
+84200444 <Lc_spc_opmsg_transition_request_4>:
+    {
+        opx_data->next_mode = SPC_MODE_SPC2_TAGSYNC_1;
+84200444:	81 30       	rMAC = Null + 34;
+84200446:	21 f0 29 8a 	MB[r0 + 41] = rMAC;
+8420044a:	36 6e       	jump (m) Lc_spc_opmsg_transition_request_21;
+
+8420044c <Lc_spc_opmsg_transition_request_5>:
+        return TRUE;
+    } 
+    else if (new_mode == OPMSG_SPC_MODE_SPC2_DATASYNC_0)
+8420044c:	88 25       	Null = rMAC - 6;
+8420044e:	05 62       	if NE jump (m) Lc_spc_opmsg_transition_request_7;
+
+84200450 <Lc_spc_opmsg_transition_request_6>:
+    {
+        opx_data->next_mode = SPC_MODE_SPC2_TAGSYNC_0;
+84200450:	41 30       	rMAC = Null + 33;
+84200452:	21 f0 29 8a 	MB[r0 + 41] = rMAC;
+84200456:	30 6e       	jump (m) Lc_spc_opmsg_transition_request_21;
+
+84200458 <Lc_spc_opmsg_transition_request_7>:
+        return TRUE;
+    } 
+    else if (new_mode == OPMSG_SPC_MODE_TAGSYNC_DUAL)
+84200458:	48 25       	Null = rMAC - 5;
+8420045a:	05 62       	if NE jump (m) Lc_spc_opmsg_transition_request_9;
+
+8420045c <Lc_spc_opmsg_transition_request_8>:
+    {
+        opx_data->next_mode = SPC_MODE_SPC1_TAGSYNC_DUAL;
+8420045c:	01 28       	rMAC = Null + 16;
+8420045e:	21 f0 29 8a 	MB[r0 + 41] = rMAC;
+84200462:	2a 6e       	jump (m) Lc_spc_opmsg_transition_request_21;
+
+84200464 <Lc_spc_opmsg_transition_request_9>:
+        return TRUE;
+    } 
+    else if (new_mode == OPMSG_SPC_MODE_TAGSYNC_1)
+84200464:	08 25       	Null = rMAC - 4;
+84200466:	05 62       	if NE jump (m) Lc_spc_opmsg_transition_request_11;
+
+84200468 <Lc_spc_opmsg_transition_request_10>:
+    {
+        opx_data->next_mode = SPC_MODE_SPC1_TAGSYNC_1;
+84200468:	81 28       	rMAC = Null + 18;
+8420046a:	21 f0 29 8a 	MB[r0 + 41] = rMAC;
+8420046e:	24 6e       	jump (m) Lc_spc_opmsg_transition_request_21;
+
+84200470 <Lc_spc_opmsg_transition_request_11>:
+        return TRUE;
+    } 
+    else if (new_mode == OPMSG_SPC_MODE_TAGSYNC_0)
+84200470:	c8 24       	Null = rMAC - 3;
+84200472:	05 62       	if NE jump (m) Lc_spc_opmsg_transition_request_13;
+
+84200474 <Lc_spc_opmsg_transition_request_12>:
+    {
+        opx_data->next_mode = SPC_MODE_SPC1_TAGSYNC_0;
+84200474:	41 28       	rMAC = Null + 17;
+84200476:	21 f0 29 8a 	MB[r0 + 41] = rMAC;
+8420047a:	1e 6e       	jump (m) Lc_spc_opmsg_transition_request_21;
+
+8420047c <Lc_spc_opmsg_transition_request_13>:
+        return TRUE;
+    } 
+    else if (new_mode == OPMSG_SPC_MODE_PASSTHROUGH1)
+8420047c:	88 24       	Null = rMAC - 2;
+8420047e:	05 62       	if NE jump (m) Lc_spc_opmsg_transition_request_15;
+
+84200480 <Lc_spc_opmsg_transition_request_14>:
+    {
+        opx_data->next_mode = SPC_MODE_PASSTHROUGH_1;
+84200480:	81 20       	rMAC = Null + 2;
+84200482:	21 f0 29 8a 	MB[r0 + 41] = rMAC;
+84200486:	18 6e       	jump (m) Lc_spc_opmsg_transition_request_21;
+
+84200488 <Lc_spc_opmsg_transition_request_15>:
+        return TRUE;
+    } 
+    else if (new_mode == OPMSG_SPC_MODE_PASSTHROUGH)
+84200488:	08 04       	Null = rMAC - Null;
+8420048a:	05 62       	if NE jump (m) Lc_spc_opmsg_transition_request_17;
+
+8420048c <Lc_spc_opmsg_transition_request_16>:
+    {
+        opx_data->next_mode = SPC_MODE_PASSTHROUGH_0;
+8420048c:	41 20       	rMAC = Null + 1;
+8420048e:	21 f0 29 8a 	MB[r0 + 41] = rMAC;
+84200492:	12 6e       	jump (m) Lc_spc_opmsg_transition_request_21;
+
+84200494 <Lc_spc_opmsg_transition_request_17>:
+        return TRUE;
+    } 
+    else if (new_mode == OPMSG_SPC_MODE_CONSUMER)
+84200494:	48 24       	Null = rMAC - 1;
+84200496:	12 62       	if NE jump (m) Lc_spc_opmsg_transition_request_22;
+
+84200498 <Lc_spc_opmsg_transition_request_18>:
+    {
+        opx_data->next_mode = SPC_MODE_CONSUME;
+84200498:	20 f0 29 8a 	MB[r0 + 41] = Null;
+
+        if (opx_data->current_mode != opx_data->next_mode &&
+                opmgr_op_is_running(op_data))
+8420049c:	21 f0 28 80 	rMAC = MBS[r0 + 40];
+842004a0:	0b 60       	if EQ jump (m) Lc_spc_opmsg_transition_request_21;
+
+842004a2 <Lc_spc_opmsg_transition_request_19>:
+842004a2:	32 00       	r0 = r4 + Null;
+842004a4:	ff fd 29 f0 	call (m) 0x5700;
+842004a8:	3d e2 
+842004aa:	10 04       	Null = r0 - Null;
+842004ac:	05 60       	if EQ jump (m) Lc_spc_opmsg_transition_request_21;
+
+842004ae <Lc_spc_opmsg_transition_request_20>:
+        {
+            /* A switch may be needed if the input is full.
+             * Try to kick the operator to perform the switch.
+             */
+            opmgr_kick_operator(op_data);
+842004ae:	32 00       	r0 = r4 + Null;
+842004b0:	ff fd 19 f0 	call (m) 0x374a;
+842004b4:	3b e4 
+
+842004b6 <Lc_spc_opmsg_transition_request_21>:
+    OPMSG_SPC_MODE new_mode = (OPMSG_SPC_MODE) OPMSG_FIELD_GET(message_data, OPMSG_SPC_CHANGE_MODE, NEW_MODE);
+
+    if (new_mode == OPMSG_SPC_MODE_SPC2_DATASYNC_DUAL)
+    {
+        opx_data->next_mode = SPC_MODE_SPC2_TAGSYNC_DUAL;
+        return TRUE;
+842004b6:	42 20       	r0 = Null + 1;
+842004b8:	02 6e       	jump (m) Lc_spc_opmsg_transition_request_23;
+
+842004ba <Lc_spc_opmsg_transition_request_22>:
+            opmgr_kick_operator(op_data);
+        }
+        return TRUE;
+    }
+
+    return FALSE;
+842004ba:	02 00       	r0 = Null + Null;
+
+842004bc <Lc_spc_opmsg_transition_request_23>:
+
+}
+842004bc:	f2 48       	popm <FP, r4, r5, rLink>;
+842004be:	d8 4c       	rts;
+
+842004c0 <Lc_spc_opmsg_set_data_format_1>:
+    opx_data->frame_size = OPMSG_FIELD_GET(message_data, OPMSG_SPC_SET_BLOCK_SIZE, BLOCK_SIZE);
+    return TRUE;
+}
+
+static bool spc_opmsg_set_data_format(OPERATOR_DATA *op_data, void *message_data, unsigned *resp_length, OP_OPMSG_RSP_PAYLOAD **resp_data)
+{
+842004c0:	f1 1c       	pushm <FP(=SP), r4, rLink>;
+842004c2:	1e 00       	r4 = r1 + Null;
+MAP_INSTANCE_DATA(CAP_ID_DOWNLOAD_SWITCHED_PASSTHROUGH_CONSUMER, SPC_OP_DATA)
+#endif /* CAPABILITY_DOWNLOAD_BUILD */
+
+static inline SPC_OP_DATA *get_instance_data(OPERATOR_DATA *op_data)
+{
+    return (SPC_OP_DATA *) base_op_get_instance_data(op_data);
+842004c4:	ff fd 00 f0 	call (m) 0x4e6;
+842004c8:	23 e1 
+}
+
+static bool spc_opmsg_set_data_format(OPERATOR_DATA *op_data, void *message_data, unsigned *resp_length, OP_OPMSG_RSP_PAYLOAD **resp_data)
+{
+    SPC_OP_DATA *opx_data = get_instance_data(op_data);
+    opx_data->data_format = OPMSG_FIELD_GET(message_data, OPMSG_SPC_SET_DATA_FORMAT, DATA_TYPE);
+842004ca:	f1 88       	rMAC = M[r4 + 12];
+842004cc:	89 c6       	rMAC = rMAC AND 0xffff;
+842004ce:	d1 9e       	M[r0 + 44] = rMAC;
+    return TRUE;
+842004d0:	42 20       	r0 = Null + 1;
+
+842004d2 <Lc_spc_opmsg_set_data_format_2>:
+}
+842004d2:	f1 48       	popm <FP, r4, rLink>;
+842004d4:	d8 4c       	rts;
+
+842004d6 <Lc_spc_opmsg_set_buffer_size_1>:
+
+static bool spc_opmsg_set_buffer_size(OPERATOR_DATA *op_data, void *message_data, unsigned *resp_length, OP_OPMSG_RSP_PAYLOAD **resp_data)
+{
+842004d6:	f1 1c       	pushm <FP(=SP), r4, rLink>;
+842004d8:	1e 00       	r4 = r1 + Null;
+MAP_INSTANCE_DATA(CAP_ID_DOWNLOAD_SWITCHED_PASSTHROUGH_CONSUMER, SPC_OP_DATA)
+#endif /* CAPABILITY_DOWNLOAD_BUILD */
+
+static inline SPC_OP_DATA *get_instance_data(OPERATOR_DATA *op_data)
+{
+    return (SPC_OP_DATA *) base_op_get_instance_data(op_data);
+842004da:	ff fd 00 f0 	call (m) 0x4e6;
+842004de:	2d e0 
+}
+
+static bool spc_opmsg_set_buffer_size(OPERATOR_DATA *op_data, void *message_data, unsigned *resp_length, OP_OPMSG_RSP_PAYLOAD **resp_data)
+{
+    SPC_OP_DATA *opx_data = get_instance_data(op_data);
+    opx_data->output_buffer_size = OPMSG_FIELD_GET(message_data, OPMSG_COMMON_SET_BUFFER_SIZE, BUFFER_SIZE);
+842004e0:	f1 88       	rMAC = M[r4 + 12];
+842004e2:	89 c6       	rMAC = rMAC AND 0xffff;
+842004e4:	11 9f       	M[r0 + 48] = rMAC;
+    return TRUE;
+842004e6:	42 20       	r0 = Null + 1;
+
+842004e8 <Lc_spc_opmsg_set_buffer_size_2>:
+}
+842004e8:	f1 48       	popm <FP, r4, rLink>;
+842004ea:	d8 4c       	rts;
+
+842004ec <Lc_spc_opmsg_select_passthrough_request_1>:
+
+}
+
+static bool spc_opmsg_select_passthrough_request(OPERATOR_DATA *op_data, void *message_data, 
+                                                 unsigned *resp_length, OP_OPMSG_RSP_PAYLOAD **resp_data)
+{
+842004ec:	f5 1c       	pushm <FP(=SP), r4, r5, r6, r7, r8, rLink>;
+842004ee:	16 00       	r4 = r0 + Null;
+842004f0:	1f 00       	r5 = r1 + Null;
+MAP_INSTANCE_DATA(CAP_ID_DOWNLOAD_SWITCHED_PASSTHROUGH_CONSUMER, SPC_OP_DATA)
+#endif /* CAPABILITY_DOWNLOAD_BUILD */
+
+static inline SPC_OP_DATA *get_instance_data(OPERATOR_DATA *op_data)
+{
+    return (SPC_OP_DATA *) base_op_get_instance_data(op_data);
+842004f2:	ef fd ff ff 	call (m) 0x4e6;
+842004f6:	35 ef 
+842004f8:	10 09       	r6 = r0 + Null;
+
+static bool spc_opmsg_select_passthrough_request(OPERATOR_DATA *op_data, void *message_data, 
+                                                 unsigned *resp_length, OP_OPMSG_RSP_PAYLOAD **resp_data)
+{
+    SPC_OP_DATA *opx_data = get_instance_data(op_data);
+    uint16 new_input = OPMSG_FIELD_GET(message_data, OPMSG_SPC_SELECT_PASSTHROUGH, NEW_INPUT);
+842004fa:	f9 88       	rMAC = M[r5 + 12];
+842004fc:	89 c6       	rMAC = rMAC AND 0xffff;
+    SPC_MODE new_mode;
+    unsigned out0, out1;
+
+    if ((new_input >= SPC_MODE_SIZE) &&
+        (!is_sync_tag_mode((SPC_MODE)new_input, &out0, &out1)))
+842004fe:	48 26       	Null = rMAC - 9;
+84200500:	0a 68       	if LT jump (m) Lc_spc_opmsg_select_passthrough_request_6;
+
+84200502 <Lc_spc_opmsg_select_passthrough_request_2>:
+84200502:	0a 08       	r0 = SE8 rMAC;
+    return map_mode;
+}
+
+static inline bool is_sync_tag_mode(SPC_MODE mode, unsigned *out0, unsigned *out1)
+{
+    switch (mode)
+84200504:	10 2c       	Null = r0 - 16;
+84200506:	07 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_6;
+
+84200508 <Lc_spc_opmsg_select_passthrough_request_3>:
+84200508:	50 2c       	Null = r0 - 17;
+8420050a:	05 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_6;
+
+8420050c <Lc_spc_opmsg_select_passthrough_request_4>:
+8420050c:	90 2c       	Null = r0 - 18;
+8420050e:	03 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_6;
+
+84200510 <Lc_spc_opmsg_select_passthrough_request_5>:
+
+    if ((new_input >= SPC_MODE_SIZE) &&
+        (!is_sync_tag_mode((SPC_MODE)new_input, &out0, &out1)))
+    {
+        /* Invalid input */
+        return FALSE;
+84200510:	02 00       	r0 = Null + Null;
+84200512:	8a 6e       	jump (m) Lc_spc_opmsg_select_passthrough_request_50;
+
+84200514 <Lc_spc_opmsg_select_passthrough_request_6>:
+    }
+
+    new_mode = (SPC_MODE)new_input;
+84200514:	0f 08       	r5 = SE8 rMAC;
+
+    if (opx_data->current_mode != opx_data->next_mode)
+84200516:	8a f0 28 80 	r8 = MBS[r6 + 40];
+8420051a:	81 f0 29 80 	rMAC = MBS[r6 + 41];
+8420051e:	1f fa 00 c2 	Null = r8 - rMAC;
+84200522:	f7 63       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_5;
+
+84200524 <Lc_spc_opmsg_select_passthrough_request_7>:
+    {
+        /* We need to wait until the previous mode switch is complete. */
+        return FALSE;
+    }
+
+    if (new_mode > SPC_MODE_CONSUME)
+84200524:	38 24       	Null = r5 - 0;
+84200526:	1a 6c       	if LE jump (m) Lc_spc_opmsg_select_passthrough_request_19;
+
+84200528 <Lc_spc_opmsg_select_passthrough_request_8>:
+    return FALSE;
+}
+
+static inline SPC_MODE adjust_mode_to_buffers(SPC_MODE mode, tCbuffer* buffers[], bool inout)
+{
+    SPC_MODE map_mode = mode;
+84200528:	51 09       	r7 = r8 + Null;
+
+    switch (mode)
+8420052a:	51 08       	rMAC = r8 + Null;
+8420052c:	08 2c       	Null = rMAC - 16;
+8420052e:	27 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_23;
+
+84200530 <Lc_spc_opmsg_select_passthrough_request_9>:
+84200530:	48 2c       	Null = rMAC - 17;
+84200532:	2e 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_25;
+
+84200534 <Lc_spc_opmsg_select_passthrough_request_10>:
+84200534:	88 2c       	Null = rMAC - 18;
+84200536:	07 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_14;
+
+84200538 <Lc_spc_opmsg_select_passthrough_request_11>:
+84200538:	08 34       	Null = rMAC - 32;
+8420053a:	4b 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_36;
+
+8420053c <Lc_spc_opmsg_select_passthrough_request_12>:
+8420053c:	48 34       	Null = rMAC - 33;
+8420053e:	28 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_25;
+
+84200540 <Lc_spc_opmsg_select_passthrough_request_13>:
+84200540:	88 34       	Null = rMAC - 34;
+84200542:	57 62       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_40;
+
+84200544 <Lc_spc_opmsg_select_passthrough_request_14>:
+            break;
+        }
+        case SPC_MODE_SPC1_TAGSYNC_1:
+        case SPC_MODE_SPC2_TAGSYNC_1:
+        {
+            if (buffers[1] == NULL)
+84200544:	81 f0 01 88 	rMAC = M[r6 + 4];
+84200548:	26 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_26;
+
+8420054a <Lc__ite_19>:
+8420054a:	26 6e       	jump (m) Lc_spc_opmsg_select_passthrough_request_27;
+
+8420054c <Lc_spc_opmsg_select_passthrough_request_15>:
+    switch (mode)
+    {
+        case SPC_MODE_SPC1_TAGSYNC_DUAL:
+        {
+            if ((buffers[0] == NULL) &&
+                (buffers[1] == NULL)    )
+8420054c:	13 e8       	r1 = M[r0 + Null];
+8420054e:	5b 62       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_42;
+
+84200550 <Lc_spc_opmsg_select_passthrough_request_16>:
+84200550:	51 88       	rMAC = M[r0 + 4];
+84200552:	df 61       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_5;
+
+84200554 <Lc_spc_opmsg_select_passthrough_request_17>:
+                map_mode = SPC_MODE_CONSUME;
+            }
+            else
+            if (buffers[0] == NULL)
+            {
+                map_mode = SPC_MODE_SPC1_TAGSYNC_1;
+84200554:	81 28       	rMAC = Null + 18;
+
+84200556 <Lc_spc_opmsg_select_passthrough_request_18>:
+        adjust_mode = adjust_mode_to_buffers(adjust_mode, opx_data->ip_buffers, 1);
+        /* Verify that the mode matches output buffers used in that mode.
+         * Return mode or amended mode based on available output buffers. */
+        adjust_mode = adjust_mode_to_buffers(adjust_mode, opx_data->op_buffers, 0);
+        /* Switching to passthrough */
+        if (adjust_mode != new_mode)
+84200556:	c8 05       	Null = rMAC - r5;
+84200558:	dc 63       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_5;
+
+8420055a <Lc_spc_opmsg_select_passthrough_request_19>:
+             */
+            return FALSE;
+        }
+    }
+
+    opx_data->next_mode = new_mode;
+8420055a:	87 f0 29 8a 	MB[r6 + 41] = r5;
+
+    if (opx_data->current_mode != opx_data->next_mode &&
+            opmgr_op_is_running(op_data))
+8420055e:	7f fa 00 c2 	Null = r8 - r5;
+84200562:	0b 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_22;
+
+84200564 <Lc_spc_opmsg_select_passthrough_request_20>:
+84200564:	32 00       	r0 = r4 + Null;
+84200566:	ff fd 28 f0 	call (m) 0x5700;
+8420056a:	3b ec 
+8420056c:	10 04       	Null = r0 - Null;
+8420056e:	05 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_22;
+
+84200570 <Lc_spc_opmsg_select_passthrough_request_21>:
+    {
+        /* A switch is needed. Try to kick the operator to perform the switch. */
+        opmgr_kick_operator(op_data);
+84200570:	32 00       	r0 = r4 + Null;
+84200572:	ff fd 18 f0 	call (m) 0x374a;
+84200576:	39 ee 
+
+84200578 <Lc_spc_opmsg_select_passthrough_request_22>:
+    }
+    return TRUE;
+84200578:	42 20       	r0 = Null + 1;
+8420057a:	56 6e       	jump (m) Lc_spc_opmsg_select_passthrough_request_50;
+
+8420057c <Lc_spc_opmsg_select_passthrough_request_23>:
+    switch (mode)
+    {
+        case SPC_MODE_SPC1_TAGSYNC_DUAL:
+        {
+            if ((buffers[0] == NULL) &&
+                (buffers[1] == NULL)    )
+8420057c:	81 f0 00 e8 	rMAC = M[r6 + Null];
+84200580:	23 62       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_34;
+
+84200582 <Lc_spc_opmsg_select_passthrough_request_24>:
+                map_mode = SPC_MODE_CONSUME;
+            }
+            else
+            if (buffers[0] == NULL)
+            {
+                map_mode = SPC_MODE_SPC1_TAGSYNC_1;
+84200582:	91 71       	r7 = Null + 18;
+84200584:	81 f0 01 88 	rMAC = M[r6 + 4];
+84200588:	00 f0 09 c0 	if EQ r7 = Null + Null;
+8420058c:	05 6e       	jump (m) Lc_spc_opmsg_select_passthrough_request_27;
+
+8420058e <Lc_spc_opmsg_select_passthrough_request_25>:
+            break;
+        }
+        case SPC_MODE_SPC1_TAGSYNC_0:
+        case SPC_MODE_SPC2_TAGSYNC_0:
+        {
+            if (buffers[0] == NULL)
+8420058e:	81 f0 00 e8 	rMAC = M[r6 + Null];
+84200592:	02 62       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_27;
+
+84200594 <Lc_spc_opmsg_select_passthrough_request_26>:
+        case SPC_MODE_SPC1_TAGSYNC_DUAL:
+        {
+            if ((buffers[0] == NULL) &&
+                (buffers[1] == NULL)    )
+            {
+                map_mode = SPC_MODE_CONSUME;
+84200594:	01 09       	r7 = Null + Null;
+
+84200596 <Lc_spc_opmsg_select_passthrough_request_27>:
+        /* Verify that the mode matches input buffers used in that mode.
+         * Return mode or amended mode based on available input buffers. */
+        adjust_mode = adjust_mode_to_buffers(adjust_mode, opx_data->ip_buffers, 1);
+        /* Verify that the mode matches output buffers used in that mode.
+         * Return mode or amended mode based on available output buffers. */
+        adjust_mode = adjust_mode_to_buffers(adjust_mode, opx_data->op_buffers, 0);
+84200596:	82 f0 20 20 	r0 = r6 + 32;
+    return FALSE;
+}
+
+static inline SPC_MODE adjust_mode_to_buffers(SPC_MODE mode, tCbuffer* buffers[], bool inout)
+{
+    SPC_MODE map_mode = mode;
+8420059a:	49 08       	rMAC = r7 + Null;
+
+    switch (mode)
+8420059c:	90 f0 10 24 	Null = r7 - 16;
+842005a0:	d6 61       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_15;
+
+842005a2 <Lc_spc_opmsg_select_passthrough_request_28>:
+842005a2:	90 f0 11 24 	Null = r7 - 17;
+842005a6:	3d 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_49;
+
+842005a8 <Lc_spc_opmsg_select_passthrough_request_29>:
+842005a8:	90 f0 12 24 	Null = r7 - 18;
+842005ac:	0a 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_33;
+
+842005ae <Lc_spc_opmsg_select_passthrough_request_30>:
+842005ae:	90 f0 20 24 	Null = r7 - 32;
+842005b2:	2d 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_44;
+
+842005b4 <Lc_spc_opmsg_select_passthrough_request_31>:
+842005b4:	90 f0 21 24 	Null = r7 - 33;
+842005b8:	34 60       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_49;
+
+842005ba <Lc_spc_opmsg_select_passthrough_request_32>:
+842005ba:	90 f0 22 24 	Null = r7 - 34;
+842005be:	31 62       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_49;
+
+842005c0 <Lc_spc_opmsg_select_passthrough_request_33>:
+            break;
+        }
+        case SPC_MODE_SPC1_TAGSYNC_1:
+        case SPC_MODE_SPC2_TAGSYNC_1:
+        {
+            if (buffers[1] == NULL)
+842005c0:	52 88       	r0 = M[r0 + 4];
+842005c2:	a7 61       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_5;
+
+842005c4 <Lc__ite_20>:
+842005c4:	c9 6f       	jump (m) Lc_spc_opmsg_select_passthrough_request_18;
+
+842005c6 <Lc_spc_opmsg_select_passthrough_request_34>:
+            if (buffers[0] == NULL)
+            {
+                map_mode = SPC_MODE_SPC1_TAGSYNC_1;
+            }
+            else
+            if (buffers[1] == NULL)
+842005c6:	81 f0 01 88 	rMAC = M[r6 + 4];
+842005ca:	e6 63       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_27;
+
+842005cc <Lc_spc_opmsg_select_passthrough_request_35>:
+            {
+                map_mode = SPC_MODE_SPC1_TAGSYNC_0;
+842005cc:	89 71       	r7 = Null + 17;
+842005ce:	e4 6f       	jump (m) Lc_spc_opmsg_select_passthrough_request_27;
+
+842005d0 <Lc_spc_opmsg_select_passthrough_request_36>:
+            break;
+        }
+        case SPC_MODE_SPC2_TAGSYNC_DUAL:
+        {
+            if ((buffers[0] == NULL) &&
+                (buffers[1] == NULL)    )
+842005d0:	81 f0 00 e8 	rMAC = M[r6 + Null];
+842005d4:	08 62       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_38;
+
+842005d6 <Lc_spc_opmsg_select_passthrough_request_37>:
+                map_mode = SPC_MODE_CONSUME;
+            }
+            else
+            if (buffers[0] == NULL)
+            {
+                map_mode = SPC_MODE_SPC2_TAGSYNC_1;
+842005d6:	09 f0 22 40 	r7 = Null + 34;
+842005da:	81 f0 01 88 	rMAC = M[r6 + 4];
+842005de:	00 f0 09 c0 	if EQ r7 = Null + Null;
+842005e2:	da 6f       	jump (m) Lc_spc_opmsg_select_passthrough_request_27;
+
+842005e4 <Lc_spc_opmsg_select_passthrough_request_38>:
+            }
+            else
+            if (buffers[1] == NULL)
+842005e4:	81 f0 01 88 	rMAC = M[r6 + 4];
+842005e8:	d7 63       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_27;
+
+842005ea <Lc_spc_opmsg_select_passthrough_request_39>:
+            {
+                map_mode = SPC_MODE_SPC2_TAGSYNC_0;
+842005ea:	09 f0 21 40 	r7 = Null + 33;
+842005ee:	d4 6f       	jump (m) Lc_spc_opmsg_select_passthrough_request_27;
+
+842005f0 <Lc_spc_opmsg_select_passthrough_request_40>:
+        default:
+        {
+            unsigned port = 0;
+            if (inout)
+            {
+                port = MAP_MODE_TO_PORT(mode);
+842005f0:	52 08       	r0 = r8 + Null;
+842005f2:	8e 4e       	call (m) Lc_MAP_MODE_TO_PORT_1;
+            }
+            if ((port >= SPC_MODE_SIZE) ||
+                (buffers[port] == NULL)    )
+842005f4:	50 26       	Null = r0 - 9;
+842005f6:	f2 ff 9f ef 	if C jump (m) Lc_spc_opmsg_select_passthrough_request_26;
+
+842005fa <Lc_spc_opmsg_select_passthrough_request_41>:
+842005fa:	52 54       	r0 = r0 LSHIFT 2;
+842005fc:	81 f0 02 e8 	rMAC = M[r6 + r0];
+84200600:	ca 61       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_26;
+
+84200602 <Lc__ite_21>:
+84200602:	ca 6f       	jump (m) Lc_spc_opmsg_select_passthrough_request_27;
+
+84200604 <Lc_spc_opmsg_select_passthrough_request_42>:
+            if (buffers[0] == NULL)
+            {
+                map_mode = SPC_MODE_SPC1_TAGSYNC_1;
+            }
+            else
+            if (buffers[1] == NULL)
+84200604:	52 88       	r0 = M[r0 + 4];
+84200606:	a8 63       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_18;
+
+84200608 <Lc_spc_opmsg_select_passthrough_request_43>:
+            {
+                map_mode = SPC_MODE_SPC1_TAGSYNC_0;
+84200608:	41 28       	rMAC = Null + 17;
+8420060a:	a6 6f       	jump (m) Lc_spc_opmsg_select_passthrough_request_18;
+
+8420060c <Lc_spc_opmsg_select_passthrough_request_44>:
+            break;
+        }
+        case SPC_MODE_SPC2_TAGSYNC_DUAL:
+        {
+            if ((buffers[0] == NULL) &&
+                (buffers[1] == NULL)    )
+8420060c:	13 e8       	r1 = M[r0 + Null];
+8420060e:	05 62       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_47;
+
+84200610 <Lc_spc_opmsg_select_passthrough_request_45>:
+84200610:	51 88       	rMAC = M[r0 + 4];
+84200612:	7f 61       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_5;
+
+84200614 <Lc_spc_opmsg_select_passthrough_request_46>:
+                map_mode = SPC_MODE_CONSUME;
+            }
+            else
+            if (buffers[0] == NULL)
+            {
+                map_mode = SPC_MODE_SPC2_TAGSYNC_1;
+84200614:	81 30       	rMAC = Null + 34;
+84200616:	a0 6f       	jump (m) Lc_spc_opmsg_select_passthrough_request_18;
+
+84200618 <Lc_spc_opmsg_select_passthrough_request_47>:
+            }
+            else
+            if (buffers[1] == NULL)
+84200618:	52 88       	r0 = M[r0 + 4];
+8420061a:	9e 63       	if NE jump (m) Lc_spc_opmsg_select_passthrough_request_18;
+
+8420061c <Lc_spc_opmsg_select_passthrough_request_48>:
+            {
+                map_mode = SPC_MODE_SPC2_TAGSYNC_0;
+8420061c:	41 30       	rMAC = Null + 33;
+8420061e:	9c 6f       	jump (m) Lc_spc_opmsg_select_passthrough_request_18;
+
+84200620 <Lc_spc_opmsg_select_passthrough_request_49>:
+            break;
+        }
+        case SPC_MODE_SPC1_TAGSYNC_0:
+        case SPC_MODE_SPC2_TAGSYNC_0:
+        {
+            if (buffers[0] == NULL)
+84200620:	12 e8       	r0 = M[r0 + Null];
+84200622:	77 61       	if EQ jump (m) Lc_spc_opmsg_select_passthrough_request_5;
+
+84200624 <Lc__ite_22>:
+84200624:	99 6f       	jump (m) Lc_spc_opmsg_select_passthrough_request_18;
+
+84200626 <Lc_spc_opmsg_select_passthrough_request_50>:
+    {
+        /* A switch is needed. Try to kick the operator to perform the switch. */
+        opmgr_kick_operator(op_data);
+    }
+    return TRUE;
+}
+84200626:	f5 48       	popm <FP, r4, r5, r6, r7, r8, rLink>;
+84200628:	d8 4c       	rts;
+
+8420062a <Lc_spc_opmsg_set_block_size_1>:
+
+static bool spc_opmsg_set_block_size(OPERATOR_DATA *op_data, void *message_data, unsigned *resp_length, OP_OPMSG_RSP_PAYLOAD **resp_data)
+{
+8420062a:	f1 1c       	pushm <FP(=SP), r4, rLink>;
+8420062c:	1e 00       	r4 = r1 + Null;
+MAP_INSTANCE_DATA(CAP_ID_DOWNLOAD_SWITCHED_PASSTHROUGH_CONSUMER, SPC_OP_DATA)
+#endif /* CAPABILITY_DOWNLOAD_BUILD */
+
+static inline SPC_OP_DATA *get_instance_data(OPERATOR_DATA *op_data)
+{
+    return (SPC_OP_DATA *) base_op_get_instance_data(op_data);
+8420062e:	ef fd ff ff 	call (m) 0x4e6;
+84200632:	39 e5 
+}
+
+static bool spc_opmsg_set_block_size(OPERATOR_DATA *op_data, void *message_data, unsigned *resp_length, OP_OPMSG_RSP_PAYLOAD **resp_data)
+{
+    SPC_OP_DATA *opx_data = get_instance_data(op_data);
+    opx_data->frame_size = OPMSG_FIELD_GET(message_data, OPMSG_SPC_SET_BLOCK_SIZE, BLOCK_SIZE);
+84200634:	f1 88       	rMAC = M[r4 + 12];
+84200636:	89 c6       	rMAC = rMAC AND 0xffff;
+84200638:	51 ae       	M[r0 + 68] = rMAC;
+    return TRUE;
+8420063a:	42 20       	r0 = Null + 1;
+
+8420063c <Lc_spc_opmsg_set_block_size_2>:
+}
+8420063c:	f1 48       	popm <FP, r4, rLink>;
+8420063e:	d8 4c       	rts;
+
+84200640 <Lc_spc_connect_disconnect_common_1>:
+        }
+    }
+}
+
+static bool spc_connect_disconnect_common(OPERATOR_DATA *op_data, unsigned terminal_id, tCbuffer *buffer)
+{
+84200640:	f4 1c       	pushm <FP(=SP), r4, r5, r6, r7, rLink>;
+84200642:	11 09       	r7 = r0 + Null;
+84200644:	1e 00       	r4 = r1 + Null;
+84200646:	27 00       	r5 = r2 + Null;
+MAP_INSTANCE_DATA(CAP_ID_DOWNLOAD_SWITCHED_PASSTHROUGH_CONSUMER, SPC_OP_DATA)
+#endif /* CAPABILITY_DOWNLOAD_BUILD */
+
+static inline SPC_OP_DATA *get_instance_data(OPERATOR_DATA *op_data)
+{
+    return (SPC_OP_DATA *) base_op_get_instance_data(op_data);
+84200648:	ef fd ff ff 	call (m) 0x4e6;
+8420064c:	3f e4 
+8420064e:	10 09       	r6 = r0 + Null;
+static bool spc_connect_disconnect_common(OPERATOR_DATA *op_data, unsigned terminal_id, tCbuffer *buffer)
+{
+    SPC_OP_DATA *opx_data = get_instance_data(op_data);
+    bool is_sink = terminal_id & TERMINAL_SINK_MASK;
+
+    if (is_sink)
+84200650:	40 f0 61 f0 	rMAC = r4 AND 0x800000;
+84200654:	00 00 
+84200656:	20 60       	if EQ jump (m) Lc_spc_connect_disconnect_common_10;
+
+84200658 <Lc_spc_connect_disconnect_common_2>:
+    {
+        terminal_id = terminal_id & ~TERMINAL_SINK_MASK;
+84200658:	bf ff 66 ff 	r4 = r4 AND 0xff7fffff;
+8420065c:	ff 1f 
+        if (terminal_id >= SPC_NUMBER_INPUTS)
+8420065e:	30 26       	Null = r4 - 8;
+84200660:	03 64       	if NC jump (m) Lc_spc_connect_disconnect_common_4;
+
+84200662 <Lc_spc_connect_disconnect_common_3>:
+        {
+            /* Invalid input terminal id */
+            return FALSE;
+84200662:	02 00       	r0 = Null + Null;
+84200664:	53 6e       	jump (m) Lc_spc_connect_disconnect_common_28;
+
+84200666 <Lc_spc_connect_disconnect_common_4>:
+        }
+        if (buffer == NULL)
+84200666:	38 04       	Null = r5 - Null;
+84200668:	13 62       	if NE jump (m) Lc_spc_connect_disconnect_common_9;
+
+8420066a <Lc_spc_connect_disconnect_common_5>:
+        {
+            /* An input terminal is being disconnected.
+             */
+
+            if (opx_data->next_mode > SPC_MODE_CONSUME &&
+                (is_valid_input_number(opx_data->next_mode, terminal_id) == TRUE))
+8420066a:	82 f0 29 80 	r0 = MBS[r6 + 41];
+8420066e:	10 24       	Null = r0 - 0;
+84200670:	0f 6c       	if LE jump (m) Lc_spc_connect_disconnect_common_9;
+
+84200672 <Lc_spc_connect_disconnect_common_6>:
+84200672:	33 00       	r1 = r4 + Null;
+84200674:	61 4e       	call (m) Lc_is_valid_input_number_1;
+84200676:	50 24       	Null = r0 - 1;
+84200678:	0b 62       	if NE jump (m) Lc_spc_connect_disconnect_common_9;
+
+8420067a <Lc_spc_connect_disconnect_common_7>:
+            {
+                /* Input is passthrough (or will soon be)
+                 * This will be handled in process_data
+                 */
+                L2_DBG_MSG("SPC Disconnection of Passthrough input.");
+8420067a:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+8420067e:	88 24       	Null = rMAC - 2;
+84200680:	07 68       	if LT jump (m) Lc_spc_connect_disconnect_common_9;
+
+84200682 <Lc_spc_connect_disconnect_common_8>:
+84200682:	55 f1 02 f0 	r0 = Null + 357564929;
+84200686:	01 42 
+84200688:	ff fd 03 f0 	call (m) 0xccc;
+8420068c:	25 e2 
+
+8420068e <Lc_spc_connect_disconnect_common_9>:
+        {
+            /* An input terminal is being connected. */
+        }
+
+        /* Apply the connection/disconnection */
+        opx_data->ip_buffers[terminal_id] = buffer;
+8420068e:	72 54       	r0 = r4 LSHIFT 2;
+84200690:	87 f0 02 ee 	M[r6 + r0] = r5;
+84200694:	1e 6e       	jump (m) Lc_spc_connect_disconnect_common_17;
+
+84200696 <Lc_spc_connect_disconnect_common_10>:
+    }
+    else
+    {
+        terminal_id = terminal_id & ~TERMINAL_SINK_MASK;
+84200696:	bf ff 66 ff 	r4 = r4 AND 0xff7fffff;
+8420069a:	ff 1f 
+        if (terminal_id >= SPC_NUMBER_OUTPUTS)
+8420069c:	b0 24       	Null = r4 - 2;
+8420069e:	f2 ff c5 ef 	if C jump (m) Lc_spc_connect_disconnect_common_3;
+
+842006a2 <Lc_spc_connect_disconnect_common_11>:
+        {
+            /* Invalid input terminal id */
+            return FALSE;
+        }
+        if (buffer == NULL)
+842006a2:	38 04       	Null = r5 - Null;
+842006a4:	18 62       	if NE jump (m) Lc_spc_connect_disconnect_common_18;
+
+842006a6 <Lc_spc_connect_disconnect_common_12>:
+        {
+            /* The output terminal is being disconnected.
+             */
+            if (opx_data->next_mode != SPC_MODE_CONSUME)
+842006a6:	81 f0 29 80 	rMAC = MBS[r6 + 41];
+842006aa:	0f 60       	if EQ jump (m) Lc_spc_connect_disconnect_common_16;
+
+842006ac <Lc_spc_connect_disconnect_common_13>:
+            {
+                /* Operator is in passthrough mode (or will soon be).
+                 * Cannot passthrough without an output.
+                 * This will be handled in process_data
+                 */
+                L2_DBG_MSG("SPC Disconnection of output during Passthrough.");
+842006ac:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+842006b0:	88 24       	Null = rMAC - 2;
+842006b2:	07 68       	if LT jump (m) Lc_spc_connect_disconnect_common_15;
+
+842006b4 <Lc_spc_connect_disconnect_common_14>:
+842006b4:	55 f1 02 f0 	r0 = Null + 357564969;
+842006b8:	29 42 
+842006ba:	ff fd 03 f0 	call (m) 0xccc;
+842006be:	33 e0 
+
+842006c0 <Lc_spc_connect_disconnect_common_15>:
+                /* If the operator doesn't get kicked (input buffers can be
+                 * full) we need to wait for the application to set a mode switch.
+                 * That will also kick the operator and consume the inputs.
+                 * Add a kick here to remove dependency from apps.
+                 */
+                opmgr_kick_operator(op_data);
+842006c0:	4a 08       	r0 = r7 + Null;
+842006c2:	ff fd 18 f0 	call (m) 0x374a;
+842006c6:	29 e4 
+
+842006c8 <Lc_spc_connect_disconnect_common_16>:
+                cbuffer_set_usable_octets(buffer, usable_octets);
+            }
+        }
+
+        /* Apply the connection/disconnection */
+        opx_data->op_buffers[terminal_id] = buffer;
+842006c8:	72 54       	r0 = r4 LSHIFT 2;
+842006ca:	10 0d       	r6 = r0 + r6;
+842006cc:	87 f0 08 8e 	M[r6 + 32] = r5;
+
+842006d0 <Lc_spc_connect_disconnect_common_17>:
+    }
+
+    return TRUE;
+842006d0:	42 20       	r0 = Null + 1;
+842006d2:	1c 6e       	jump (m) Lc_spc_connect_disconnect_common_28;
+
+842006d4 <Lc_spc_connect_disconnect_common_18>:
+ *
+ * \return TRUE if the buffer supports metadata. FALSE if it doesn't.
+ */
+static inline bool buff_has_metadata(tCbuffer *buff)
+{
+    if (buff->metadata != NULL)
+842006d4:	b9 89       	rMAC = M[r5 + 24];
+842006d6:	f9 61       	if EQ jump (m) Lc_spc_connect_disconnect_common_16;
+
+842006d8 <Lc_spc_connect_disconnect_common_19>:
+        else
+        {
+            /* The output terminal is being connected. */
+            if (buff_has_metadata(buffer))
+            {
+                unsigned usable_octets = get_octets_per_word(opx_data->data_format);
+842006d8:	81 f0 0b 88 	rMAC = M[r6 + 44];
+} AUDIO_DATA_FORMAT;
+
+/* Returns the used octets in a word for a given format. */
+static inline unsigned get_octets_per_word(AUDIO_DATA_FORMAT format)
+{
+    if (format == AUDIO_DATA_FORMAT_24_BIT)
+842006dc:	c8 26       	Null = rMAC - 11;
+842006de:	03 62       	if NE jump (m) Lc_spc_connect_disconnect_common_21;
+
+842006e0 <Lc_spc_connect_disconnect_common_20>:
+    {
+        return 3;
+842006e0:	c3 20       	r1 = Null + 3;
+842006e2:	0f 6e       	jump (m) Lc_spc_connect_disconnect_common_27;
+
+842006e4 <Lc_spc_connect_disconnect_common_21>:
+    }
+    else if ((format == AUDIO_DATA_FORMAT_FIXP) ||
+             (format == AUDIO_DATA_FORMAT_FIXP_WITH_METADATA) ||
+             (format == SPDIF_INPUT_DATA_FORMAT) ||
+             (format == USB_AUDIO_DATA_FORMAT))
+842006e4:	48 24       	Null = rMAC - 1;
+842006e6:	07 60       	if EQ jump (m) Lc_spc_connect_disconnect_common_25;
+
+842006e8 <Lc_spc_connect_disconnect_common_22>:
+842006e8:	c8 24       	Null = rMAC - 3;
+842006ea:	05 60       	if EQ jump (m) Lc_spc_connect_disconnect_common_25;
+
+842006ec <Lc_spc_connect_disconnect_common_23>:
+842006ec:	88 26       	Null = rMAC - 10;
+842006ee:	03 60       	if EQ jump (m) Lc_spc_connect_disconnect_common_25;
+
+842006f0 <Lc_spc_connect_disconnect_common_24>:
+842006f0:	08 27       	Null = rMAC - 12;
+842006f2:	03 62       	if NE jump (m) Lc_spc_connect_disconnect_common_26;
+
+842006f4 <Lc_spc_connect_disconnect_common_25>:
+    {
+       return (DAWTH / 8);
+842006f4:	03 21       	r1 = Null + 4;
+842006f6:	05 6e       	jump (m) Lc_spc_connect_disconnect_common_27;
+
+842006f8 <Lc_spc_connect_disconnect_common_26>:
+    else /* AUDIO_DATA_FORMAT_16_BIT, AUDIO_DATA_FORMAT_16_BIT_WITH_METADATA,
+            AUDIO_DATA_FORMAT_16_BIT_BYTE_SWAP, AUDIO_DATA_FORMAT_16_BIT_BYTE_SWAP_WITH_METADATA,
+            AUDIO_DATA_FORMAT_13_BIT, AUDIO_DATA_FORMAT_8_BIT, AUDIO_DATA_FORMAT_MU_LAW,
+            AUDIO_DATA_FORMAT_A_LAW*/
+    {
+        return 2;
+842006f8:	03 21       	r1 = Null + 4;
+842006fa:	48 27       	Null = rMAC - 13;
+842006fc:	a1 f0 43 ce 	if NE r1 = Null + 2;
+
+84200700 <Lc_spc_connect_disconnect_common_27>:
+                cbuffer_set_usable_octets(buffer, usable_octets);
+84200700:	3a 00       	r0 = r5 + Null;
+84200702:	ff fd 9e f0 	call (m) 0x1432e;
+84200706:	2d e1 
+84200708:	e0 6f       	jump (m) Lc_spc_connect_disconnect_common_16;
+
+8420070a <Lc_spc_connect_disconnect_common_28>:
+        /* Apply the connection/disconnection */
+        opx_data->op_buffers[terminal_id] = buffer;
+    }
+
+    return TRUE;
+}
+8420070a:	f4 48       	popm <FP, r4, r5, r6, r7, rLink>;
+8420070c:	d8 4c       	rts;
+
+8420070e <Lc_MAP_MODE_TO_PORT_1>:
+    return (SPC_OP_DATA *) base_op_get_instance_data(op_data);
+}
+
+static bool MAP_MODE_TO_PORT(SPC_MODE mode)
+{
+    if (mode < SPC_MODE_SIZE)
+8420070e:	50 26       	Null = r0 - 9;
+84200710:	03 66       	if GE jump (m) Lc_MAP_MODE_TO_PORT_3;
+
+84200712 <Lc_MAP_MODE_TO_PORT_2>:
+    {
+        return (mode - SPC_MODE_PASSTHROUGH_0);
+84200712:	52 24       	r0 = r0 - 1;
+84200714:	10 6e       	jump (m) Lc_MAP_MODE_TO_PORT_9;
+
+84200716 <Lc_MAP_MODE_TO_PORT_3>:
+    }
+    switch (mode)
+84200716:	50 2c       	Null = r0 - 17;
+84200718:	05 60       	if EQ jump (m) Lc_MAP_MODE_TO_PORT_6;
+
+8420071a <Lc_MAP_MODE_TO_PORT_4>:
+8420071a:	90 2c       	Null = r0 - 18;
+8420071c:	05 60       	if EQ jump (m) Lc_MAP_MODE_TO_PORT_7;
+
+8420071e <Lc_MAP_MODE_TO_PORT_5>:
+8420071e:	50 34       	Null = r0 - 33;
+84200720:	05 62       	if NE jump (m) Lc_MAP_MODE_TO_PORT_8;
+
+84200722 <Lc_MAP_MODE_TO_PORT_6>:
+    {
+        case SPC_MODE_SPC1_TAGSYNC_0 :
+        case SPC_MODE_SPC2_TAGSYNC_0 :
+        {
+            return 0;
+84200722:	02 00       	r0 = Null + Null;
+84200724:	08 6e       	jump (m) Lc_MAP_MODE_TO_PORT_9;
+
+84200726 <Lc_MAP_MODE_TO_PORT_7>:
+        }
+        case SPC_MODE_SPC1_TAGSYNC_1 :
+        case SPC_MODE_SPC2_TAGSYNC_1 :
+        {
+            return 1;
+84200726:	42 20       	r0 = Null + 1;
+84200728:	06 6e       	jump (m) Lc_MAP_MODE_TO_PORT_9;
+
+8420072a <Lc_MAP_MODE_TO_PORT_8>:
+        }
+        default:
+        {
+            return SPC_MODE_SIZE;
+8420072a:	11 00       	rMAC = r0 + Null;
+8420072c:	42 22       	r0 = Null + 9;
+8420072e:	88 34       	Null = rMAC - 34;
+84200730:	20 f0 42 ce 	if EQ r0 = Null + 1;
+
+84200734 <Lc_MAP_MODE_TO_PORT_9>:
+84200734:	d8 4c       	rts;
+
+84200736 <Lc_is_valid_input_number_1>:
+        }
+    }
+}
+
+static bool is_valid_input_number(SPC_MODE mode, unsigned terminal_id)
+{
+84200736:	f1 1c       	pushm <FP(=SP), r4, rLink>;
+84200738:	1e 00       	r4 = r1 + Null;
+    PL_ASSERT(mode > SPC_MODE_CONSUME);
+8420073a:	10 24       	Null = r0 - 0;
+8420073c:	09 6a       	if GT jump (m) Lc_is_valid_input_number_3;
+
+8420073e <Lc_is_valid_input_number_2>:
+8420073e:	03 f0 e4 40 	r1 = Null + 228;
+84200742:	02 f0 13 60 	r0 = Null + 4115;
+84200746:	ff fd b4 f0 	call (m) 0x16ff0;
+8420074a:	2b e5 
+8420074c:	0f 6e       	jump (m) Lc_is_valid_input_number_10;
+
+8420074e <Lc_is_valid_input_number_3>:
+
+    if ((mode == SPC_MODE_SPC1_TAGSYNC_DUAL) ||
+        (mode == SPC_MODE_SPC2_TAGSYNC_DUAL))
+8420074e:	10 2c       	Null = r0 - 16;
+84200750:	03 60       	if EQ jump (m) Lc_is_valid_input_number_5;
+
+84200752 <Lc_is_valid_input_number_4>:
+84200752:	10 34       	Null = r0 - 32;
+84200754:	07 62       	if NE jump (m) Lc_is_valid_input_number_8;
+
+84200756 <Lc_is_valid_input_number_5>:
+    {
+        if ((terminal_id == 0) ||
+            (terminal_id == 1)    )
+84200756:	30 04       	Null = r4 - Null;
+84200758:	03 60       	if EQ jump (m) Lc_is_valid_input_number_7;
+
+8420075a <Lc_is_valid_input_number_6>:
+8420075a:	70 24       	Null = r4 - 1;
+8420075c:	06 62       	if NE jump (m) Lc_is_valid_input_number_9;
+
+8420075e <Lc_is_valid_input_number_7>:
+        {
+            return TRUE;
+8420075e:	42 20       	r0 = Null + 1;
+84200760:	05 6e       	jump (m) Lc_is_valid_input_number_10;
+
+84200762 <Lc_is_valid_input_number_8>:
+        }
+    }
+    else
+    {
+        unsigned port = MAP_MODE_TO_PORT(mode);    
+84200762:	d6 4f       	call (m) Lc_MAP_MODE_TO_PORT_1;
+        if (terminal_id == port)
+84200764:	b0 04       	Null = r4 - r0;
+84200766:	fc 61       	if EQ jump (m) Lc_is_valid_input_number_7;
+
+84200768 <Lc_is_valid_input_number_9>:
+        {
+            return TRUE;
+        }
+    }
+    return FALSE;
+84200768:	02 00       	r0 = Null + Null;
+
+8420076a <Lc_is_valid_input_number_10>:
+}
+8420076a:	f1 48       	popm <FP, r4, rLink>;
+8420076c:	d8 4c       	rts;
+
+8420076e <Lc_mtag_len_1>:
+            return FALSE;
+    }
+}
+
+static unsigned mtag_len(SPC_OP_DATA *opx_data, unsigned in, unsigned out, bool *passthrough)
+{
+8420076e:	f6 1e       	pushm <FP(=SP), r4, r5, r6, r7, r8, r9, rLink>, SP = SP + 0x20;
+84200770:	16 00       	r4 = r0 + Null;
+84200772:	43 de       	M[FP + 32] = r1;
+84200774:	4d de       	M[FP + 36] = r3;
+    unsigned input_data;
+
+    /* Select which set of cbuffer functions to use. The normal cbuffer functions
+       are used to process PCM data. The _ex cbuffer functions are used to process
+       other data types (which may contain frames with an odd number of octets). */
+    switch (opx_data->data_format)
+84200776:	f1 98       	rMAC = M[r4 + 44];
+84200778:	48 24       	Null = rMAC - 1;
+8420077a:	03 60       	if EQ jump (m) Lc_mtag_len_3;
+
+8420077c <Lc_mtag_len_2>:
+8420077c:	c8 24       	Null = rMAC - 3;
+8420077e:	06 62       	if NE jump (m) Lc_mtag_len_4;
+
+84200780 <Lc_mtag_len_3>:
+    {
+        case AUDIO_DATA_FORMAT_FIXP:
+        case AUDIO_DATA_FORMAT_FIXP_WITH_METADATA: 
+            data_size = OCTETS_PER_SAMPLE;
+84200780:	21 71       	r7 = Null + 4;
+            cbuffer = &cbuffer_functions;
+84200782:	07 f0 0b f0 	r9 = Null + 7340168;
+84200786:	88 40 
+            break; 
+84200788:	05 6e       	jump (m) Lc_mtag_len_5;
+
+8420078a <Lc_mtag_len_4>:
+        default:
+            data_size = 1;
+8420078a:	09 71       	r7 = Null + 1;
+            cbuffer = &cbuffer_ex_functions;
+8420078c:	07 f0 0b f0 	r9 = Null + 7340188;
+84200790:	9c 40 
+
+84200792 <Lc_mtag_len_5>:
+            break;
+    }
+
+    ip_buffer = opx_data->ip_buffers[in];
+84200792:	42 d8       	r0 = M[FP + 32];
+84200794:	52 54       	r0 = r0 LSHIFT 2;
+84200796:	b1 e8       	rMAC = M[r4 + r0];
+84200798:	51 de       	M[FP + 40] = rMAC;
+    op_buffer = opx_data->op_buffers[out];
+8420079a:	62 54       	r0 = r2 LSHIFT 2;
+8420079c:	31 00       	rMAC = r4 + Null;
+8420079e:	51 00       	rMAC = r0 + rMAC;
+842007a0:	09 98       	rMAC = M[rMAC + 32];
+842007a2:	59 de       	M[FP + 44] = rMAC;
+
+    buffer_size = cbuffer_get_size_in_octets(ip_buffer);
+842007a4:	52 d8       	r0 = M[FP + 40];
+842007a6:	ff fd 9e f0 	call (m) 0x1445a;
+842007aa:	35 e5 
+842007ac:	12 09       	r8 = r0 + Null;
+    input_data = cbuffer->data(ip_buffer);
+842007ae:	b1 f0 01 88 	rMAC = M[r9 + 4];
+842007b2:	52 d8       	r0 = M[FP + 40];
+842007b4:	d1 4c       	call rMAC;
+842007b6:	62 de       	M[FP + 48] = r0;
+842007b8:	10 09       	r6 = r0 + Null;
+    complete_data = 0;
+842007ba:	07 00       	r5 = Null + Null;
+    data_to_handle = input_data;
+    if (opx_data->current_mode > SPC_MODE_CONSUME &&
+            (is_valid_input_number(opx_data->current_mode, in) == TRUE) &&
+            (op_buffer != NULL))
+842007bc:	62 f0 28 80 	r0 = MBS[r4 + 40];
+842007c0:	10 24       	Null = r0 - 0;
+842007c2:	2a 6c       	if LE jump (m) Lc_mtag_len_14;
+
+842007c4 <Lc_mtag_len_6>:
+842007c4:	43 d8       	r1 = M[FP + 32];
+842007c6:	b8 4f       	call (m) Lc_is_valid_input_number_1;
+842007c8:	50 24       	Null = r0 - 1;
+842007ca:	26 62       	if NE jump (m) Lc_mtag_len_14;
+
+842007cc <Lc_mtag_len_7>:
+842007cc:	59 d8       	rMAC = M[FP + 44];
+842007ce:	24 60       	if EQ jump (m) Lc_mtag_len_14;
+
+842007d0 <Lc_mtag_len_8>:
+    {
+        unsigned output_space = cbuffer->space(op_buffer);
+842007d0:	b1 f0 00 e8 	rMAC = M[r9 + Null];
+842007d4:	5a d8       	r0 = M[FP + 44];
+842007d6:	d1 4c       	call rMAC;
+842007d8:	16 00       	r4 = r0 + Null;
+        unsigned out_buf_size = cbuffer_get_size_in_octets(op_buffer);
+842007da:	5a d8       	r0 = M[FP + 44];
+842007dc:	ff fd 9e f0 	call (m) 0x1445a;
+842007e0:	3f e3 
+        if (buffer_size > out_buf_size)
+842007e2:	2f fa 00 c2 	Null = r8 - r0;
+842007e6:	09 f0 87 e0 	if LS jump (m) Lc_mtag_len_10;
+
+842007ea <Lc_mtag_len_9>:
+        {
+            buffer_size = out_buf_size;
+842007ea:	12 09       	r8 = r0 + Null;
+
+842007ec <Lc_mtag_len_10>:
+        }
+
+        *passthrough = TRUE;
+842007ec:	41 20       	rMAC = Null + 1;
+842007ee:	4a d8       	r0 = M[FP + 36];
+842007f0:	11 ee       	M[r0 + Null] = rMAC;
+        if (output_space < input_data)
+842007f2:	61 d8       	rMAC = M[FP + 48];
+842007f4:	70 04       	Null = r4 - rMAC;
+842007f6:	02 f0 a1 e0 	if C jump (m) Lc_mtag_len_14;
+
+842007fa <Lc_mtag_len_11>:
+        {
+            L3_DBG_MSG3("SPC: ### [input%d] input data %d didn't fit in space %d",
+                                        in, input_data, output_space);
+842007fa:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+842007fe:	c8 24       	Null = rMAC - 3;
+84200800:	0a 68       	if LT jump (m) Lc_mtag_len_13;
+
+84200802 <Lc_mtag_len_12>:
+84200802:	55 f1 02 f0 	r0 = Null + 357564416;
+84200806:	00 40 
+84200808:	35 00       	r3 = r4 + Null;
+8420080a:	64 d8       	r2 = M[FP + 48];
+8420080c:	43 d8       	r1 = M[FP + 32];
+8420080e:	ff fd 02 f0 	call (m) 0xd08;
+84200812:	3b e7 
+
+84200814 <Lc_mtag_len_13>:
+            data_to_handle = output_space;
+84200814:	30 09       	r6 = r4 + Null;
+
+84200816 <Lc_mtag_len_14>:
+84200816:	51 d8       	rMAC = M[FP + 40];
+84200818:	89 89       	rMAC = M[rMAC + 24];
+8420081a:	34 60       	if EQ jump (m) Lc_mtag_len_24;
+
+8420081c <Lc_mtag_len_15>:
+        }
+    }
+
+    if (buff_has_metadata(ip_buffer))
+    {
+         metadata_tag * mtag = buff_metadata_peek(ip_buffer);
+8420081c:	52 d8       	r0 = M[FP + 40];
+8420081e:	ff fd a0 f0 	call (m) 0x14920;
+84200822:	23 e8 
+84200824:	16 00       	r4 = r0 + Null;
+84200826:	0d 6e       	jump (m) Lc_mtag_len_18;
+
+84200828 <Lc_mtag_len_16>:
+                complete_data = buffer_size;
+                break;
+            }
+            else
+            {
+                unsigned tmp = complete_data + mtag->length/data_size;
+84200828:	1a 00       	r0 = r1 + Null;
+8420082a:	4b 08       	r1 = r7 + Null;
+8420082c:	ff fd cd f0 	call (m) 0x1a290;
+84200830:	25 e3 
+84200832:	d1 01       	rMAC = r0 + r5;
+                if (tmp > data_to_handle)
+84200834:	8f f1 00 c2 	Null = rMAC - r6;
+84200838:	08 f0 c7 e0 	if HI jump (m) Lc_mtag_len_23;
+
+8420083c <Lc_mtag_len_17>:
+                    * the data yet. We will not consider any of its data.
+                    */
+                    break;
+                }
+
+                mtag = mtag->next;
+8420083c:	36 e8       	r4 = M[r4 + Null];
+                complete_data = tmp;
+8420083e:	0f 00       	r5 = rMAC + Null;
+
+84200840 <Lc_mtag_len_18>:
+         * in the input buffer that corresponds to the complete tags.
+         * Only this data will be processed, together with the
+         * associated metadata. This way we will always output
+         * data aligned to metadata and can switch mode at any time.
+         */
+        while (mtag != NULL)
+84200840:	30 04       	Null = r4 - Null;
+84200842:	1e 60       	if EQ jump (m) Lc_mtag_len_23;
+
+84200844 <Lc_mtag_len_19>:
+        {
+            if (mtag->length > buffer_size)
+84200844:	f3 88       	r1 = M[r4 + 12];
+84200846:	af f3 00 c2 	Null = r1 - r8;
+8420084a:	f9 ff df ef 	if LS jump (m) Lc_mtag_len_16;
+
+8420084e <Lc_mtag_len_20>:
+            {
+                /* This tag is bigger than either the input or output buffer.
+                 * This is not going to work: warn the user to increase
+                 * buffer sizes.
+                 */
+                fault_diatribe(FAULT_AUDIO_SPC_TAG_BIGGER_THAN_BUFFER, mtag->length);
+8420084e:	02 f0 64 40 	r0 = Null + 100;
+84200852:	ff fd b2 f0 	call (m) 0x16ca6;
+84200856:	35 e2 
+
+                L2_DBG_MSG4("SPC: [input%d] Tag is too big: %d. "
+                            "buffer sizes: in %d, out %d",
+                            in, mtag->length, ip_buffer->size, op_buffer->size);
+84200858:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+8420085c:	88 24       	Null = rMAC - 2;
+8420085e:	0f 68       	if LT jump (m) Lc_mtag_len_22;
+
+84200860 <Lc_mtag_len_21>:
+84200860:	59 d8       	rMAC = M[FP + 44];
+84200862:	09 e8       	rMAC = M[rMAC + Null];
+84200864:	09 1c       	pushm <rMAC>;
+84200866:	51 d8       	rMAC = M[FP + 40];
+84200868:	f4 88       	r2 = M[r4 + 12];
+8420086a:	55 f1 02 f0 	r0 = Null + 357564472;
+8420086e:	38 40 
+84200870:	0d e8       	r3 = M[rMAC + Null];
+84200872:	43 d8       	r1 = M[FP + 32];
+84200874:	ff fd 02 f0 	call (m) 0xd20;
+84200878:	2d e5 
+8420087a:	7f 4c       	SP = SP + -4;
+
+8420087c <Lc_mtag_len_22>:
+
+                /* For the time being, just go on, we might be lucky and
+                 * keep working in the current mode.
+                 */
+                complete_data = buffer_size;
+8420087c:	57 08       	r5 = r8 + Null;
+
+8420087e <Lc_mtag_len_23>:
+    {
+        /* No metadata. Process all available data. */
+        complete_data = input_data;
+    }
+
+    return complete_data;
+8420087e:	3a 00       	r0 = r5 + Null;
+84200880:	03 6e       	jump (m) Lc_mtag_len_25;
+
+84200882 <Lc_mtag_len_24>:
+        }
+    }
+    else
+    {
+        /* No metadata. Process all available data. */
+        complete_data = input_data;
+84200882:	67 d8       	r5 = M[FP + 48];
+84200884:	fd 6f       	jump (m) Lc_mtag_len_23;
+
+84200886 <Lc_mtag_len_25>:
+    }
+
+    return complete_data;
+}
+84200886:	f6 4a       	SP = SP - 0x20, popm <FP, r4, r5, r6, r7, r8, r9, rLink>;
+84200888:	d8 4c       	rts;
+
+8420088a <Lc_outputdata_len_1>:
+
+static unsigned outputdata_len(SPC_OP_DATA *opx_data, unsigned out)
+{
+8420088a:	f1 1c       	pushm <FP(=SP), r4, rLink>;
+    const struct _cbuffer_functions *cbuffer;
+    tCbuffer *op_buffer;
+    unsigned data_in_buffer = 0;
+8420088c:	04 00       	r2 = Null + Null;
+
+    /* Select which set of cbuffer functions to use. The normal cbuffer functions
+       are used to process PCM data. The _ex cbuffer functions are used to process
+       other data types (which may contain frames with an odd number of octets). */
+    switch (opx_data->data_format)
+8420088e:	d1 98       	rMAC = M[r0 + 44];
+84200890:	48 24       	Null = rMAC - 1;
+84200892:	05 62       	if NE jump (m) Lc_outputdata_len_3;
+
+84200894 <Lc_outputdata_len_2>:
+    {
+        case AUDIO_DATA_FORMAT_FIXP:
+        case AUDIO_DATA_FORMAT_FIXP_WITH_METADATA: 
+            cbuffer = &cbuffer_functions;
+84200894:	07 f0 05 f0 	r3 = Null + 7340168;
+84200898:	88 40 
+            break; 
+8420089a:	0a 6e       	jump (m) Lc_outputdata_len_4;
+
+8420089c <Lc_outputdata_len_3>:
+        default:
+            cbuffer = &cbuffer_ex_functions;
+8420089c:	07 f0 06 f0 	r4 = Null + 7340188;
+842008a0:	9c 40 
+842008a2:	07 f0 05 f0 	r3 = Null + 7340168;
+842008a6:	88 40 
+842008a8:	c8 24       	Null = rMAC - 3;
+842008aa:	01 f6 05 c0 	if NE r3 = r4 + Null;
+
+842008ae <Lc_outputdata_len_4>:
+            break;
+    }
+
+    op_buffer = opx_data->op_buffers[out];
+842008ae:	5b 54       	r1 = r1 LSHIFT 2;
+842008b0:	d1 00       	rMAC = r0 + r1;
+842008b2:	09 98       	rMAC = M[rMAC + 32];
+    if (opx_data->current_mode > SPC_MODE_CONSUME && (op_buffer != NULL))
+842008b4:	22 f0 28 80 	r0 = MBS[r0 + 40];
+842008b8:	10 24       	Null = r0 - 0;
+842008ba:	07 6c       	if LE jump (m) Lc_outputdata_len_7;
+
+842008bc <Lc_outputdata_len_5>:
+842008bc:	08 04       	Null = rMAC - Null;
+842008be:	05 60       	if EQ jump (m) Lc_outputdata_len_7;
+
+842008c0 <Lc_outputdata_len_6>:
+    {
+        data_in_buffer = cbuffer->data(op_buffer);
+842008c0:	6b 88       	r1 = M[r3 + 4];
+842008c2:	0a 00       	r0 = rMAC + Null;
+842008c4:	d3 4c       	call r1;
+842008c6:	14 00       	r2 = r0 + Null;
+
+842008c8 <Lc_outputdata_len_7>:
+    }
+    return data_in_buffer;
+842008c8:	22 00       	r0 = r2 + Null;
+
+842008ca <Lc_outputdata_len_8>:
+}
+842008ca:	f1 48       	popm <FP, r4, rLink>;
+842008cc:	d8 4c       	rts;
+
+842008ce <Lc_bufferdata_len_1>:
+
+static unsigned bufferdata_len(SPC_OP_DATA *opx_data, unsigned in, unsigned out, bool *passthrough)
+{
+842008ce:	f6 1d       	pushm <FP(=SP), r4, r5, r6, r7, r8, r9, rLink>, SP = SP + 0x10;
+842008d0:	17 00       	r5 = r0 + Null;
+842008d2:	1b 09       	r9 = r1 + Null;
+842008d4:	45 de       	M[FP + 32] = r3;
+    unsigned input_data;
+
+    /* Select which set of cbuffer functions to use. The normal cbuffer functions
+       are used to process PCM data. The _ex cbuffer functions are used to process
+       other data types (which may contain frames with an odd number of octets). */
+    switch (opx_data->data_format)
+842008d6:	f9 98       	rMAC = M[r5 + 44];
+842008d8:	48 24       	Null = rMAC - 1;
+842008da:	05 62       	if NE jump (m) Lc_bufferdata_len_3;
+
+842008dc <Lc_bufferdata_len_2>:
+    {
+        case AUDIO_DATA_FORMAT_FIXP:
+        case AUDIO_DATA_FORMAT_FIXP_WITH_METADATA: 
+            cbuffer = &cbuffer_functions;
+842008dc:	07 f0 08 f0 	r6 = Null + 7340168;
+842008e0:	88 40 
+            break; 
+842008e2:	0b 6e       	jump (m) Lc_bufferdata_len_4;
+
+842008e4 <Lc_bufferdata_len_3>:
+        default:
+            cbuffer = &cbuffer_ex_functions;
+842008e4:	07 f0 02 f0 	r0 = Null + 7340188;
+842008e8:	9c 40 
+842008ea:	07 f0 03 f0 	r1 = Null + 7340168;
+842008ee:	88 40 
+842008f0:	18 09       	r6 = r1 + Null;
+842008f2:	c8 24       	Null = rMAC - 3;
+842008f4:	01 f2 08 c0 	if NE r6 = r0 + Null;
+
+842008f8 <Lc_bufferdata_len_4>:
+            break;
+    }
+
+    ip_buffer = opx_data->ip_buffers[in];
+842008f8:	01 fb d2 c8 	r0 = r9 LSHIFT 2;
+842008fc:	ba e8       	r0 = M[r5 + r0];
+    op_buffer = opx_data->op_buffers[out];
+842008fe:	63 54       	r1 = r2 LSHIFT 2;
+84200900:	39 00       	rMAC = r5 + Null;
+84200902:	59 00       	rMAC = r1 + rMAC;
+84200904:	0e 98       	r4 = M[rMAC + 32];
+
+    input_data = cbuffer->data(ip_buffer);
+84200906:	81 f0 01 88 	rMAC = M[r6 + 4];
+8420090a:	d1 4c       	call rMAC;
+8420090c:	12 09       	r8 = r0 + Null;
+    complete_data = 0;
+    data_to_handle = input_data;
+8420090e:	51 09       	r7 = r8 + Null;
+    if (opx_data->current_mode > SPC_MODE_CONSUME &&
+            (is_valid_input_number(opx_data->current_mode, in) == TRUE) &&
+            (op_buffer != NULL))
+84200910:	72 f0 28 80 	r0 = MBS[r5 + 40];
+84200914:	10 24       	Null = r0 - 0;
+84200916:	29 6c       	if LE jump (m) Lc_bufferdata_len_13;
+
+84200918 <Lc_bufferdata_len_5>:
+84200918:	5b 08       	r1 = r9 + Null;
+8420091a:	0e 4f       	call (m) Lc_is_valid_input_number_1;
+8420091c:	50 24       	Null = r0 - 1;
+8420091e:	1e 62       	if NE jump (m) Lc_bufferdata_len_11;
+
+84200920 <Lc_bufferdata_len_6>:
+84200920:	30 04       	Null = r4 - Null;
+84200922:	23 60       	if EQ jump (m) Lc_bufferdata_len_13;
+
+84200924 <Lc_bufferdata_len_7>:
+    {
+        unsigned output_space = cbuffer->space(op_buffer);
+84200924:	81 f0 00 e8 	rMAC = M[r6 + Null];
+84200928:	32 00       	r0 = r4 + Null;
+8420092a:	d1 4c       	call rMAC;
+8420092c:	16 00       	r4 = r0 + Null;
+
+        *passthrough = TRUE;
+8420092e:	41 20       	rMAC = Null + 1;
+84200930:	42 d8       	r0 = M[FP + 32];
+84200932:	11 ee       	M[r0 + Null] = rMAC;
+        if (output_space < input_data)
+84200934:	af f6 00 c2 	Null = r4 - r8;
+84200938:	02 f0 b1 e0 	if C jump (m) Lc_bufferdata_len_13;
+
+8420093c <Lc_bufferdata_len_8>:
+        {
+            L3_DBG_MSG3("SPC: ### [input%d] input data %d didn't fit in space %d",
+                                        in, input_data, output_space);
+8420093c:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+84200940:	c8 24       	Null = rMAC - 3;
+84200942:	0a 68       	if LT jump (m) Lc_bufferdata_len_10;
+
+84200944 <Lc_bufferdata_len_9>:
+84200944:	55 f1 02 f0 	r0 = Null + 357564416;
+84200948:	00 40 
+8420094a:	35 00       	r3 = r4 + Null;
+8420094c:	54 08       	r2 = r8 + Null;
+8420094e:	5b 08       	r1 = r9 + Null;
+84200950:	ff fd 01 f0 	call (m) 0xd08;
+84200954:	39 ed 
+
+84200956 <Lc_bufferdata_len_10>:
+            data_to_handle = output_space;
+84200956:	31 09       	r7 = r4 + Null;
+84200958:	08 6e       	jump (m) Lc_bufferdata_len_13;
+
+8420095a <Lc_bufferdata_len_11>:
+        }
+    }
+    else if (opx_data->current_mode > SPC_MODE_CONSUME &&
+             (op_buffer != NULL))
+8420095a:	30 04       	Null = r4 - Null;
+8420095c:	06 60       	if EQ jump (m) Lc_bufferdata_len_13;
+
+8420095e <Lc_bufferdata_len_12>:
+    {
+        unsigned output_space = cbuffer->space(op_buffer);
+8420095e:	81 f0 00 e8 	rMAC = M[r6 + Null];
+84200962:	32 00       	r0 = r4 + Null;
+84200964:	d1 4c       	call rMAC;
+
+        data_to_handle = output_space;
+84200966:	11 09       	r7 = r0 + Null;
+
+84200968 <Lc_bufferdata_len_13>:
+    }
+
+    /* No metadata. Process all available data. */
+    complete_data = data_to_handle;
+
+    return complete_data;
+84200968:	4a 08       	r0 = r7 + Null;
+
+8420096a <Lc_bufferdata_len_14>:
+}
+8420096a:	f6 49       	SP = SP - 0x10, popm <FP, r4, r5, r6, r7, r8, r9, rLink>;
+8420096c:	d8 4c       	rts;
+
+8420096e <Lc_process_data_1>:
+
+static unsigned process_data(SPC_OP_DATA *opx_data, unsigned complete_data, unsigned in, unsigned out, bool passthrough, TOUCHED_TERMINALS *touched)
+{
+8420096e:	f6 1e       	pushm <FP(=SP), r4, r5, r6, r7, r8, r9, rLink>, SP = SP + 0x20;
+84200970:	1a 09       	r8 = r1 + Null;
+84200972:	21 09       	r7 = r2 + Null;
+84200974:	f1 d9       	rMAC = M[FP + -8];
+84200976:	41 de       	M[FP + 32] = rMAC;
+    const struct _cbuffer_functions *cbuffer;
+    unsigned data_size;
+    tCbuffer *op_buffer;
+    tCbuffer *ip_buffer;
+    unsigned touched_snk_mask = 1 << in;
+84200978:	49 08       	rMAC = r7 + Null;
+8420097a:	00 f1 93 de 	r1 = 0x1 LSHIFT rMAC;
+8420097e:	4b de       	M[FP + 36] = r1;
+    unsigned touched_src_mask = 1 << out;
+84200980:	29 00       	rMAC = r3 + Null;
+84200982:	00 f1 93 de 	r1 = 0x1 LSHIFT rMAC;
+84200986:	53 de       	M[FP + 40] = r1;
+    unsigned input_data;
+
+    /* Select which set of cbuffer functions to use. The normal cbuffer functions
+       are used to process PCM data. The _ex cbuffer functions are used to process
+       other data types (which may contain frames with an odd number of octets). */
+    switch (opx_data->data_format)
+84200988:	d1 98       	rMAC = M[r0 + 44];
+8420098a:	48 24       	Null = rMAC - 1;
+8420098c:	03 60       	if EQ jump (m) Lc_process_data_3;
+
+8420098e <Lc_process_data_2>:
+8420098e:	c8 24       	Null = rMAC - 3;
+84200990:	07 62       	if NE jump (m) Lc_process_data_4;
+
+84200992 <Lc_process_data_3>:
+    {
+        case AUDIO_DATA_FORMAT_FIXP:
+        case AUDIO_DATA_FORMAT_FIXP_WITH_METADATA: 
+            data_size = OCTETS_PER_SAMPLE;
+84200992:	01 21       	rMAC = Null + 4;
+84200994:	59 de       	M[FP + 44] = rMAC;
+            cbuffer = &cbuffer_functions;
+84200996:	07 f0 06 f0 	r4 = Null + 7340168;
+8420099a:	88 40 
+            break; 
+8420099c:	06 6e       	jump (m) Lc_process_data_5;
+
+8420099e <Lc_process_data_4>:
+        default:
+            data_size = 1;
+8420099e:	41 20       	rMAC = Null + 1;
+842009a0:	59 de       	M[FP + 44] = rMAC;
+            cbuffer = &cbuffer_ex_functions;
+842009a2:	07 f0 06 f0 	r4 = Null + 7340188;
+842009a6:	9c 40 
+
+842009a8 <Lc_process_data_5>:
+            break;
+    }
+
+    ip_buffer  = opx_data->ip_buffers[in];
+842009a8:	01 f9 d3 c8 	r1 = r7 LSHIFT 2;
+842009ac:	28 f0 03 e8 	r6 = M[r0 + r1];
+    op_buffer  = opx_data->op_buffers[out];
+842009b0:	6b 54       	r1 = r3 LSHIFT 2;
+842009b2:	9a 00       	r0 = r1 + r0;
+842009b4:	17 98       	r5 = M[r0 + 32];
+    input_data = cbuffer->data(ip_buffer);
+842009b6:	71 88       	rMAC = M[r4 + 4];
+842009b8:	42 08       	r0 = r6 + Null;
+842009ba:	d1 4c       	call rMAC;
+842009bc:	13 09       	r9 = r0 + Null;
+
+    if (passthrough)
+842009be:	f8 d9       	Null = M[FP + -4];
+842009c0:	43 60       	if EQ jump (m) Lc_process_data_14;
+
+842009c2 <Lc_process_data_6>:
+    {
+        unsigned copied = cbuffer->copy(op_buffer, ip_buffer, complete_data);
+842009c2:	b1 88       	rMAC = M[r4 + 8];
+842009c4:	54 08       	r2 = r8 + Null;
+842009c6:	43 08       	r1 = r6 + Null;
+842009c8:	3a 00       	r0 = r5 + Null;
+842009ca:	d1 4c       	call rMAC;
+842009cc:	16 00       	r4 = r0 + Null;
+
+        PL_ASSERT(op_buffer != NULL);
+842009ce:	38 04       	Null = r5 - Null;
+842009d0:	09 62       	if NE jump (m) Lc_process_data_8;
+
+842009d2 <Lc_process_data_7>:
+842009d2:	03 f0 56 42 	r1 = Null + 598;
+842009d6:	02 f0 13 60 	r0 = Null + 4115;
+842009da:	ff fd b3 f0 	call (m) 0x16ff0;
+842009de:	37 e0 
+842009e0:	57 6e       	jump (m) Lc_process_data_17;
+
+842009e2 <Lc_process_data_8>:
+
+        L3_DBG_MSG3("SPC#1 passed through [input%d] %d of %d",
+                    in, copied, input_data);
+842009e2:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+842009e6:	c8 24       	Null = rMAC - 3;
+842009e8:	0a 68       	if LT jump (m) Lc_process_data_10;
+
+842009ea <Lc_process_data_9>:
+842009ea:	55 f1 02 f0 	r0 = Null + 357564535;
+842009ee:	77 40 
+842009f0:	5d 08       	r3 = r9 + Null;
+842009f2:	34 00       	r2 = r4 + Null;
+842009f4:	4b 08       	r1 = r7 + Null;
+842009f6:	ff fd 01 f0 	call (m) 0xd08;
+842009fa:	33 e8 
+
+842009fc <Lc_process_data_10>:
+        touched->sources |= touched_src_mask;
+842009fc:	41 d8       	rMAC = M[FP + 32];
+842009fe:	52 d8       	r0 = M[FP + 40];
+84200a00:	09 e8       	rMAC = M[rMAC + Null];
+84200a02:	89 12       	rMAC = rMAC OR r0;
+84200a04:	42 d8       	r0 = M[FP + 32];
+84200a06:	11 ee       	M[r0 + Null] = rMAC;
+        metadata_strict_transport(ip_buffer, op_buffer, copied * data_size);
+84200a08:	59 d8       	rMAC = M[FP + 44];
+84200a0a:	3b 00       	r1 = r5 + Null;
+84200a0c:	74 1a       	r2 = r4 * rMAC (int);
+84200a0e:	42 08       	r0 = r6 + Null;
+84200a10:	ff fd a1 f0 	call (m) 0x14c88;
+84200a14:	39 e3 
+        if (copied != complete_data)
+84200a16:	af f6 00 c2 	Null = r4 - r8;
+84200a1a:	0e 60       	if EQ jump (m) Lc_process_data_13;
+
+84200a1c <Lc_process_data_11>:
+        {
+            L2_DBG_MSG3("SPC#1 error on [input%d] %d of %d",
+                        in, copied, input_data);
+84200a1c:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+84200a20:	88 24       	Null = rMAC - 2;
+84200a22:	0a 68       	if LT jump (m) Lc_process_data_13;
+
+84200a24 <Lc_process_data_12>:
+84200a24:	55 f1 02 f0 	r0 = Null + 357564575;
+84200a28:	9f 40 
+84200a2a:	5d 08       	r3 = r9 + Null;
+84200a2c:	34 00       	r2 = r4 + Null;
+84200a2e:	4b 08       	r1 = r7 + Null;
+84200a30:	ff fd 01 f0 	call (m) 0xd08;
+84200a34:	39 e6 
+
+84200a36 <Lc_process_data_13>:
+        }
+        touched->sinks |= touched_snk_mask;
+84200a36:	41 d8       	rMAC = M[FP + 32];
+84200a38:	4a d8       	r0 = M[FP + 36];
+84200a3a:	49 88       	rMAC = M[rMAC + 4];
+84200a3c:	89 12       	rMAC = rMAC OR r0;
+84200a3e:	42 d8       	r0 = M[FP + 32];
+84200a40:	51 8e       	M[r0 + 4] = rMAC;
+        return copied;
+84200a42:	32 00       	r0 = r4 + Null;
+84200a44:	25 6e       	jump (m) Lc_process_data_17;
+
+84200a46 <Lc_process_data_14>:
+    {
+        metadata_tag *mtag;
+        unsigned b4idx, afteridx;
+
+        L3_DBG_MSG3("SPC#1 discard [input%d] %d of %d",
+                    in, complete_data, input_data);
+84200a46:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+84200a4a:	c8 24       	Null = rMAC - 3;
+84200a4c:	0a 68       	if LT jump (m) Lc_process_data_16;
+
+84200a4e <Lc_process_data_15>:
+84200a4e:	55 f1 02 f0 	r0 = Null + 357564609;
+84200a52:	c1 40 
+84200a54:	5d 08       	r3 = r9 + Null;
+84200a56:	54 08       	r2 = r8 + Null;
+84200a58:	4b 08       	r1 = r7 + Null;
+84200a5a:	ff fd 01 f0 	call (m) 0xd08;
+84200a5e:	2f e5 
+
+84200a60 <Lc_process_data_16>:
+
+        cbuffer->advance_rd_ptr(ip_buffer, complete_data);
+84200a60:	f1 88       	rMAC = M[r4 + 12];
+84200a62:	53 08       	r1 = r8 + Null;
+84200a64:	42 08       	r0 = r6 + Null;
+84200a66:	d1 4c       	call rMAC;
+        mtag = buff_metadata_remove(ip_buffer, complete_data * data_size, &b4idx, &afteridx);
+84200a68:	45 13       	r3 = FP + 52;
+84200a6a:	04 13       	r2 = FP + 48;
+84200a6c:	59 d8       	rMAC = M[FP + 44];
+84200a6e:	af f1 83 c9 	r1 = rMAC * r8 (int);
+84200a72:	42 08       	r0 = r6 + Null;
+84200a74:	ff fd 9f f0 	call (m) 0x149ca;
+84200a78:	37 ea 
+        buff_metadata_tag_list_delete(mtag);
+84200a7a:	ff fd 9d f0 	call (m) 0x145ee;
+84200a7e:	35 eb 
+        touched->sinks |= touched_snk_mask;
+84200a80:	41 d8       	rMAC = M[FP + 32];
+84200a82:	4a d8       	r0 = M[FP + 36];
+84200a84:	49 88       	rMAC = M[rMAC + 4];
+84200a86:	89 12       	rMAC = rMAC OR r0;
+84200a88:	42 d8       	r0 = M[FP + 32];
+84200a8a:	51 8e       	M[r0 + 4] = rMAC;
+        return complete_data;
+84200a8c:	52 08       	r0 = r8 + Null;
+
+84200a8e <Lc_process_data_17>:
+    }
+}
+84200a8e:	f6 4a       	SP = SP - 0x20, popm <FP, r4, r5, r6, r7, r8, r9, rLink>;
+84200a90:	d8 4c       	rts;
+
+84200a92 <Lc_process_data_spc2_1>:
+
+static unsigned process_data_spc2(SPC_OP_DATA *opx_data, unsigned complete_data, unsigned in, unsigned out, bool passthrough, bool transition, TOUCHED_TERMINALS *touched)
+{
+84200a92:	f6 1e       	pushm <FP(=SP), r4, r5, r6, r7, r8, r9, rLink>, SP = SP + 0x20;
+84200a94:	18 09       	r6 = r1 + Null;
+84200a96:	22 09       	r8 = r2 + Null;
+84200a98:	e9 d9       	rMAC = M[FP + -12];
+84200a9a:	41 de       	M[FP + 32] = rMAC;
+    const struct _cbuffer_functions *cbuffer;
+    unsigned data_size;
+    tCbuffer *op_buffer;
+    tCbuffer *ip_buffer;
+    unsigned touched_snk_mask = 1 << in;
+84200a9c:	51 08       	rMAC = r8 + Null;
+84200a9e:	00 f1 93 de 	r1 = 0x1 LSHIFT rMAC;
+84200aa2:	4b de       	M[FP + 36] = r1;
+    unsigned touched_src_mask = 1 << out;
+84200aa4:	29 00       	rMAC = r3 + Null;
+84200aa6:	00 f1 93 de 	r1 = 0x1 LSHIFT rMAC;
+84200aaa:	53 de       	M[FP + 40] = r1;
+    unsigned input_data;
+
+    /* Select which set of cbuffer functions to use. The normal cbuffer functions
+       are used to process PCM data. The _ex cbuffer functions are used to process
+       other data types (which may contain frames with an odd number of octets). */
+    switch (opx_data->data_format)
+84200aac:	d1 98       	rMAC = M[r0 + 44];
+84200aae:	48 24       	Null = rMAC - 1;
+84200ab0:	03 60       	if EQ jump (m) Lc_process_data_spc2_3;
+
+84200ab2 <Lc_process_data_spc2_2>:
+84200ab2:	c8 24       	Null = rMAC - 3;
+84200ab4:	07 62       	if NE jump (m) Lc_process_data_spc2_4;
+
+84200ab6 <Lc_process_data_spc2_3>:
+    {
+        case AUDIO_DATA_FORMAT_FIXP:
+        case AUDIO_DATA_FORMAT_FIXP_WITH_METADATA: 
+            data_size = OCTETS_PER_SAMPLE;
+84200ab6:	01 21       	rMAC = Null + 4;
+84200ab8:	59 de       	M[FP + 44] = rMAC;
+            cbuffer = &cbuffer_functions;
+84200aba:	07 f0 06 f0 	r4 = Null + 7340168;
+84200abe:	88 40 
+            break; 
+84200ac0:	06 6e       	jump (m) Lc_process_data_spc2_5;
+
+84200ac2 <Lc_process_data_spc2_4>:
+        default:
+            data_size = 1;
+84200ac2:	41 20       	rMAC = Null + 1;
+84200ac4:	59 de       	M[FP + 44] = rMAC;
+            cbuffer = &cbuffer_ex_functions;
+84200ac6:	07 f0 06 f0 	r4 = Null + 7340188;
+84200aca:	9c 40 
+
+84200acc <Lc_process_data_spc2_5>:
+            break;
+    }
+
+    ip_buffer  = opx_data->ip_buffers[in];
+84200acc:	01 fa d3 c8 	r1 = r8 LSHIFT 2;
+84200ad0:	d7 e8       	r5 = M[r0 + r1];
+    op_buffer  = opx_data->op_buffers[out];
+84200ad2:	6b 54       	r1 = r3 LSHIFT 2;
+84200ad4:	9a 00       	r0 = r1 + r0;
+84200ad6:	29 f0 08 88 	r7 = M[r0 + 32];
+    input_data = cbuffer->data(ip_buffer);
+84200ada:	71 88       	rMAC = M[r4 + 4];
+84200adc:	3a 00       	r0 = r5 + Null;
+84200ade:	d1 4c       	call rMAC;
+84200ae0:	13 09       	r9 = r0 + Null;
+
+    if (passthrough)
+84200ae2:	f8 d9       	Null = M[FP + -4];
+84200ae4:	44 60       	if EQ jump (m) Lc_process_data_spc2_14;
+
+84200ae6 <Lc_process_data_spc2_6>:
+    {
+        unsigned copied = cbuffer->copy(op_buffer, ip_buffer, complete_data);
+84200ae6:	b1 88       	rMAC = M[r4 + 8];
+84200ae8:	44 08       	r2 = r6 + Null;
+84200aea:	3b 00       	r1 = r5 + Null;
+84200aec:	4a 08       	r0 = r7 + Null;
+84200aee:	d1 4c       	call rMAC;
+84200af0:	16 00       	r4 = r0 + Null;
+
+        PL_ASSERT(op_buffer != NULL);
+84200af2:	0f f9 00 c2 	Null = r7 - Null;
+84200af6:	09 62       	if NE jump (m) Lc_process_data_spc2_8;
+
+84200af8 <Lc_process_data_spc2_7>:
+84200af8:	03 f0 96 42 	r1 = Null + 662;
+84200afc:	02 f0 13 60 	r0 = Null + 4115;
+84200b00:	ff fd b2 f0 	call (m) 0x16ff0;
+84200b04:	31 e7 
+84200b06:	75 6e       	jump (m) Lc_process_data_spc2_23;
+
+84200b08 <Lc_process_data_spc2_8>:
+
+        L3_DBG_MSG3("SPC#2 passed through [input%d] %d of %d",
+                    in, copied, input_data);
+84200b08:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+84200b0c:	c8 24       	Null = rMAC - 3;
+84200b0e:	0a 68       	if LT jump (m) Lc_process_data_spc2_10;
+
+84200b10 <Lc_process_data_spc2_9>:
+84200b10:	55 f1 02 f0 	r0 = Null + 357564642;
+84200b14:	e2 40 
+84200b16:	5d 08       	r3 = r9 + Null;
+84200b18:	34 00       	r2 = r4 + Null;
+84200b1a:	53 08       	r1 = r8 + Null;
+84200b1c:	ff fd 00 f0 	call (m) 0xd08;
+84200b20:	2d ef 
+
+84200b22 <Lc_process_data_spc2_10>:
+
+        touched->sources |= touched_src_mask;
+84200b22:	41 d8       	rMAC = M[FP + 32];
+84200b24:	52 d8       	r0 = M[FP + 40];
+84200b26:	09 e8       	rMAC = M[rMAC + Null];
+84200b28:	89 12       	rMAC = rMAC OR r0;
+84200b2a:	42 d8       	r0 = M[FP + 32];
+84200b2c:	11 ee       	M[r0 + Null] = rMAC;
+        metadata_strict_transport(ip_buffer, op_buffer, copied * data_size);
+84200b2e:	59 d8       	rMAC = M[FP + 44];
+84200b30:	4b 08       	r1 = r7 + Null;
+84200b32:	74 1a       	r2 = r4 * rMAC (int);
+84200b34:	3a 00       	r0 = r5 + Null;
+84200b36:	ff fd a0 f0 	call (m) 0x14c88;
+84200b3a:	33 ea 
+        if (copied != complete_data)
+84200b3c:	8f f6 00 c2 	Null = r4 - r6;
+84200b40:	0e 60       	if EQ jump (m) Lc_process_data_spc2_13;
+
+84200b42 <Lc_process_data_spc2_11>:
+        {
+            L2_DBG_MSG3("SPC#2 error on [input%d] %d of %d",
+                        in, copied, input_data);
+84200b42:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+84200b46:	88 24       	Null = rMAC - 2;
+84200b48:	0a 68       	if LT jump (m) Lc_process_data_spc2_13;
+
+84200b4a <Lc_process_data_spc2_12>:
+84200b4a:	55 f1 02 f0 	r0 = Null + 357564682;
+84200b4e:	0a 41 
+84200b50:	5d 08       	r3 = r9 + Null;
+84200b52:	34 00       	r2 = r4 + Null;
+84200b54:	53 08       	r1 = r8 + Null;
+84200b56:	ff fd 00 f0 	call (m) 0xd08;
+84200b5a:	33 ed 
+
+84200b5c <Lc_process_data_spc2_13>:
+        }
+        touched->sinks |= touched_snk_mask;
+84200b5c:	41 d8       	rMAC = M[FP + 32];
+84200b5e:	4a d8       	r0 = M[FP + 36];
+84200b60:	49 88       	rMAC = M[rMAC + 4];
+84200b62:	89 12       	rMAC = rMAC OR r0;
+84200b64:	42 d8       	r0 = M[FP + 32];
+84200b66:	51 8e       	M[r0 + 4] = rMAC;
+        return copied;
+84200b68:	32 00       	r0 = r4 + Null;
+84200b6a:	43 6e       	jump (m) Lc_process_data_spc2_23;
+
+84200b6c <Lc_process_data_spc2_14>:
+    }
+    else
+    {
+        L3_DBG_MSG3("SPC#2 discard [input%d] %d of %d",
+                    in, complete_data, input_data);
+84200b6c:	01 f0 3c 91 	rMAC = MBS[Null + 0x33c];
+84200b70:	c8 24       	Null = rMAC - 3;
+84200b72:	0a 68       	if LT jump (m) Lc_process_data_spc2_16;
+
+84200b74 <Lc_process_data_spc2_15>:
+84200b74:	55 f1 02 f0 	r0 = Null + 357564716;
+84200b78:	2c 41 
+84200b7a:	5d 08       	r3 = r9 + Null;
+84200b7c:	44 08       	r2 = r6 + Null;
+84200b7e:	53 08       	r1 = r8 + Null;
+84200b80:	ff fd 00 f0 	call (m) 0xd08;
+84200b84:	29 ec 
+
+84200b86 <Lc_process_data_spc2_16>:
+
+        cbuffer->advance_wr_ptr(op_buffer, complete_data);
+84200b86:	31 89       	rMAC = M[r4 + 16];
+84200b88:	43 08       	r1 = r6 + Null;
+84200b8a:	4a 08       	r0 = r7 + Null;
+84200b8c:	d1 4c       	call rMAC;
+        touched->sources |= touched_src_mask;
+84200b8e:	41 d8       	rMAC = M[FP + 32];
+84200b90:	52 d8       	r0 = M[FP + 40];
+84200b92:	09 e8       	rMAC = M[rMAC + Null];
+84200b94:	89 12       	rMAC = rMAC OR r0;
+84200b96:	42 d8       	r0 = M[FP + 32];
+84200b98:	11 ee       	M[r0 + Null] = rMAC;
+
+        /* Drain unused Aptx buffer */
+        if (transition && (ip_buffer != NULL) && (cbuffer->data(ip_buffer) > 0))
+84200b9a:	f0 d9       	Null = M[FP + -8];
+84200b9c:	29 60       	if EQ jump (m) Lc_process_data_spc2_22;
+
+84200b9e <Lc_process_data_spc2_17>:
+84200b9e:	38 04       	Null = r5 - Null;
+84200ba0:	27 60       	if EQ jump (m) Lc_process_data_spc2_22;
+
+84200ba2 <Lc_process_data_spc2_18>:
+84200ba2:	71 88       	rMAC = M[r4 + 4];
+84200ba4:	3a 00       	r0 = r5 + Null;
+84200ba6:	d1 4c       	call rMAC;
+84200ba8:	10 04       	Null = r0 - Null;
+84200baa:	22 60       	if EQ jump (m) Lc_process_data_spc2_22;
+
+84200bac <Lc_process_data_spc2_19>:
+        {
+            if (cbuffer->data(ip_buffer) < complete_data)
+84200bac:	71 88       	rMAC = M[r4 + 4];
+84200bae:	3a 00       	r0 = r5 + Null;
+84200bb0:	d1 4c       	call rMAC;
+84200bb2:	8f f2 00 c2 	Null = r0 - r6;
+84200bb6:	02 f0 8d e0 	if C jump (m) Lc_process_data_spc2_21;
+
+84200bba <Lc_process_data_spc2_20>:
+            {
+                complete_data = cbuffer->data(ip_buffer);
+84200bba:	71 88       	rMAC = M[r4 + 4];
+84200bbc:	3a 00       	r0 = r5 + Null;
+84200bbe:	d1 4c       	call rMAC;
+84200bc0:	10 09       	r6 = r0 + Null;
+
+84200bc2 <Lc_process_data_spc2_21>:
+            }
+
+            metadata_tag *mtag;
+            unsigned b4idx, afteridx;
+
+            cbuffer->advance_rd_ptr(ip_buffer, complete_data);
+84200bc2:	f1 88       	rMAC = M[r4 + 12];
+84200bc4:	43 08       	r1 = r6 + Null;
+84200bc6:	3a 00       	r0 = r5 + Null;
+84200bc8:	d1 4c       	call rMAC;
+            mtag = buff_metadata_remove(ip_buffer, complete_data * data_size, &b4idx, &afteridx);
+84200bca:	45 13       	r3 = FP + 52;
+84200bcc:	04 13       	r2 = FP + 48;
+84200bce:	59 d8       	rMAC = M[FP + 44];
+84200bd0:	8f f1 83 c9 	r1 = rMAC * r6 (int);
+84200bd4:	3a 00       	r0 = r5 + Null;
+84200bd6:	ff fd 9e f0 	call (m) 0x149ca;
+84200bda:	35 ef 
+
+            buff_metadata_tag_list_delete(mtag);
+84200bdc:	ff fd 9d f0 	call (m) 0x145ee;
+84200be0:	33 e0 
+            touched->sinks |= touched_snk_mask;
+84200be2:	41 d8       	rMAC = M[FP + 32];
+84200be4:	4a d8       	r0 = M[FP + 36];
+84200be6:	49 88       	rMAC = M[rMAC + 4];
+84200be8:	89 12       	rMAC = rMAC OR r0;
+84200bea:	42 d8       	r0 = M[FP + 32];
+84200bec:	51 8e       	M[r0 + 4] = rMAC;
+
+84200bee <Lc_process_data_spc2_22>:
+        }
+
+        return complete_data;
+84200bee:	42 08       	r0 = r6 + Null;
+
+84200bf0 <Lc_process_data_spc2_23>:
+    }
+}
+84200bf0:	f6 4a       	SP = SP - 0x20, popm <FP, r4, r5, r6, r7, r8, r9, rLink>;
+84200bf2:	d8 4c       	rts;
+
+84200bf4 <Lc_spc1_transition_1>:
+
+static bool spc1_transition(SPC_OP_DATA *opx_data)
+{
+    if ((opx_data->current_mode == SPC_MODE_SPC1_TAGSYNC_DUAL) &&
+        (opx_data->next_mode    == SPC_MODE_SPC1_TAGSYNC_0) )
+84200bf4:	21 f0 28 80 	rMAC = MBS[r0 + 40];
+84200bf8:	08 2c       	Null = rMAC - 16;
+84200bfa:	10 62       	if NE jump (m) Lc_spc1_transition_7;
+
+84200bfc <Lc_spc1_transition_2>:
+84200bfc:	21 f0 29 80 	rMAC = MBS[r0 + 41];
+84200c00:	48 2c       	Null = rMAC - 17;
+84200c02:	06 62       	if NE jump (m) Lc_spc1_transition_5;
+
+84200c04 <Lc_spc1_transition_3>:
+    {
+        opx_data->transition = transition_dual_2_sync_0;
+84200c04:	41 20       	rMAC = Null + 1;
+84200c06:	21 f0 34 8a 	MB[r0 + 52] = rMAC;
+
+84200c0a <Lc_spc1_transition_4>:
+    }
+    else
+    {
+        return FALSE;
+    }
+    return TRUE;
+84200c0a:	42 20       	r0 = Null + 1;
+84200c0c:	1c 6e       	jump (m) Lc_spc1_transition_14;
+
+84200c0e <Lc_spc1_transition_5>:
+    {
+        opx_data->transition = transition_dual_2_sync_0;
+    }
+    else
+    if ((opx_data->current_mode == SPC_MODE_SPC1_TAGSYNC_DUAL) &&
+        (opx_data->next_mode    == SPC_MODE_SPC1_TAGSYNC_1) )
+84200c0e:	88 2c       	Null = rMAC - 18;
+84200c10:	19 62       	if NE jump (m) Lc_spc1_transition_13;
+
+84200c12 <Lc_spc1_transition_6>:
+    {
+        opx_data->transition = transition_dual_2_sync_1;
+84200c12:	81 20       	rMAC = Null + 2;
+84200c14:	21 f0 34 8a 	MB[r0 + 52] = rMAC;
+84200c18:	f9 6f       	jump (m) Lc_spc1_transition_4;
+
+84200c1a <Lc_spc1_transition_7>:
+    }
+    else
+    if ((opx_data->current_mode == SPC_MODE_SPC1_TAGSYNC_0) &&
+        (opx_data->next_mode    == SPC_MODE_SPC1_TAGSYNC_DUAL) )
+84200c1a:	48 2c       	Null = rMAC - 17;
+84200c1c:	09 62       	if NE jump (m) Lc_spc1_transition_10;
+
+84200c1e <Lc_spc1_transition_8>:
+84200c1e:	21 f0 29 80 	rMAC = MBS[r0 + 41];
+84200c22:	08 2c       	Null = rMAC - 16;
+84200c24:	0f 62       	if NE jump (m) Lc_spc1_transition_13;
+
+84200c26 <Lc_spc1_transition_9>:
+    {
+        opx_data->transition = transition_sync_0_2_dual;
+84200c26:	c1 20       	rMAC = Null + 3;
+84200c28:	21 f0 34 8a 	MB[r0 + 52] = rMAC;
+84200c2c:	ef 6f       	jump (m) Lc_spc1_transition_4;
+
+84200c2e <Lc_spc1_transition_10>:
+    }
+    else
+    if ((opx_data->current_mode == SPC_MODE_SPC1_TAGSYNC_1) &&
+        (opx_data->next_mode    == SPC_MODE_SPC1_TAGSYNC_DUAL) )
+84200c2e:	88 2c       	Null = rMAC - 18;
+84200c30:	09 62       	if NE jump (m) Lc_spc1_transition_13;
+
+84200c32 <Lc_spc1_transition_11>:
+84200c32:	21 f0 29 80 	rMAC = MBS[r0 + 41];
+84200c36:	08 2c       	Null = rMAC - 16;
+84200c38:	05 62       	if NE jump (m) Lc_spc1_transition_13;
+
+84200c3a <Lc_spc1_transition_12>:
+    {
+        opx_data->transition = transition_sync_1_2_dual;
+84200c3a:	01 21       	rMAC = Null + 4;
+84200c3c:	21 f0 34 8a 	MB[r0 + 52] = rMAC;
+84200c40:	e5 6f       	jump (m) Lc_spc1_transition_4;
+
+84200c42 <Lc_spc1_transition_13>:
+    }
+    else
+    {
+        return FALSE;
+84200c42:	02 00       	r0 = Null + Null;
+
+84200c44 <Lc_spc1_transition_14>:
+84200c44:	d8 4c       	rts;
+
+84200c46 <Lc_spc2_transition_1>:
+}
+
+static bool spc2_transition(SPC_OP_DATA *opx_data)
+{
+    if ((opx_data->current_mode == SPC_MODE_SPC2_TAGSYNC_0) &&
+        (opx_data->next_mode    == SPC_MODE_SPC2_TAGSYNC_DUAL) )
+84200c46:	21 f0 28 80 	rMAC = MBS[r0 + 40];
+84200c4a:	48 34       	Null = rMAC - 33;
+84200c4c:	0a 62       	if NE jump (m) Lc_spc2_transition_5;
+
+84200c4e <Lc_spc2_transition_2>:
+84200c4e:	21 f0 29 80 	rMAC = MBS[r0 + 41];
+84200c52:	08 34       	Null = rMAC - 32;
+84200c54:	10 62       	if NE jump (m) Lc_spc2_transition_8;
+
+84200c56 <Lc_spc2_transition_3>:
+    {
+        opx_data->transition = transition_sync_0_2_dual;
+84200c56:	c1 20       	rMAC = Null + 3;
+84200c58:	21 f0 34 8a 	MB[r0 + 52] = rMAC;
+
+84200c5c <Lc_spc2_transition_4>:
+    }
+    else
+    {
+        return FALSE;
+    }
+    return TRUE;
+84200c5c:	42 20       	r0 = Null + 1;
+84200c5e:	0c 6e       	jump (m) Lc_spc2_transition_9;
+
+84200c60 <Lc_spc2_transition_5>:
+    {
+        opx_data->transition = transition_sync_0_2_dual;
+    }
+    else
+    if ((opx_data->current_mode == SPC_MODE_SPC2_TAGSYNC_1) &&
+        (opx_data->next_mode    == SPC_MODE_SPC2_TAGSYNC_DUAL) )
+84200c60:	88 34       	Null = rMAC - 34;
+84200c62:	09 62       	if NE jump (m) Lc_spc2_transition_8;
+
+84200c64 <Lc_spc2_transition_6>:
+84200c64:	21 f0 29 80 	rMAC = MBS[r0 + 41];
+84200c68:	08 34       	Null = rMAC - 32;
+84200c6a:	05 62       	if NE jump (m) Lc_spc2_transition_8;
+
+84200c6c <Lc_spc2_transition_7>:
+    {
+        opx_data->transition = transition_sync_1_2_dual;
+84200c6c:	01 21       	rMAC = Null + 4;
+84200c6e:	21 f0 34 8a 	MB[r0 + 52] = rMAC;
+84200c72:	f5 6f       	jump (m) Lc_spc2_transition_4;
+
+84200c74 <Lc_spc2_transition_8>:
+    }
+    else
+    {
+        return FALSE;
+84200c74:	02 00       	r0 = Null + Null;
+
+84200c76 <Lc_spc2_transition_9>:
+84200c76:	d8 4c       	rts;
+
+84200c78 <Lc_spc1_reset_transition_state_1>:
+}
+
+
+static void spc1_reset_transition_state(SPC_OP_DATA *opx_data)
+{
+    opx_data->opbuf_len[0] = 0;
+84200c78:	d0 9f       	M[r0 + 60] = Null;
+    opx_data->opbuf_len[1] = 0;
+84200c7a:	10 ae       	M[r0 + 64] = Null;
+    opx_data->wait_kicks   = 0;
+84200c7c:	90 9f       	M[r0 + 56] = Null;
+    opx_data->transition   = transition_none;
+84200c7e:	20 f0 34 8a 	MB[r0 + 52] = Null;
+
+84200c82 <Lc_spc1_reset_transition_state_2>:
+84200c82:	d8 4c       	rts;
+
+84200c84 <Lc_spc1_is_empty_opbuffer_1>:
+}
+
+static bool spc1_is_empty_opbuffer(SPC_OP_DATA *opx_data, TOUCHED_TERMINALS *touched)
+{
+84200c84:	f4 1d       	pushm <FP(=SP), r4, r5, r6, r7, rLink>, SP = SP + 0x10;
+84200c86:	16 00       	r4 = r0 + Null;
+84200c88:	19 09       	r7 = r1 + Null;
+    unsigned len[SPC_NUMBER_OUTPUTS];
+    bool stalled = FALSE;
+84200c8a:	07 00       	r5 = Null + Null;
+
+    len[0] = outputdata_len(opx_data, 0);
+84200c8c:	03 00       	r1 = Null + Null;
+84200c8e:	fd ff 3d ef 	call (m) Lc_outputdata_len_1;
+84200c92:	10 09       	r6 = r0 + Null;
+    len[1] = outputdata_len(opx_data, 1);
+84200c94:	43 20       	r1 = Null + 1;
+84200c96:	32 00       	r0 = r4 + Null;
+84200c98:	fd ff 33 ef 	call (m) Lc_outputdata_len_1;
+
+    if ((len[0] == opx_data->opbuf_len[0]) &&
+        (len[1] == opx_data->opbuf_len[1])   )
+84200c9c:	f1 99       	rMAC = M[r4 + 60];
+84200c9e:	1f f8 00 c2 	Null = r6 - rMAC;
+84200ca2:	05 62       	if NE jump (m) Lc_spc1_is_empty_opbuffer_4;
+
+84200ca4 <Lc_spc1_is_empty_opbuffer_2>:
+84200ca4:	31 a8       	rMAC = M[r4 + 64];
+84200ca6:	50 04       	Null = r0 - rMAC;
+84200ca8:	02 62       	if NE jump (m) Lc_spc1_is_empty_opbuffer_4;
+
+84200caa <Lc_spc1_is_empty_opbuffer_3>:
+    {
+        stalled = TRUE;
+84200caa:	47 20       	r5 = Null + 1;
+
+84200cac <Lc_spc1_is_empty_opbuffer_4>:
+    }
+
+    opx_data->opbuf_len[0] = len[0];
+84200cac:	68 f0 0f 8e 	M[r4 + 60] = r6;
+    opx_data->opbuf_len[1] = len[1];
+84200cb0:	32 ae       	M[r4 + 64] = r0;
+
+    if (stalled)
+84200cb2:	38 04       	Null = r5 - Null;
+84200cb4:	13 60       	if EQ jump (m) Lc_spc1_is_empty_opbuffer_10;
+
+84200cb6 <Lc_spc1_is_empty_opbuffer_5>:
+    {
+        stalled = FALSE;
+84200cb6:	07 00       	r5 = Null + Null;
+        switch (opx_data->transition)
+84200cb8:	61 f0 34 80 	rMAC = MBS[r4 + 52];
+84200cbc:	c8 24       	Null = rMAC - 3;
+84200cbe:	08 60       	if EQ jump (m) Lc_spc1_is_empty_opbuffer_8;
+
+84200cc0 <Lc_spc1_is_empty_opbuffer_6>:
+84200cc0:	08 25       	Null = rMAC - 4;
+84200cc2:	0b 62       	if NE jump (m) Lc_spc1_is_empty_opbuffer_9;
+
+84200cc4 <Lc_spc1_is_empty_opbuffer_7>:
+                if (len[0] <= opx_data->frame_size) stalled = TRUE;
+                break;
+            }
+            case transition_sync_1_2_dual :
+            {
+                if (len[1] <= opx_data->frame_size) stalled = TRUE;
+84200cc4:	71 a8       	rMAC = M[r4 + 68];
+84200cc6:	50 04       	Null = r0 - rMAC;
+84200cc8:	09 f0 91 e0 	if LS jump (m) Lc_spc1_is_empty_opbuffer_9;
+
+84200ccc <Lc__ite_23>:
+84200ccc:	07 6e       	jump (m) Lc_spc1_is_empty_opbuffer_10;
+
+84200cce <Lc_spc1_is_empty_opbuffer_8>:
+        stalled = FALSE;
+        switch (opx_data->transition)
+        {
+            case transition_sync_0_2_dual :
+            {
+                if (len[0] <= opx_data->frame_size) stalled = TRUE;
+84200cce:	71 a8       	rMAC = M[r4 + 68];
+84200cd0:	1f f8 00 c2 	Null = r6 - rMAC;
+84200cd4:	08 f0 87 e0 	if HI jump (m) Lc_spc1_is_empty_opbuffer_10;
+
+84200cd8 <Lc_spc1_is_empty_opbuffer_9>:
+84200cd8:	47 20       	r5 = Null + 1;
+
+84200cda <Lc_spc1_is_empty_opbuffer_10>:
+                break;
+            }
+        }
+    }
+
+    touched->sinks = 3;
+84200cda:	c1 20       	rMAC = Null + 3;
+84200cdc:	91 f0 01 8e 	M[r7 + 4] = rMAC;
+    return stalled;
+84200ce0:	3a 00       	r0 = r5 + Null;
+
+84200ce2 <Lc_spc1_is_empty_opbuffer_11>:
+}
+84200ce2:	f4 49       	SP = SP - 0x10, popm <FP, r4, r5, r6, r7, rLink>;
+84200ce4:	d8 4c       	rts;
+
+84200ce6 <Lc_spc2_is_empty_ipbuffer_1>:
+
+static bool spc2_is_empty_ipbuffer(SPC_OP_DATA *opx_data, TOUCHED_TERMINALS *touched)
+{
+84200ce6:	f4 1c       	pushm <FP(=SP), r4, r5, r6, r7, rLink>;
+84200ce8:	16 00       	r4 = r0 + Null;
+    const struct _cbuffer_functions *cbuffer;
+    unsigned data0 = 0, data1 = 0;
+84200cea:	07 00       	r5 = Null + Null;
+84200cec:	00 09       	r6 = Null + Null;
+
+    /* Select which set of cbuffer functions to use. The normal cbuffer functions
+       are used to process PCM data. The _ex cbuffer functions are used to process
+       other data types (which may contain frames with an odd number of octets). */
+    switch (opx_data->data_format)
+84200cee:	f1 98       	rMAC = M[r4 + 44];
+84200cf0:	48 24       	Null = rMAC - 1;
+84200cf2:	05 62       	if NE jump (m) Lc_spc2_is_empty_ipbuffer_3;
+
+84200cf4 <Lc_spc2_is_empty_ipbuffer_2>:
+    {
+        case AUDIO_DATA_FORMAT_FIXP:
+        case AUDIO_DATA_FORMAT_FIXP_WITH_METADATA: 
+            cbuffer = &cbuffer_functions;
+84200cf4:	07 f0 09 f0 	r7 = Null + 7340168;
+84200cf8:	88 40 
+            break; 
+84200cfa:	0b 6e       	jump (m) Lc_spc2_is_empty_ipbuffer_4;
+
+84200cfc <Lc_spc2_is_empty_ipbuffer_3>:
+        default:
+            cbuffer = &cbuffer_ex_functions;
+84200cfc:	07 f0 02 f0 	r0 = Null + 7340188;
+84200d00:	9c 40 
+84200d02:	07 f0 03 f0 	r1 = Null + 7340168;
+84200d06:	88 40 
+84200d08:	19 09       	r7 = r1 + Null;
+84200d0a:	c8 24       	Null = rMAC - 3;
+84200d0c:	01 f2 09 c0 	if NE r7 = r0 + Null;
+
+84200d10 <Lc_spc2_is_empty_ipbuffer_4>:
+            break;
+    }
+
+    if (opx_data->ip_buffers[0] != NULL) 
+84200d10:	32 e8       	r0 = M[r4 + Null];
+84200d12:	05 60       	if EQ jump (m) Lc_spc2_is_empty_ipbuffer_6;
+
+84200d14 <Lc_spc2_is_empty_ipbuffer_5>:
+    {
+        data0 = cbuffer->data(opx_data->ip_buffers[0]);
+84200d14:	91 f0 01 88 	rMAC = M[r7 + 4];
+84200d18:	d1 4c       	call rMAC;
+84200d1a:	17 00       	r5 = r0 + Null;
+
+84200d1c <Lc_spc2_is_empty_ipbuffer_6>:
+    }
+    if (opx_data->ip_buffers[1] != NULL) 
+84200d1c:	72 88       	r0 = M[r4 + 4];
+84200d1e:	05 60       	if EQ jump (m) Lc_spc2_is_empty_ipbuffer_8;
+
+84200d20 <Lc_spc2_is_empty_ipbuffer_7>:
+    {
+        data1 = cbuffer->data(opx_data->ip_buffers[1]);
+84200d20:	91 f0 01 88 	rMAC = M[r7 + 4];
+84200d24:	d1 4c       	call rMAC;
+84200d26:	10 09       	r6 = r0 + Null;
+
+84200d28 <Lc_spc2_is_empty_ipbuffer_8>:
+    }
+
+    return ((data0 != 0) && (data1 != 0));
+84200d28:	38 04       	Null = r5 - Null;
+84200d2a:	07 60       	if EQ jump (m) Lc_spc2_is_empty_ipbuffer_10;
+
+84200d2c <Lc_spc2_is_empty_ipbuffer_9>:
+84200d2c:	02 00       	r0 = Null + Null;
+84200d2e:	0f f8 00 c2 	Null = r6 - Null;
+84200d32:	21 f0 42 ce 	if NE r0 = Null + 1;
+84200d36:	02 6e       	jump (m) Lc_spc2_is_empty_ipbuffer_11;
+
+84200d38 <Lc_spc2_is_empty_ipbuffer_10>:
+84200d38:	02 00       	r0 = Null + Null;
+
+84200d3a <Lc_spc2_is_empty_ipbuffer_11>:
+84200d3a:	f4 48       	popm <FP, r4, r5, r6, r7, rLink>;
+84200d3c:	d8 4c       	rts;
+
+84200d3e <$kdc_start>:
+.MODULE $M.kdc_start;
+.CODESEGMENT PM;
+.DATASEGMENT DM;
+
+$kdc_start:
+r0 = $_switched_passthrough_consumer_cap_data;
+84200d3e:	07 f0 02 f0 	r0 = Null + 7340032;
+84200d42:	00 40 
+    /* Force this symbol to be exported in ELF */
+    Null = $___kymera_debug_map_addr;
+84200d44:	20 f0 f8 42 	Null = Null + 17144;

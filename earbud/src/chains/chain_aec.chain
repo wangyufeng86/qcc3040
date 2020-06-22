@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019 Qualcomm Technologies International, Ltd.-->
+<!--Chain for AEC reference-->
+
+<chain name="CHAIN_AEC" id="1" generate_operator_roles_enum="False" generate_endpoint_roles_enum="False">
+
+    <include_header name="../earbud_cap_ids.h"/>
+    <include_header name="kymera_chain_roles.h"/>
+
+    <operator name="OPR_AEC" id="EB_CAP_ID_AEC_REF">
+        <sink name="INPUT1" terminal="0"/>
+        <sink name="MIC1_IN" terminal="2"/>
+        <sink name="MIC2_IN" terminal="3"/>
+        <source name="REFERENCE_OUT" terminal="0"/>
+        <source name="SPEAKER1_OUT" terminal="1"/>
+        <source name="MIC1_OUT" terminal="3"/>
+        <source name="MIC2_OUT" terminal="4"/>
+    </operator>
+	    
+    <input sink="OPR_AEC.INPUT1" role="EPR_AEC_INPUT1"/>
+    <input sink="OPR_AEC.MIC1_IN" role="EPR_AEC_MIC1_IN"/>
+    <input sink="OPR_AEC.MIC2_IN" role="EPR_AEC_MIC2_IN"/>
+
+    <output source="OPR_AEC.REFERENCE_OUT" role="EPR_AEC_REFERENCE_OUT"/>
+    <output source="OPR_AEC.SPEAKER1_OUT" role="EPR_AEC_SPEAKER1_OUT"/>
+    <output source="OPR_AEC.MIC1_OUT" role="EPR_AEC_MIC1_OUT"/>
+    <output source="OPR_AEC.MIC2_OUT" role="EPR_AEC_MIC2_OUT"/>
+</chain>

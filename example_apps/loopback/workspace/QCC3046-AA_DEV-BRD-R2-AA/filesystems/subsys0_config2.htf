@@ -1,0 +1,6 @@
+file=curator2
+
+# Action to take when a panic or subsystem watchdog occurs.
+# Halt all subsystems except System, keeping USB debug access.
+# These settings should be removed from production software.
+PanicAction=2

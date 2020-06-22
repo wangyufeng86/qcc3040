@@ -1,0 +1,21 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright 2018 - 2019 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Definitions required to build the downloadable convert_from_audio
+
+#
+# Capabilities we want to include on the chip
+# This list gets turned into a set of defines of the form INSTALL_OPERATOR_XXXX
+#
+%list CFG_CAPABILITIES
+CONVERT_FROM_AUDIO
+
+%list ALL_SRCDIRS
+capabilities/convert_from_audio
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/convert_from_audio/convert_from_audio

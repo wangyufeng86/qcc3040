@@ -1,0 +1,12 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2016 - 2018 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Definitions to enable thread offload support for selected capabilities
+
+%cpp
+APTX_OFFLOAD
+CELT_ENCODE_OFFLOAD
+CELT_DECODE_OFFLOAD

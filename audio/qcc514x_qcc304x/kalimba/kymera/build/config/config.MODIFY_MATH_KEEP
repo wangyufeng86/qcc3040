@@ -1,0 +1,17 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2018 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+
+# These code segments need to be explicitly kept
+# because we wan't all native math library functions in the ROM
+
+%cpp
+MATH_PM=PM_KEEP
+# Current configurations don't place code in MATH_FAST_PM into PM_RAM but just KEEP it.
+# If we ever need to place MATH_FAST_PM code into PM_RAM, we'd have to invent a PM_KEEP_RAM or similar.
+# Similarly for MATH_OPTIONAL_FAST_PM.
+MATH_FAST_PM=PM_KEEP
+MATH_OPTIONAL_FAST_PM=PM_KEEP

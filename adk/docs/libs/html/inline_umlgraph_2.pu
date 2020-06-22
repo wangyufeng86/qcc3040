@@ -1,0 +1,32 @@
+@startuml
+
+
+    note "For clarity not all state transitions shown" as N1
+
+    [*] -down-> UNINITIALISED : Start
+
+    UNINITIALISED : App module and library init
+    UNINITIALISED --> FINDING_HANDLES : GattRoleSelectionClientInit()
+    UNINITIALISED --> ERROR : Failed to register with Gatt Manager
+
+    FINDING_HANDLES : Discovering characteristics of the remote server so that handles are known for commands
+    FINDING_HANDLES --> INITIALISED : Characteristic discovery completed 
+
+    INITIALISED : Handles known, awaiting command
+    INITIALISED --> WAITING_READ : 
+    INITIALISED --> FINDING_NOTIFICATION_HANDLE : 
+    INITIALISED --> SETTING_NOTIFICATION : 
+
+    FINDING_NOTIFICATION_HANDLE : Asked to enable notifications, but no handle yet
+    FINDING_NOTIFICATION_HANDLE --> SETTING_NOTIFICATION : Setting notification state on server
+
+    SETTING_NOTIFICATION : Waiting for acknowledgment that notificatiin setting updated at the server
+    SETTING_NOTIFICATION --> INITIALISED : Characteristic configuration write successful
+
+    WAITING_READ : Awaiting response for a characteristic read
+    WAITING_READ --> INITIALISED : response received
+
+    WAITING_WRITE : Awaiting response for a characteristic write
+    WAITING_WRITE --> INITIALISED : response received
+
+@enduml

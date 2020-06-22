@@ -1,0 +1,31 @@
+############################################################################
+# CONFIDENTIAL
+#
+# %%fullcopyright(2016)
+#
+############################################################################
+# definitions for a2d9 builds
+
+%cpp
+
+%list CFG_CAPABILITIES
+APTX_ADAPTIVE_DEMUX
+
+
+# List of global include paths
+%list ALL_INCDIRS
+../lib_private/aptx_adaptive_demux
+../lib_private/aptx_adaptive_common
+../lib_private/aptx_adaptive_common/packer
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/aptx_adaptive_demux/aptx_adaptive_demux
+
+# Libraries needed by aptx capabilities
+../lib_private/aptx_adaptive_demux/aptx_adaptive_demux
+../lib_private/aptx_adaptive_common/aptx_adaptive_common
+
+%list MAXIM_LIBS
+../lib_private/aptx_adaptive_demux/aptx_adaptive_demux
+../lib_private/aptx_adaptive_common/aptx_adaptive_common

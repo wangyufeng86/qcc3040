@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['vncl3020_2ec',['vncl3020.c',['../vncl3020_8c.html',1,'']]],
+  ['vncl3020_2eh',['vncl3020.h',['../vncl3020_8h.html',1,'']]],
+  ['vncl3020_5fcommand_5fregister',['vncl3020_command_register',['../unionvncl3020__command__register.html',1,'']]],
+  ['vncl3020_5fcommand_5fregister_5ft',['vncl3020_command_register_t',['../vncl3020_8h.html#a5c16626d0eda57f0554a686c6bcb8322',1,'vncl3020.h']]],
+  ['vncl3020_5finterrupt_5fcontrol_5fregister',['vncl3020_interrupt_control_register',['../unionvncl3020__interrupt__control__register.html',1,'']]],
+  ['vncl3020_5finterrupt_5fcontrol_5fregister_5ft',['vncl3020_interrupt_control_register_t',['../vncl3020_8h.html#a54e17af7027aca8c8b42228a64898f63',1,'vncl3020.h']]],
+  ['vncl3020_5finterrupt_5fstatus_5fregister',['vncl3020_interrupt_status_register',['../unionvncl3020__interrupt__status__register.html',1,'']]],
+  ['vncl3020_5finterrupt_5fstatus_5fregister_5ft',['vncl3020_interrupt_status_register_t',['../vncl3020_8h.html#aaabef534fca41487427401963423fe8b',1,'vncl3020.h']]],
+  ['vncl3020_5fir_5fled_5fcurrent_5fregister',['vncl3020_ir_led_current_register',['../unionvncl3020__ir__led__current__register.html',1,'']]],
+  ['vncl3020_5fir_5fled_5fcurrent_5fregister_5ft',['vncl3020_ir_led_current_register_t',['../vncl3020_8h.html#a147544adcced36d1819ae4a611f8146e',1,'vncl3020.h']]],
+  ['vncl3020_5fproximity_5frate_5fregister',['vncl3020_proximity_rate_register',['../unionvncl3020__proximity__rate__register.html',1,'']]],
+  ['vncl3020_5fproximity_5frate_5fregister_5ft',['vncl3020_proximity_rate_register_t',['../vncl3020_8h.html#a075b65d32a5d9db16ba302223c8ef252',1,'vncl3020.h']]],
+  ['vncl3020_5fproximity_5frates',['vncl3020_proximity_rates',['../vncl3020_8h.html#a7ebb016783068864f192819512e4f3b6',1,'vncl3020.h']]],
+  ['vncl3020_5frevision_5fregister',['vncl3020_revision_register',['../unionvncl3020__revision__register.html',1,'']]],
+  ['vncl3020_5frevision_5fregister_5ft',['vncl3020_revision_register_t',['../vncl3020_8h.html#a7c6f26c2c71ea8ae4f0f42232eda700d',1,'vncl3020.h']]],
+  ['vncl_5fthreshold_5fcounts',['vncl_threshold_counts',['../vncl3020_8h.html#aab1e60685c994569c2de5f1d94befed2',1,'vncl3020.h']]]
+];

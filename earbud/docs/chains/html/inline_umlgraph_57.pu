@@ -1,0 +1,9 @@
+@startuml
+
+    object OPR_WUW
+    OPR_WUW : id = CAP_ID_QVA
+    object OPR_VA_GRAPH_MANAGER
+    OPR_VA_GRAPH_MANAGER : id = EB_CAP_ID_VA_GRAPH_MANAGER
+    object EPR_VA_WUW_IN #lightgreen
+    OPR_WUW "IN(0)" <-- EPR_VA_WUW_IN
+@enduml

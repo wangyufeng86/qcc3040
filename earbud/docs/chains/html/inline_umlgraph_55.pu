@@ -1,0 +1,13 @@
+@startuml
+
+    object OPR_CVC_SEND
+    OPR_CVC_SEND : id = CAP_ID_CVCHS2MIC_MONO_SEND_WB
+    object EPR_VA_MIC_AEC_IN #lightgreen
+    OPR_CVC_SEND "AEC_IN(0)" <-- EPR_VA_MIC_AEC_IN
+    object EPR_VA_MIC_MIC1_IN #lightgreen
+    OPR_CVC_SEND "MIC1_IN(1)" <-- EPR_VA_MIC_MIC1_IN
+    object EPR_VA_MIC_MIC2_IN #lightgreen
+    OPR_CVC_SEND "MIC2_IN(2)" <-- EPR_VA_MIC_MIC2_IN
+    object EPR_VA_MIC_ENCODE_OUT #lightblue
+    EPR_VA_MIC_ENCODE_OUT <-- "OUT(0)" OPR_CVC_SEND
+@enduml

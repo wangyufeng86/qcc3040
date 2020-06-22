@@ -1,0 +1,83 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2017 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Crescendo ROM config common for both cores with no dual core enabled.
+# This is also the de facto top-level config that most others inherit
+# from. Think carefully before making changes here.
+
+%include config.COMMON_CHIP_BASE_CRESCENDO
+%include config.COMMON_CHIP_STREPLUS
+%include config.COMMON_CAPABILITIES
+%include config.MODIFY_STREPLUS_ROM
+
+# Use Heap memory, and select Crescendo heap sizes including PM heap
+%include config.MODIFY_HEAP_AURA
+
+# Install DM Profiling for DM heaps and pools
+%include config.MODIFY_DM_MEMORY_PROFILING
+
+# Include TTP support
+%include config.MODIFY_TIMED_PLAYBACK
+%include config.MODIFY_TIMESTAMPED
+
+# Include Mixer, Splitter, Compander capabilities
+%include config.MODIFY_MIXER
+%include config.MODIFY_SPLITTER
+%include config.MODIFY_COMPANDER
+
+#Install the source sync capability
+%include config.MODIFY_SOURCE_SYNC
+
+#Install the ringtone generator
+%include config.MODIFY_RINGTONE_GENERATOR
+
+#Install the IIR_RESAMPLER capability
+%include config.MODIFY_IIR_RESAMPLER
+
+# Install Resampler
+%include config.MODIFY_RESAMPLER
+
+#Install the Programmable EQ capability
+%include config.MODIFY_PEQ
+
+#Install the Bass Enhancement capability
+%include config.MODIFY_DBE
+
+#Install the VSE capability
+%include config.MODIFY_VSE
+
+#Install the crossover capability
+%include config.MODIFY_XOVER
+
+# Install CVC-related capabilities everywhere.
+# (Licensing is enabled, so that's OK.)
+%include config.MODIFY_INSTALL_CVC_MODULES
+%include config.MODIFY_INSTALL_CVC_CAPABILITIES_STREPLUS
+%include config.MODIFY_INSTALL_VOLUME
+
+#Install support for Persistent Storage
+%include config.MODIFY_PS_FOR_ACCMD
+
+#Install support for Direct Flash Access
+%include config.MODIFY_DIRECT_FLASH_ACCESS
+
+#Install the Switched Passthrough Consumer capability
+%include config.MODIFY_SWITCHED_PASSTHROUGH_CONSUMER
+
+# Include A2DP - Currently only on P0
+%include config.MODIFY_A2DP_STREPLUS
+
+# Include sco
+%include config.MODIFY_SCO_STREPLUS
+
+#install cvsd
+%include config.MODIFY_CVSD
+
+#Install the OPUS encoder capability
+%include config.MODIFY_OPUS_CELT_ENCODE
+
+%build
+DOWNLOAD_CELT_LIBS=../lib/celt/celt

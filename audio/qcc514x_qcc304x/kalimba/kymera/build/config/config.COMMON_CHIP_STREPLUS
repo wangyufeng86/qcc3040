@@ -1,0 +1,178 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2017 - 2019 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# chip-specific definitions for StrePlus
+
+%cpp
+
+# Symbol name as required by Hydra common code
+# <http://wiki/Hydra_Common_Firmware/Build_Definitions>
+CHIP_STREPLUS
+NUMBER_OF_PIOS=72
+
+#Max clock in Mhz
+CHIP_MAX_CLOCK = 120
+
+NUMBER_DM_BANKS=14
+
+# Size of PM RAM in 32-bit words
+PM_RAM_SIZE_WORDS=0x7000
+# First address of PM RAM
+PM_RAM_START_ADDRESS=0x04000000
+# Default first usable PM RAM address, with direct-mapped cache
+PM_RAM_FREE_START=0x04000800
+# Free end is the last address of usable PM RAM if (direct-mapped) cache is enabled.
+PM_RAM_FREE_END=0x0401B7FF
+# And the P1 cache starts at the next address
+PM_RAM_P1_CACHE_START_ADDRESS=0x0401B800
+# The last address of PM RAM
+PM_RAM_END_ADDRESS=0x0401C000
+NUMBER_PM_BANKS=14
+
+# Size of Audio Log buffer in words
+AUDIO_LOG_BUF_SIZE=512
+
+PATCH_ADDR_MAX=0x0400bfff
+
+# Area of Program Memory for Downloadable Capabilities
+PM_DOWNLOAD_START_VIRTUAL_ADDR=0x4200000UL
+PM_DOWNLOAD_VIRTUAL_ADDR_MASK=0x7FFFFFFUL
+
+# PM RAM used by cache in words. This changes with cache configuration, default is for direct mapped cache.
+PM_RAM_CACHE_BANK_SIZE_WORDS=0x200
+
+# 1 stereo codecs (Channels A/B)
+NUMBER_CODEC_INSTANCES=1
+CHIP_HAS_HIFI_ADC_ON_KCODEC_CHANNELS12=1
+NUMBER_SPDIF_INSTANCES=2
+NUMBER_DIGITAL_MICS=6
+INSTALL_ADC
+INSTALL_DAC
+HAVE_MIC_BIAS_CONTROL
+
+NUMBER_BAC_STREAM_MONITORS=8
+NUMBER_VOICE_SLOTS=8
+
+# In StrePlus PCM hardware supports 24 bits in 32 bit slots while running in multi slot mode.
+INSTALL_32BIT_SLOT
+
+# In StrePlus, DDS clock does not derive from root clock but derives from PLL and XTAL. The following define enables that part of code
+CHIP_HAS_SEPARATE_DDS_DOMAIN
+
+#Streplus DMIC clock freq range support ~600KHz which is considered as low power mode for most
+#of the external digi mic available in market
+HAVE_DMIC_LOWPOWER_MODE_CLK
+
+# In StrePlus the clock frequency for S/PDIF Rx is always same as DDS clock frequency
+CHIP_SPDIF_RX_CLK_DIV_RATIO=1
+
+#A new facility is added to Streplus where the data from DMIC A,B,C,D,E,F can be
+#routed to 6th and 7th decimation chains.
+HAVE_ADAPTIVE_ROUTING
+
+#A new hardware is added to Streplus which is attached to Analog/Digital mics where
+#it is possible to route mic data to internal hardware buffer.
+HAVE_CONTINUOUS_BUFFERING
+
+# Chips after Crescendo D01 has new registers controlling what PCM_INTERNAL_CLK_MODE does
+CHIP_HAS_PCM_INTERNAL_CLK_MODE_CONFIG
+PCM_INTERNAL_CLK_CNT_LIMIT=1250
+PCM_INTERNAL_CLK_HIGH_LIMIT=20
+
+# Chip requires audio endpoint sample rate change on kcodec clk change
+CHIP_NEEDS_RATE_CHANGE_ON_KCODEC_CLK
+
+# Which PIO pin the MCLK_IN signal comes in on.
+# This is hardwired into the chip design. (Mostly only Curator needs to know
+# which actual pin it is, but unfortunately we need to know in order to
+# ask Curator to measure the frequency on it.)
+EXTERNAL_MCLK_IN_PIO=31
+
+# StrePlus as well as Aura has a newer AUX PLL compared to Crescendo, some differences
+# are exposed in CCP messages
+CHIP_HAS_AUX_PLL_V3
+
+# Hardware version numbering
+# This StrePlus scheme is following the one used for Aura.
+# FIXME: this schema, which dates from Amber, doesn't really allow for
+# the possibility of one digital revision (dXX) being included in more
+# than one chip spin (rXX).
+# d00 digits are in r00 and do not include the ANC block
+# v01 digits are in r00 and include the ANC block
+# d01 digits are in r01 and do not include the ANC block
+# v02 digits will be in r01 and include the ANC block
+# At build time, our firmware cares about the difference between d00/v01 and
+# d01v02, but not about the difference between r00 and r01.
+# See also <http://wiki.europe.root.pri/AuraChipVersions>.
+CHIP_MINOR_VERSION_d00=0
+CHIP_MINOR_VERSION_d01=2
+CHIP_MINOR_VERSION_v01=CHIP_MINOR_VERSION_d00
+CHIP_MINOR_VERSION_v02=CHIP_MINOR_VERSION_d01
+# XXX: this line is currently needed for d01 FPGA builds. Once digits rename
+# their stuff from "dev" to "d01", it can go.
+CHIP_MINOR_VERSION_dev=CHIP_MINOR_VERSION_d01
+
+
+CHIP_BUILD_VER_LATEST=CHIP_MINOR_VERSION_d01
+CHIP_BUILD_VER=CHIP_MINOR_VERSION_$(CHIP_VER)
+
+# Metadata tag allocation threshold
+# This isn't really a chip property, but it's a function of pool sizes
+# and supported use cases, so it's definitely chip-specific
+DEFAULT_TAG_ALLOC_THRESHOLD = 150
+
+# To avoid direct access contention when using DIRECT_FLASH Streplus includes
+# hardware to avoid the contention between audio accessing Apps Flash and hostio (USB etc).
+# See EC-914, and B-261597 for the hardware implementation.
+CHIP_HAS_DEDICATED_APPS_QSPI_TRB_QUEUE=1
+
+# The clock manager asks the curator regularly for the chip temperature.
+INSTALL_TEMPERATURE_MONITORING
+
+# The subsystem has an ADPLL that need to be put in a safe state before
+# going into deep sleep. So the clock manager wants to be notified about
+# transitions to and from deep sleep.
+CLK_MGR_CARES_ABOUT_DEEP_SLEEP
+
+# The subsystem has an ADPLL that allows fine grained control over
+# the DSP clock frequency.
+CLK_MGR_CLK_CAN_BE_MAPPED
+
+# Chip has QCA-heritage BTSS, not CSR-heritage BTSS. Usages:
+# - With Zeagle IP we cannot detect if SCO is master or Slave.
+CHIP_HAS_CSR_BT=0
+
+%build
+
+# This is used for generating a local MIB .sdb file for convenience
+# (see hydra_modules/mib/makefile).
+# For that purpose it needs to match CHIP_VERSION_MAJOR in
+# (SUB_SYS_)CHIP_VERSION in the hardware (don't include any minor/
+# variant IDs). See <http://wiki/ChipVersionIDs>.
+# It's not critical that it be correct, but it makes configcmd
+# outputs filenames that are more likely to be what you want.
+# This definition is also used by cap_download_mgr (via DSP_ID),
+# which means it shouldn't change once it's been assigned.
+CHIPVER_FOR_MIB=0x4B
+
+# Used by kcc
+CHIP_NAME = streplus_audio
+CHIP_NAME_KCC = QCC514x_audio
+CHIP_ARCH = hydra
+CHIP_VER = d00
+# Indicate kcc this is architecture 4
+KAL_ARCH = 4
+# Indicate kcc this build uses kld
+LINKER = KLD
+
+# The clock manager asks the curator regularly for the chip temperature.
+BUILD_TEMPERATURE_MONITORING = TRUE
+
+# Stack size (in words) empirically determined to be big enough,
+# probably.
+# (By analysing various stack exhaustion coredumps from real
+# use cases.)
+FORCE_STACK_SIZE_WORDS=0x3C0

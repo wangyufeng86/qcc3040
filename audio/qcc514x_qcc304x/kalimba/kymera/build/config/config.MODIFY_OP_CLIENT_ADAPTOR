@@ -1,0 +1,20 @@
+############################################################################
+# Copyright (c) 2016 - 2018 Qualcomm Technologies International, Ltd.
+############################################################################
+
+%list ALL_SRCDIRS
+components/adaptor/op_client_adaptor
+
+%list ALL_INCDIRS
+components/adaptor/op_client_adaptor
+
+%list CFG_LIBS
+components/adaptor/op_client_adaptor/op_client_adaptor
+
+%cpp
+INSTALL_OP_CLIENT_ADAPTOR
+INSTALL_OP_CLIENT
+
+%build
+BUILD_OP_CLIENT_ADAPTOR=TRUE
+BUILD_OP_CLIENT=TRUE

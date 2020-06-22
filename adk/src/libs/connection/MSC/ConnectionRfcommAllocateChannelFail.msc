@@ -1,0 +1,31 @@
+# 
+# ConnectionRfcommAllocateChannel.msc
+# 21/03/04
+#
+# Multipoint Connection Library - RFC Failure to Allocate Server Channel
+#
+
+
+
+# Object definition
+define HEADING
+ object pl_m  "PL"
+ object cl_m  "CL"
+ object rfc_m "RFC"
+end
+
+define REGISTER
+ message pl_m cl_m "ConnectionRfcommAllocateChannel" "(Task PL_TASK)"
+ message cl_m rfc_m "RFC_REGISTER_REQ" "(phandle=CL_TASK)"
+ message rfc_m cl_m "RFC_REGISTER_CFM" "(phandle=CL_TASK, accept=FALSE, server_chan)"
+ message cl_m pl_m "CL_RFCOMM_CHANNEL_CFM" "(bool_t status=accept, uint16 local_server_channel=server_chan)"
+end
+
+# Draw
+ chart ConnectionRfcommAllocateChannelFail
+ HEADING
+ REGISTER
+end
+
+
+

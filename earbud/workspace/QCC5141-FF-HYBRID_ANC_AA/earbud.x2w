@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <aliases>
+        <alias name="extensions">../../../adk/tools/extensions</alias>
+    </aliases>
+    <project path="earbud.x2p" default="yes">
+        <dependencies>
+            <project name="sys_cfg"/>
+            <project name="fw_cfg"/>
+            <project name="dev_cfg"/>
+            <project name="ps_cfg"/>
+            <project name="ro_fs"/>
+            <project name="appsp0"/>
+            <project name="libs"/>
+            <project name="os"/>
+        </dependencies>
+    </project>
+    <project name="sys_cfg" path="../QCC5141-FF-HYBRID_ANC_AA/filesystems/sys_cfg.x2p" default="no"/>
+    <project name="fw_cfg" path="../QCC5141-FF-HYBRID_ANC_AA/filesystems/fw_cfg.x2p" default="no"/>
+    <project name="dev_cfg" path="../QCC5141-FF-HYBRID_ANC_AA/filesystems/dev_cfg.x2p" default="no"/>
+    <project name="ps_cfg" path="../QCC5141-FF-HYBRID_ANC_AA/filesystems/ps_cfg.x2p" default="no"/>
+    <project name="ro_fs" path="../QCC5141-FF-HYBRID_ANC_AA/filesystems/ro_fs.x2p" default="no"/>
+    <project name="kymera_audio" path="../../../audio/qcc514x_qcc304x/kalimba/kymera/build/kymera_audio.x2p" default="no"/>
+    <project name="appsp0" path="../QCC5141-FF-HYBRID_ANC_AA/bsp/appsp0.x2p" default="no"/>
+    <project name="os" path="../../../os/src/fw/src/hydra_os_qcc514x_qcc304x.x2p" default="no"/>
+    <project name="libs" path="../../../adk/src/libs/libs_qcc514x_qcc304x.x2p" default="no">
+        <dependencies>
+            <project name="os"/>
+        </dependencies>
+    </project>
+    <project name="deploy" path="../QCC5141-FF-HYBRID_ANC_AA/filesystems/deploy.x2p" default="no"/>
+    
+</workspace>

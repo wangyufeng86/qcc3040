@@ -1,0 +1,52 @@
+######################################################################################
+#
+# Copyright (c) 2019-2020 Qualcomm Technologies International, Ltd.
+#
+# This file contains all AT commands used by the Device Test Service
+#
+######################################################################################
+
+prefix DeviceTestServiceParser_
+
+# ------------------------------------------------------------------------------------
+# AT Commands for Authorisation
+#-------------------------------------------------------------------------------------
+
+{ AT + AUTHSTART \r } : DeviceTestServiceCommand_HandleAuthStart
+
+[0-9A-Fa-f] : hexdigit
+{ AT + AUTHRESP = %hexdigit+:response \r } : DeviceTestServiceCommand_HandleAuthResp
+
+{ AT + AUTHDISABLE \r } : DeviceTestServiceCommand_HandleAuthDisable
+
+# ------------------------------------------------------------------------------------
+# AT Commands for controlling the test mode operation
+#-------------------------------------------------------------------------------------
+
+{ AT + DTSENDTESTING = %d:reboot \r } : DeviceTestServiceCommand_HandleDtsEndTesting
+
+{ AT + DTSSETTESTMODE = %d:testmode \r } : DeviceTestServiceCommand_HandleDtsSetTestMode
+
+{ AT + DTSTESTMODE ? \r } : DeviceTestServiceCommand_HandleDtsTestModeQuery
+
+# ------------------------------------------------------------------------------------
+# AT Commands for configuration of ANC
+#-------------------------------------------------------------------------------------
+
+{ AT + ANCENABLE = %d:mode \r } : DeviceTestServiceCommand_HandleAncEnable
+
+{ AT + ANCDISABLE \r } : DeviceTestServiceCommand_HandleAncDisable
+
+{ AT + ANCREADFINEGAIN = %d:mode , %d:gainpath \r } : DeviceTestServiceCommand_HandleAncReadFineGain
+
+{ AT + ANCSETFINEGAIN = %d:mode , %d:gainpath , %d:gainvalue \r } : DeviceTestServiceCommand_HandleAncSetFineGain
+
+{ AT + ANCWRITEFINEGAIN = %d:mode , %d:gainpath , %d:gainvalue \r } : DeviceTestServiceCommand_HandleAncWriteFineGain
+
+
+# ------------------------------------------------------------------------------------
+# Sample AT Commands for extensions
+#-------------------------------------------------------------------------------------
+
+{ AT + LOCALBDADDR ? \r } : DeviceTestServiceCommand_HandleLocalBdaddr
+

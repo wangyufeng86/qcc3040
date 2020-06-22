@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019 Qualcomm Technologies International, Ltd.-->
+
+<types name="tws_topology" standalone="true">
+
+    <inherit header="marshal_common.h" count="NUMBER_OF_COMMON_MARSHAL_OBJECT_TYPES" x_macro_table="MARSHAL_COMMON_TYPES_TABLE"/>
+    
+    <typedef_header_source>typedef unsigned long long rule_event_t;</typedef_header_source>
+    <typedef_header_source>#define MARSHAL_TYPE_rule_event_t MARSHAL_TYPE_uint64</typedef_header_source>
+
+    <typedef_struct name="tws_topology_remote_rule_event_t" doc="Command to secondary to generate new rule event">
+        <member marshal="true" doc="Rule event to generate on Secondary">rule_event_t event</member>
+    </typedef_struct>
+
+    <typedef_struct name="tws_topology_remote_static_handover_cmd_t" basic="true" doc="Command to secondary for a static handover">
+        <member marshal="false" doc="Whether media was being played when this was requested">bool media_was_playing</member>
+    </typedef_struct>
+
+</types>

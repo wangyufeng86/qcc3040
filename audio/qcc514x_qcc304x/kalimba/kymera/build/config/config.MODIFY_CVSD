@@ -1,0 +1,23 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright 2017 - 2019 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Definitions required to build cvsd library
+
+
+%list ALL_SRCDIRS
+../lib/cvsd
+
+# List of global include paths
+%list ALL_INCDIRS
+../lib/cvsd
+
+# List of libraries to build
+%list CFG_LIBS
+../lib/cvsd/cvsd
+
+%cpp
+CVSD_CODEC_SOFTWARE
+

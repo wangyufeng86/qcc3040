@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project path="">
+    <file path="../../../../../os/bin/qcc514x_qcc304x/image/apps_p0_firmware.xuv"/>
+    <configurations>
+        <configuration name="prebuilt_image" options="deploy">
+            <devkitGroup>kitres://{0F0E0182-5E9B-4D6B-88F4-133D2574D14C}</devkitGroup>
+            <deployProject>deploy</deployProject>
+            <devkitConfiguration>prebuilt_image</devkitConfiguration>
+            <property name="SUBSYSTEM_NAME">apps0</property>
+            <property name="CHIP_TYPE">qcc514x_qcc304x</property>
+        </configuration>
+    </configurations>
+</project>

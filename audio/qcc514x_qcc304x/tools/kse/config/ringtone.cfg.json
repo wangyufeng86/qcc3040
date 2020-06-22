@@ -1,0 +1,64 @@
+{
+    "stream": [
+        {
+            "interface": "pcm",
+            "type": "sink",
+            "kwargs": {
+                "backing": "file",
+                "filename": "tmp/ringtone_0.wav",
+                "sample_rate": 8000,
+                "sample_width": 16
+            }
+        }
+    ],
+    "endpoint": [
+        {
+            "interface": "pcm",
+            "type": "sink",
+            "kwargs": {
+                "instance": 0,
+                "channel": 0,
+                "pcm_sync_rate": 8000,
+                "pcm_sample_rising_edge": 0,
+                "pcm_master_mode": 1,
+                "pcm_slot_count": 4,
+                "pcm_sample_format": 1,
+                "pcm_master_clock_rate": 512000
+            }
+        }
+    ],
+    "operator": [
+        {
+            "interface": "RINGTONE_GENERATOR",
+            "args": [
+                [
+                    "SET_SAMPLE_RATE",
+                    [
+                        320
+                    ]
+                ],
+                [
+                    "OPMSG_RINGTONE_ID_TONE_SEQ",
+                    [
+                        37264,
+                        41215,
+                        45056,
+                        1540,
+                        16272,
+                        32768
+                    ]
+                ]
+            ]
+        }
+    ],
+    "graph": [
+        [
+            "operator0o0",
+            "endpoint0"
+        ],
+        [
+            "endpoint0",
+            "stream0"
+        ]
+    ]
+}

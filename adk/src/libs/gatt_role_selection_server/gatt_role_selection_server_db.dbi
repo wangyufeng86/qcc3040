@@ -1,0 +1,46 @@
+#ifndef __GATT_ROLE_SELECTION_SERVICE_DB_DBI__
+#define __GATT_ROLE_SELECTION_SERVICE_DB_DBI__
+
+#include "gatt_role_selection_server_uuids.h"
+
+primary_service {
+    uuid : UUID_ROLE_SELECTION_SERVICE,
+    name : "ROLE_SELECTION_SERVICE",
+    sdp  : FALSE, # Included as an aide memoire. SDP records only of use for BREDR.
+    characteristic {
+        uuid        : UUID_ROLE_SEL_MIRRORING_STATE,
+        name        : "ROLE_SELECTION_MIRRORING_STATE",
+        flags       : [ FLAG_IRQ, FLAG_ENCR_R ],
+        properties  : [ read, notify ],
+        size_value  : 0x01,
+        value       : 0x00,
+        client_config
+        {
+            name  : "ROLE_SELECTION_MIRRORING_STATE_CLIENT_CONFIG",
+            flags : [ FLAG_IRQ , FLAG_DYNLEN ]
+        }
+    },
+    characteristic {
+        uuid        : UUID_ROLE_SEL_CONTROL_POINT,
+        name        : "ROLE_SELECTION_CONTROL",
+        flags       : [ FLAG_IRQ, FLAG_DYNLEN, FLAG_ENCR_W ],
+        properties  : [ write ],
+        value       : 0x00
+    },
+    characteristic {
+        uuid        : UUID_ROLE_SEL_FIGURE_OF_MERIT,
+        name        : "ROLE_SELECTION_FIGURE_OF_MERIT",
+        flags       : [ FLAG_IRQ, FLAG_ENCR_R ],
+        properties  : [ read, notify ],
+        size_value  : 0x02,
+        value       : 0x0000,
+        client_config
+        {
+            name  : "ROLE_SELECTION_FIGURE_OF_MERIT_CLIENT_CONFIG",
+            flags : [ FLAG_IRQ , FLAG_DYNLEN ]
+        }
+    }
+},
+
+#endif /* __GATT_ROLE_SELECTION_SERVICE_DB_DBI__ */
+

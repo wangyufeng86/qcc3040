@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2018 - 2020 Qualcomm Technologies International, Ltd.-->
+<!--Chain for HFP (SCO). Chain used on receiving earbud. This chain is used for both wideband and narrowband SCO -->
+
+<chain name="CHAIN_SCOFWD_RECV" id="1" generate_operator_roles_enum="False" generate_endpoint_roles_enum="False">
+
+    <include_header name="../earbud_cap_ids.h"/>
+    <include_header name="kymera_chain_roles.h"/>
+
+    <operator name="OPR_SCOFWD_RECV" id="EB_CAP_ID_ASYNC_WBS_DEC">
+        <sink name="FORWARDED_AUDIO" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_SOURCE_SYNC" id="CAP_ID_SOURCE_SYNC">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_VOLUME_CONTROL" id="EB_CAP_ID_VOL_CTRL_VOL">
+        <sink name="MAIN_IN" terminal="0"/>
+        <sink name="AUX_IN" terminal="1"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <input sink="OPR_SCOFWD_RECV.FORWARDED_AUDIO" role="EPR_SCOFWD_RX_OTA"/>
+    <input sink="OPR_VOLUME_CONTROL.AUX_IN" role="EPR_VOLUME_AUX"/>
+	<output source="OPR_VOLUME_CONTROL.OUT" role="EPR_SCO_VOL_OUT"/>
+
+    <connection source="OPR_SCOFWD_RECV.OUT" sink="OPR_SOURCE_SYNC.IN"/>
+    <connection source="OPR_SOURCE_SYNC.OUT" sink="OPR_VOLUME_CONTROL.MAIN_IN"/>
+
+</chain>
+

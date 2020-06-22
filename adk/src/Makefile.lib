@@ -1,0 +1,83 @@
+# Makefile for BlueLab3 with MingW
+TOP=..
+include $(TOP)/Makefile.path
+
+############################################################
+# Genparse needed to make headers
+
+all ::	$(BIN3)/genparse$(EXE_EXT)
+
+ifeq ($(HOSTBUILD_OS),win32)
+BIN_DIR=$(RESULT)/$(HOSTBUILD_PLATFORM)/bin/release
+else
+BIN_DIR=$(RESULT)/$(HOSTBUILD_PLATFORM)/bin
+endif
+$(info vm Makefile dot lib)
+$(info SDK_NAME=$(SDK_NAME))
+ifeq ($(SDK_NAME),ADK_QCC300x.WIN)
+ZARKOV_SDK_PATH=rom_sdk
+else
+ZARKOV_SDK_PATH=adk
+endif
+	
+$(BIN3)/genparse$(EXE_EXT) : $(BIN_DIR)/genparse$(EXE_EXT)
+	$(docopy)
+
+############################################################
+# Grab the library sources
+
+libs := $(SDK_LIBS)
+$(warning libs = $(libs) )
+
+want_variants =  $(subst libs,lib,$(foreach d,$(libs),$(wildcard libs/$(d)/VARIANTS)))
+
+ifeq ($(SDK_NAME),ADK_QCC300x.WIN)
+want_files =  $(subst libs,lib,$(foreach d,$(libs), $(if $(filter config, $(d)), $(foreach x,mak,$(wildcard libs/$(d)/*.$(x))) ,$(foreach x,c dbi h parse pl,$(wildcard libs/$(d)/*.$(x))))))
+want_files_qcc300x =  lib/audio_output/CONFIG_QCC300X/audio_output_pcm.c lib/connection/CONFIG_QCC300X/bluestack_handler.c lib/connection/CONFIG_QCC300X/dm_ble_latency.c lib/upgrade/CONFIG_QCC300X/upgrade_fw_if_config.c lib/vmal/CONFIG_QCC300X/vmal_transform.c lib/vmal/CONFIG_QCC300X/vmal_vm.c lib/vmal/CONFIG_QCC300X/vmal_pio.c lib/pio_common/CONFIG_QCC300X/pio_common_pin_function.c
+want := lib/Makefile $(want_variants) $(want_files) $(want_files_qcc300x)
+$(warning want_files_qcc300x = $(want_files_qcc300x) )
+$(warning want = $(want) )
+else
+want_files =  $(subst libs,lib,$(foreach d,$(libs), $(if $(filter config, $(d)), $(foreach x,mak,$(wildcard libs/$(d)/default.$(x))) ,$(foreach x,c dbi h parse pl,$(wildcard libs/$(d)/*.$(x)))))) lib/config/no_kymera.mak
+
+$(warning want_files = $(want_files) )
+
+want := lib/Makefile $(want_variants) $(want_files)
+endif
+
+
+all :: $(addprefix $(BL3)/src/,$(want))
+
+$(BL3)/src/lib/Makefile : libs/Makefile
+	$(domangle)
+
+unwicky := perl ../$(ZARKOV_SDK_PATH)/sdktools/partially_preprocess.pl -ULCD_ST7549i_WICKY
+
+$(BL3)/src/lib/%.c : libs/%.c
+	$(domkdir)
+	$(fixcopyright) $^ | $(fixversion) | $(unwicky) > $@
+
+$(BL3)/src/lib/%.h : libs/%.h
+	$(domkdir)
+	$(fixcopyright) $^ | $(fixversion) | $(unwicky) > $@
+
+$(BL3)/src/lib/% : libs/%
+	$(domangle)
+
+############################################################
+# A utility to let us build applications without using xIDE
+
+XIDE3_DST=$(BL3)/xide
+
+all :: $(PREFIX)/xip2make.pl \
+       $(PREFIX)/xipmunge.pl 
+
+$(PREFIX)/xip2make.pl : $(TOP)/$(ZARKOV_SDK_PATH)/scripts/xip2make.pl
+	$(docopy)
+
+$(PREFIX)/xipmunge.pl : $(TOP)/$(ZARKOV_SDK_PATH)/scripts/xipmunge.pl
+	$(docopy)
+
+
+
+# vim: set ft=make:

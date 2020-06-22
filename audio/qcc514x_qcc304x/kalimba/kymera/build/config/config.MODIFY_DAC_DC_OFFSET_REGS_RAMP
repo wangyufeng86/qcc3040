@@ -1,0 +1,16 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2019 - 2019 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+
+%cpp
+
+INSTALL_DAC_DC_OFFSET_REGS_RAMP
+
+%build
+
+%options
+SUPPORTS_DAC_DC_OFFSET_REGS_RAMP=not UNIT_TEST_BUILD
+

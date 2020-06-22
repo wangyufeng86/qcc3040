@@ -1,0 +1,90 @@
+<project buildenvironment="{84faf732-1340-4049-9094-244167adf571}" executionenvironment="{2b2c6868-a56e-4266-962a-cddf1c979343}" executionenvironmentname="CSR Virtual Machine" buildenvironmentoption="" buildenvironmentname="CSR Virtual Machine" executionenvironmentoption="" >
+ <folder name="C Files" >
+  <extension name="c" />
+  <file path="common.c" />
+  <file path="dm_baseband.c" />
+  <file path="dm_baseband_handler.c" />
+  <file path="dm_info.c" />
+  <file path="dm_info_handler.c" />
+  <file path="dm_init.c" />
+  <file path="dm_inquiry.c" />
+  <file path="dm_inquiry_handler.c" />
+  <file path="dm_link_policy.c" />
+  <file path="dm_sco.c" />
+  <file path="dm_security.c" />
+  <file path="dm_security_auth.c" />
+  <file path="dm_security_handler.c" />
+  <file path="dm_security_init.c" />
+  <file path="init.c" />
+  <file path="l2cap.c" />
+  <file path="l2cap_handler.c" />
+  <file path="l2cap_init.c" />
+  <file path="rfc.c" />
+  <file path="rfc_handler.c" />
+  <file path="rfc_init.c" />
+  <file path="sdp.c" />
+  <file path="sdp_handler.c" />
+  <file path="sdp_init.c" />
+  <file path="tcp_init.c" />
+  <file path="udp_init.c" />
+  <file path="bluestack_handler.c" />
+  <file path="main.c" />
+  <file path="connection_manager.c" />
+  <file path="dm_link_policy_handler.c" />
+  <file path="dm_sco_handler.c" />
+ </folder>
+ <folder name="Header Files" >
+  <extension name="h" />
+  <file path="udp_init.h" />
+  <file path="bluestack_handler.h" />
+  <file path="common.h" />
+  <file path="connection.h" />
+  <file path="connection_enum.h" />
+  <file path="connection_private.h" />
+  <file path="dm_baseband_handler.h" />
+  <file path="dm_info_handler.h" />
+  <file path="dm_init.h" />
+  <file path="dm_inquiry_handler.h" />
+  <file path="dm_link_key.h" />
+  <file path="dm_security_auth.h" />
+  <file path="dm_security_handler.h" />
+  <file path="dm_security_init.h" />
+  <file path="init.h" />
+  <file path="l2cap_handler.h" />
+  <file path="l2cap_init.h" />
+  <file path="l2cap_private.h" />
+  <file path="rfc_handler.h" />
+  <file path="rfc_init.h" />
+  <file path="sdp_handler.h" />
+  <file path="sdp_init.h" />
+  <file path="tcp_handler.h" />
+  <file path="tcp_init.h" />
+  <file path="udp_handler.h" />
+  <file path="connection_manager.h" />
+  <file path="dm_link_policy_handler.h" />
+  <file path="dm_sco_handler.h" />
+ </folder>
+ <properties currentconfiguration="Release" >
+  <configuration name="Debug Library" >
+   <property key="buildMatch" >(file):(line):</property>
+   <property key="buildtransport" >0</property>
+   <property key="debugtransport" >[bcsp|com1|115200]</property>
+   <property key="defines" >CONNECTION_DEBUG_LIB</property>
+   <property key="firmware" >bc02</property>
+   <property key="libs" >message,panic</property>
+   <property key="output" >test</property>
+   <property key="stacksize" >81</property>
+  </configuration>
+  <configuration name="Release" >
+   <property key="buildMatch" >(file):(line):</property>
+   <property key="buildtransport" >0</property>
+   <property key="debugtransport" >[SPI|LPT1|Yes]</property>
+   <property key="defines" >CONNECTION_DEBUG_LIB
+</property>
+   <property key="firmware" ></property>
+   <property key="libs" ></property>
+   <property key="output" ></property>
+   <property key="stacksize" >120</property>
+  </configuration>
+ </properties>
+</project>

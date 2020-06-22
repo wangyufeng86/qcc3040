@@ -1,0 +1,26 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2017 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# definitions for including support of delegating of rate adjustment to
+# a standalone rate adjust operator
+
+%cpp
+
+# include usb audio endpoint
+INSTALL_DELEGATE_RATE_ADJUST_SUPPORT
+
+%build
+# We base this on another variable for unit tests so that delegating rate_adjust can be turned on
+# at the top level unit test makefile
+BUILD_DELEGATE_RATE_ADJUST_SUPPORT=TRUE
+
+# List of global include paths
+%list ALL_INCDIRS
+components/stream/stream
+
+# List of libraries to build
+%list CFG_LIBS
+components/stream/stream

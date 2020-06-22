@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019 Qualcomm Technologies International, Ltd.-->
+
+<types name="earbud_handover">
+    <include_header name="marshal_common.h"/>
+
+    <typedef_struct name="earbud_sm_timers" doc="Earbud application timers">
+        <member marshal="true" doc="Out of ear A2DP pause timer">marshal_rtime_t out_of_ear_a2dp_pause</member>
+        <member marshal="true" doc="In ear A2DP play timer">marshal_rtime_t in_ear_a2dp_play</member>
+        <member marshal="true" doc="Out of ear SCO timer">marshal_rtime_t out_of_ear_sco_transfer</member>
+	<member marshal="true" doc="Is out of ear A2DP pause timer valid">uint8 out_of_ear_a2dp_pause_valid</member>
+	<member marshal="true" doc="Is out of ear SCO transfer timer valid">uint8 out_of_ear_sco_transfer_valid</member>
+	<member marshal="true" doc="Is in ear A2DP play timer valid">uint8 in_ear_a2dp_play_valid</member>
+    </typedef_struct>
+
+</types>

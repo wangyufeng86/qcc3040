@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project path="../">
+    
+    <configurations>
+        <configuration name="prebuilt_image" options="build|default">
+            <devkitConfiguration>prebuilt_image</devkitConfiguration>
+            <devkitGroup>kitres://{0F0E0182-5E9B-4D6B-88F4-133D2574D14C}</devkitGroup>
+            <deployProject>deploy</deployProject>
+            <property name="MAKEFILE_TO_CALL">makefile</property>
+            <property name="BUILD_ARGUMENTS">CONFIG=streplus_rom_release OSTYPE=Windows_NT</property>
+            <property name="CLEAN_ARGUMENTS">clean CONFIG=streplus_rom_release OSTYPE=Windows_NT</property>
+            <property name="BUILD_TYPE">MAKEFILE</property>
+            <property name="OUTPUT">../../../kalimba_ROM_7120/kymera/output/streplus_rom_release/build/debugbin/kymera_streplus_audio.elf</property>
+            <property name="SUBSYSTEM_NAME">audio</property>
+            <property name="ACAT_PATH">../../../tools/acat</property>
+            <property name="DKCS_PATH">../../../kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release</property>
+            <property name="KALSIM_MODE">false</property>
+            <property name="KALSIM_ENABLE_DEBUGGER">false</property>
+            <property name="KALSIM_NAME">kalsim_qcc514x_audio.exe</property>
+            <property name="KALSIM_PLATFORM">streplus</property>
+            <property name="KALSIM_FIRMWARE">../output/streplus_rom_kalsim_kalcmd2_release/build/debugbin/kymera_streplus_audio.elf</property>
+            <property name="KALSIM_KSE_PATH">../../../tools/kse</property>
+        </configuration>
+        <configuration name="kse" options="deploy">
+            <devkitConfiguration>prebuilt_image</devkitConfiguration>
+            <devkitGroup>kitres://{0F0E0182-5E9B-4D6B-88F4-133D2574D14C}</devkitGroup>
+            <property name="MAKEFILE_TO_CALL">makefile</property>
+            <property name="BUILD_ARGUMENTS">CONFIG=streplus_rom_release OSTYPE=Windows_NT</property>
+            <property name="CLEAN_ARGUMENTS">clean CONFIG=streplus_rom_release OSTYPE=Windows_NT</property>
+            <property name="BUILD_TYPE">MAKEFILE</property>
+            <property name="OUTPUT">../output/streplus_rom_kalsim_kalcmd2_release/build/debugbin/kymera_streplus_audio.elf</property>
+            <property name="SUBSYSTEM_NAME">audio</property>
+            <property name="ACAT_PATH">../../../tools/acat</property>
+            <property name="KALSIM_MODE">true</property>
+            <property name="KALSIM_ENABLE_DEBUGGER">false</property>
+            <property name="KALSIM_NAME">kalsim_qcc514x_audio.exe</property>
+            <property name="KALSIM_PLATFORM">streplus</property>
+            <property name="KALSIM_FIRMWARE">../output/streplus_rom_kalsim_kalcmd2_release/build/debugbin/kymera_streplus_audio.elf</property>
+            <property name="KALSIM_KSE_PATH">../../../tools/kse</property>
+        </configuration>
+    </configurations>
+</project>

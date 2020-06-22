@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019 Qualcomm Technologies International, Ltd.-->
+
+<types name="avrcp">
+    <include_header name="marshal_common.h"/>
+    <include_header name="avrcp.h"/>
+    <include_header name="task_list.h"/>
+
+    <source>
+#include "domain_marshal_types.h"
+    </source>
+
+    <typedef_header_source>
+/*! Flag used on AVRCP states to indicate if the state represents an activity
+    that will finish. */
+#define AVRCP_STATE_LOCK (0x10)
+    </typedef_header_source>
+
+    <typedef_struct name="avrcpTaskDataBitfields" basic="true" doc="AVRCP task data bitfields structure">
+        <member marshal="false" doc="Last sent AVRCP operation ID, used to determine which confirmation or error tone to play">unsigned op_id:8</member>
+        <member marshal="false" doc="Last sent AVRCP operation state, used to determine if operation was button press or release">unsigned op_state:1</member>
+        <member marshal="false" doc="Last sent AVRCP operation was a repeat">unsigned op_repeat:1</member>
+        <member marshal="false" doc="Does volume_time field contain valid time">unsigned volume_time_valid:1</member>
+        <member marshal="true" doc="Bitmask of events supported. See the avrcp_supported_events enum.">unsigned supported_events:13</member>
+        <member marshal="true" doc="Bitmask of events that have changed but notifications not sent. See the avrcp_supported_events enum.">unsigned changed_events:13</member>
+        <member marshal="true" doc="Bitmask of events that we have registered successfully. See the avrcp_supported_events enum.">unsigned registered_events:13</member>
+    </typedef_struct>
+
+    <typedef_enum name="avAvrcpState" basic="true" doc="Application AVRCP state machine states">
+        /*! Initial state */
+        AVRCP_STATE_NULL = 0,
+        /*! No AVRCP connection */
+        AVRCP_STATE_DISCONNECTED = 1,
+        /*! Locally initiated connection in progress */
+        AVRCP_STATE_CONNECTING_LOCAL = 2 + AVRCP_STATE_LOCK,
+        /*! Locally initiated connection in progress, waiting got client task to respond */
+        AVRCP_STATE_CONNECTING_LOCAL_WAIT_RESPONSE = 3 + AVRCP_STATE_LOCK,
+        /*! Remotely initiated connection is progress */
+        AVRCP_STATE_CONNECTING_REMOTE = 4 + AVRCP_STATE_LOCK,
+        /*! Remotely initiated connection in progress, waiting got client task to respond */
+        AVRCP_STATE_CONNECTING_REMOTE_WAIT_RESPONSE = 5 + AVRCP_STATE_LOCK,
+        /*! Control channel connected */
+        AVRCP_STATE_CONNECTED = 6,
+        /*! Disconnecting control channel */
+        AVRCP_STATE_DISCONNECTING = 7 + AVRCP_STATE_LOCK
+    </typedef_enum>
+
+    <typedef_struct name="avrcpTaskData" doc="AVRCP task data structure">
+        <member marshal="false" doc="AVRCP profile library instance">AVRCP *avrcp</member>
+        <member marshal="true" doc="Current state of AVRCP state machine">avAvrcpState state</member>
+        <member marshal="false" doc="AVRCP operation lock, used to serialise AVRCP operations">uint16 lock</member>
+        <member marshal="false" doc="Register notification lock, used to serialise notifications">uint16 notification_lock</member>
+        <member marshal="true" doc="Playback status lock, set when AVRCP Play or Pause sent.  Cleared when playback status received, or after timeout">uint16 playback_lock</member>
+        <member marshal="true" doc="AVRCP bitfields data">avrcpTaskDataBitfields bitfields</member>
+        <member marshal="false" doc="List of clients for AVRCP messages for this link">task_list_t *client_list</member>
+        <member marshal="false" doc="Count of the number of clients registered for this AVRCP link">uint8 client_lock</member>
+        <member marshal="false" doc="Count of outstanding response to requests sent to registered clients">uint8 client_responses</member>
+        <member marshal="false" doc="Task to receive vendor commands">Task vendor_task</member>
+        <member marshal="false" doc="Data for current vendor command">uint8 *vendor_data</member>
+        <member marshal="false" doc="Operation identifier of the current vendor command">uint16 vendor_opid</member>
+        <member marshal="false" doc="Was this connection initiated by the far end">bool remotely_initiated</member>
+        <member marshal="false" doc="Time of last volume change, only valid if volume_time_valid is set">rtime_t volume_time</member>
+        <member marshal="true" doc="Current play status of the AVRCP connection. This is not always known. See \ref avrcp_play_hint">avrcp_play_status play_status</member>
+        <member marshal="true" doc="Our local guess at the play status. Not always accurate.">avrcp_play_status play_hint</member>
+        <member marshal="false" doc="Temporarily suppress changes in absolute volume">bool suppress_absolute_volume</member>
+    </typedef_struct>
+</types>

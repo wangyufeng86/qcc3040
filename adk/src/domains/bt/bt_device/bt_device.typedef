@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019-2020 Qualcomm Technologies International, Ltd.-->
+
+<types name="bt_device">
+    <include_header name="csrtypes.h"/>
+    <include_header name="marshal_common.h"/>
+
+    <source>
+    </source>
+
+    <typedef_struct name="bt_device_pdd_t" doc="Device attributes store in Persistent Store">
+
+        <member marshal="true" doc="Last set volume for the device">uint8 a2dp_volume</member>
+        <member marshal="true" doc="HFP or HSP profile">uint8 hfp_profile</member>
+        <member marshal="true" doc="Type of device enumeration, DEVICE_TYPE_XXX">uint8 type</member>
+        <member marshal="true" doc="Device Link mode">uint8 link_mode</member>
+        <member marshal="true" doc="Bitmap of supported profiles">uint8 supported_profiles</member>
+        <member marshal="true" doc="Bitmap of last connected profiles">uint8 last_connected_profiles</member>
+        <member marshal="true" doc="Padding">uint16 padding</member>
+        <member marshal="true" doc="Misc. flags">uint16 flags</member>
+        <member marshal="true" doc="Supported SCO forwarding features">uint16 sco_fwd_features</member>
+        <member marshal="true" doc="Left Battery Server client configuration">uint16 battery_server_config_l</member>
+        <member marshal="true" doc="Right Battery Server client configuration">uint16 battery_server_config_r</member>
+        <member marshal="true" doc="GATT Server client configuration">uint16 gatt_server_config</member>
+        <member marshal="true" doc="GATT Server services changed flag">uint8 gatt_server_services_changed</member>
+        <member marshal="true" doc="Last selected Voice Assistant">uint8 voice_assistant</member>
+        <member marshal="true" doc="Device used by the device test service">uint8 dts</member>
+    </typedef_struct>
+
+</types>

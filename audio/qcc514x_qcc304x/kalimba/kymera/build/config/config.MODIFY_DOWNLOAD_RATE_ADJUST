@@ -1,0 +1,23 @@
+############################################################################
+# Confidential
+#
+# Copyright (c) 2017 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# definitions for including downloadable standalone rate adjustment operator
+
+# include rate adjust capability
+%list CFG_CAPABILITIES
+RATE_ADJUST
+
+%list ALL_SRCDIRS
+../lib/cbops
+capabilities/rate_adjust
+
+# List of global include paths
+%list ALL_INCDIRS
+capabilities/rate_adjust
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/rate_adjust/rate_adjust

@@ -1,0 +1,26 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright 2018 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Configuration file to make use of Kalimba's 2-Way cache.
+# This is useful for chips running from SQIF and having enough Program RAM.
+# If neither this file nor config.MODIFY_STREPLUS_PM_RAM_2WAYHALF_CACHE is
+# included, then direct cache will be used.
+
+%cpp
+INSTALL_2WAY_CACHE
+
+# PM RAM used by cache in words.
+PM_RAM_CACHE_BANK_SIZE_WORDS=0x2200
+
+# Default first usable PM RAM address, with 2-way cache
+PM_RAM_FREE_START = 0x04008800
+# Free end is the last address of usable PM RAM if cache is enabled.
+PM_RAM_FREE_END   = 0x040137FF
+# And the P1 cache starts at the next address
+PM_RAM_P1_CACHE_START_ADDRESS=0x04013800
+
+%build
+USE_2WAY_CACHE=1

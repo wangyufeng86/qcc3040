@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['operatorbundleload',['OperatorBundleLoad',['../group__trapset__operator.html#gaac26f1a27d441c7ab928e4cbbe15cff8',1,'operator.h']]],
+  ['operatorbundleunload',['OperatorBundleUnload',['../group__trapset__operator.html#gaa5bcad9b0e963e3c8bc115d26a268315',1,'operator.h']]],
+  ['operatorcreate',['OperatorCreate',['../group__trapset__operator.html#ga521c7142338c85a1e6c756c3d0395657',1,'operator.h']]],
+  ['operatordataload',['OperatorDataLoad',['../group__trapset__wake__on__audio.html#gab8f401effe84d79316e179d807a8c247',1,'operator.h']]],
+  ['operatordataloadex',['OperatorDataLoadEx',['../group__trapset__operator.html#ga2a7a368edb334ac3abcc12a740f235c6',1,'operator.h']]],
+  ['operatordataunload',['OperatorDataUnload',['../group__trapset__wake__on__audio.html#gae69b3fb4aff9040fca448036d4f6effe',1,'operator.h']]],
+  ['operatordataunloadex',['OperatorDataUnloadEx',['../group__trapset__operator.html#gafb062db11e7266a50d42376a4409a86d',1,'operator.h']]],
+  ['operatordelegatemultiple',['OperatorDelegateMultiple',['../group__trapset__operator.html#ga051cd8287bf864a21cf2d3a210fb1d9d',1,'operator.h']]],
+  ['operatordestroymultiple',['OperatorDestroyMultiple',['../group__trapset__operator.html#ga8f89fb78f6a4345f75a712bd915e3182',1,'operator.h']]],
+  ['operatorframeworkconfigurationget',['OperatorFrameworkConfigurationGet',['../group__trapset__operator.html#ga72f4fec77607bd17b1dc13e968193996',1,'operator.h']]],
+  ['operatorframeworkconfigurationset',['OperatorFrameworkConfigurationSet',['../group__trapset__operator.html#ga949c6dbc65fc9fc31f6d40e6cd01d3b4',1,'operator.h']]],
+  ['operatorframeworkenable',['OperatorFrameworkEnable',['../group__trapset__operator.html#ga4ee409610cc974f617f6f9c274f8ded2',1,'operator.h']]],
+  ['operatorframeworkpreserve',['OperatorFrameworkPreserve',['../group__trapset__wake__on__audio.html#ga6d852ad9be52ce96087da2016928eab0',1,'operator.h']]],
+  ['operatorframeworkrelease',['OperatorFrameworkRelease',['../group__trapset__wake__on__audio.html#gaa2b4c0805ee5bfdb855f6528179bc8f4',1,'operator.h']]],
+  ['operatorframeworktriggernotificationstart',['OperatorFrameworkTriggerNotificationStart',['../group__trapset__wake__on__audio.html#gac3029d98019c1d6019a72964e4e8071f',1,'operator.h']]],
+  ['operatorframeworktriggernotificationstop',['OperatorFrameworkTriggerNotificationStop',['../group__trapset__wake__on__audio.html#ga994b2660663f2d9f2bcc92c807f42283',1,'operator.h']]],
+  ['operatormessage',['OperatorMessage',['../group__trapset__operator.html#ga72ca5e811c7aeb823bab50ab56cd3d63',1,'operator.h']]],
+  ['operatorresetmultiple',['OperatorResetMultiple',['../group__trapset__operator.html#gab66d3a69fdb89ba17aca656929bab472',1,'operator.h']]],
+  ['operatorstartmultiple',['OperatorStartMultiple',['../group__trapset__operator.html#gaff9d8e3cd9de89a7b677a4c77b2ee701',1,'operator.h']]],
+  ['operatorstopmultiple',['OperatorStopMultiple',['../group__trapset__operator.html#gae866e285f64a83f5ddc95e45b60bc69a',1,'operator.h']]],
+  ['osinit',['OsInit',['../group__trapset__core.html#ga1f71ebda91fa4b2a1f9e536e6e93026e',1,'os.h']]],
+  ['otpreaddata',['OtpReadData',['../group__trapset__otp.html#ga4d888f97748346e453e0c81708f1cedd',1,'otp.h']]],
+  ['otpwritedata',['OtpWriteData',['../group__trapset__otp.html#ga7ab7553c9f796cc4f853290d1736abed',1,'otp.h']]]
+];

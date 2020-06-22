@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2020 Qualcomm Technologies International, Ltd.-->
+
+<chain name="CHAIN_INPUT_APTX_ADAPTIVE_STEREO_MIX" id="0" generate_endpoint_roles_enum="False" generate_operator_roles_enum="False">
+
+    <include_header name="../earbud_cap_ids.h"/>
+    <include_header name="kymera_chain_roles.h"/>
+    
+    <operator name="OPR_RTP_DECODER" id="CAP_ID_RTP_DECODE">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_APTX_ADAPTIVE_DECODER" id="EB_CAP_ID_APTX_ADAPTIVE_DECODE" processor="P1">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <input sink="OPR_RTP_DECODER.IN" role="EPR_SINK_MEDIA"/>
+    <connection source="OPR_RTP_DECODER.OUT" sink="OPR_APTX_ADAPTIVE_DECODER.IN"/>
+    <output source="OPR_APTX_ADAPTIVE_DECODER.OUT" role="EPR_SOURCE_DECODED_PCM"/>
+</chain>
+

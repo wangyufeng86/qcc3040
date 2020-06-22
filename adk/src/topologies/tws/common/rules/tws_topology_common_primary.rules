@@ -1,0 +1,129 @@
+{
+    "rules_tables": [
+        {
+            "name": "tws_topology_common_primary",
+
+            "doc": "TWS Topology common rules deciding behaviour in a Primary role.",
+
+            "include_headers": [
+                "tws_topology_common_primary_rule_functions.h",
+                "tws_topology_rule_events.h",
+                "tws_topology_primary_ruleset.h"
+            ],
+
+            "rules": [
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_NO_PEER",
+                    "rule_function": "ruleTwsTopPriPairPeer",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_PAIR_PEER",
+                    "doc": "Decide if peer pairing should run."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_PAIRED",
+                    "rule_function": "ruleTwsTopPriPeerPairedInCase",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_SET_PRIMARY_ADDRESS",
+                    "doc": "Decide if Primary address should be set, when peer pairing completes whilst in the case."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_PAIRED",
+                    "rule_function": "ruleTwsTopPriPeerPairedOutCase",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_SET_PRIMARY_ADDRESS_FIND_ROLE",
+                    "doc": "Decide if Primary address should be set and role selection started, when peer pairing completes out of the case."
+                },
+
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_ROLE_SELECTED_PRIMARY",
+                    "rule_function": "ruleTwsTopPriSelectedPrimary",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_BECOME_PRIMARY",
+                    "doc": "When Primary role has been selected, decide if switch to become Primary role should be executed."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_ROLE_SELECTED_SECONDARY",
+                    "rule_function": "ruleTwsTopPriNoRoleSelectedSecondary",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_BECOME_SECONDARY",
+                    "doc": "When Secondary role has been selected, decide if switch to become Secondary role should be executed."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_ROLE_SELECTED_ACTING_PRIMARY",
+                    "rule_function": "ruleTwsTopPriSelectedActingPrimary",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_BECOME_ACTING_PRIMARY",
+                    "doc": " When Acting Primary role has been selected, decide if switch to become Acting Primary role should be executed."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_ROLE_SELECTED_SECONDARY",
+                    "rule_function": "ruleTwsTopPriPrimarySelectedSecondary",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_ROLE_SWITCH_TO_SECONDARY",
+                    "doc": "When an Earbud in an acting primary role has received decision to be secondary, decide if the switch to secondary role should be executed."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_DFU_ROLE",
+                    "rule_function": "ruleTwsTopPriSwitchToDfuRole",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_DFU_ROLE",
+                    "doc": "When requested to select DFU rules, select them"
+                },
+
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_ROLE_SWITCH",
+                    "rule_function": "ruleTwsTopPriEnableConnectablePeer",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_CONNECTABLE_PEER",
+                    "doc": "After switching to primary role, decide if Primary should enable page scan for Secondary to connect."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_CONNECTED_BREDR",
+                    "rule_function": "ruleTwsTopPriDisableConnectablePeer",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_CONNECTABLE_PEER",
+                    "doc": "After peer BREDR connection established, decide if Primary should disable page scan for Secondary."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_CONNECTED_BREDR",
+                    "rule_function": "ruleTwsTopPriConnectPeerProfiles",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_CONNECT_PEER_PROFILES",
+                    "doc": "When peer BREDR link established by Secondary, decide which profiles to connect."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_CONNECTED_BREDR",
+                    "rule_function": "ruleTwsTopPriReleasePeer",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_RELEASE_PEER",
+                    "doc": "When peer BREDR link established by Secondary, but we have since entered case, release the peer link (dont wait for disconnect as other rules handle)."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_HANDSET_LINKLOSS",
+                    "rule_function": "ruleTwsTopPriHandsetLinkLossReconnect",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_CONNECT_HANDSET",
+                    "doc": "When handset BREDR link is lost, decide if Primary Earbud should attempt to reconnect."
+                },
+
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_ROLE_SWITCH",
+                    "rule_function": "ruleTwsTopPriAllowHandsetConnect",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_ALLOW_HANDSET_CONNECT",
+                    "doc": "When role switch complete, decide if connection manager should accept handset connections."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_ROLE_SWITCH",
+                    "rule_function": "ruleTwsTopPriEnableLeConnectableHandset",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_LE_CONNECTABLE_HANDSET",
+                    "doc": "When role switch completed, decide if LE advertisement should be enabled for handset connections."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_ROLE_SWITCH",
+                    "rule_function": "ruleTwsTopPriRoleSwitchConnectHandset",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_CONNECT_HANDSET",
+                    "doc": "Connect handset after role switch to Primary"
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_HANDSET_ACL_CONNECTED",
+                    "rule_function": "ruleTwsTopPriDisableConnectableHandset",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_CONNECTABLE_HANDSET",
+                    "doc": "After handset BREDR ACL connection established, decide if Primary should disable page scan."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_PROHIBIT_CONNECT_TO_HANDSET",
+                    "rule_function": "ruleTwsTopPriDisconnectHandset",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_DISCONNECT_HANDSET",
+                    "doc": "Decide what to do after handset connection has been prohibited"
+                }
+            ]
+        }
+    ]
+}

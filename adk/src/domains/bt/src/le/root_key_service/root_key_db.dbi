@@ -1,0 +1,41 @@
+#ifndef __ROOT_KEY_SERVICE_DB_DBI__
+#define __ROOT_KEY_SERVICE_DB_DBI__
+
+#include "root_key_uuids.h"
+
+primary_service {
+    uuid : UUID_ROOT_KEY_SERVICE,
+    name : "ROOT_TRANSFER_SERVICE",
+    sdp  : FALSE, # Included as an aide memoire. SDP records only of use for BREDR.
+    characteristic {
+        uuid        : UUID_ROOT_KEY_FEATURES,
+        name        : "UUID_ROOT_KEY_FEATURES",
+        flags       : [ FLAG_IRQ, FLAG_ENCR_R ],
+        properties  : [ read ],
+        size_value  : 0x02,
+        value       : 0x0000
+    },
+    characteristic {
+        uuid        : UUID_ROOT_KEY_STATUS,
+        name        : "UUID_ROOT_KEY_STATUS",
+        flags       : [ FLAG_IRQ, FLAG_ENCR_R ],
+        properties  : [ read ],
+        value       : 0x00
+    },
+    characteristic {
+        uuid        : UUID_ROOT_KEY_CHALLENGE_CONTROL,  # Note that this is an Indicate characterisic
+        name        : "UUID_ROOT_KEY_CHALLENGE_CONTROL",
+        flags       : [ FLAG_IRQ, FLAG_ENCR_W, FLAG_DYNLEN ],
+        properties  : [ write_cmd ],
+        value       : 0x00
+    },
+    characteristic {
+        uuid        : UUID_ROOT_KEY_KEYS_CONTROL,
+        name        : "UUID_ROOT_KEY_KEYS_CONTROL",
+        flags       : [ FLAG_IRQ, FLAG_ENCR_W, FLAG_DYNLEN ],
+        properties  : [ write_cmd ],
+        value       : 0x00
+    }
+},
+#endif /* __ROOT_KEY_SERVICE_DB_DBI__ */
+

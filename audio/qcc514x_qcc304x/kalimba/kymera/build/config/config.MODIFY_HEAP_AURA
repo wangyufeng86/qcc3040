@@ -1,0 +1,25 @@
+############################################################################
+# Copyright (c) 2015 Qualcomm Technologies International, Ltd.
+# All Rights Reserved.
+# Qualcomm Technologies International, Ltd. Confidential and Proprietary.
+# Notifications and licenses are retained for attribution purposes only
+#
+############################################################################
+# definitions for heap memory on Crescendo builds
+
+%include config.MODIFY_EXTERNAL_MEMORY
+
+%cpp
+POOL_OVERFLOW_TO_HEAP
+
+# Enable dynamic pools where pool blocks are allocated from the heap after
+# the heap is configured.
+PMALLOC_DYNAMIC_POOLS
+
+#Maximum DM boundary guard
+HEAP_MAX_BOUNDARY_GUARD=0x40
+
+#enable external SRAM
+EXT_RAM_READ_WINDOW=3
+EXT_RAM_WRITE_WINDOW=4
+

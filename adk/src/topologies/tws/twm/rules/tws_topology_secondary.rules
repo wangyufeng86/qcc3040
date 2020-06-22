@@ -1,0 +1,26 @@
+{
+    "rules_tables": [
+        {
+            "name": "tws_topology_secondary",
+
+            "doc": "Table of rules for a TWS TWM earbud in the Secondary role",
+
+            "include_headers": [
+                "tws_topology_common_secondary_rule_functions.h",
+                "tws_topology_rule_events.h",
+                "tws_topology_secondary_ruleset.h"
+            ],
+
+            "rules_includes": [
+                {
+                    "file": "../../common/rules/tws_topology_common_secondary.rules",
+                    "rules_table_name": "tws_topology_common_secondary"
+                },
+                {
+                    "file": "tws_topology_twm_secondary.rules",
+                    "rules_table_name": "tws_topology_twm_secondary"
+                }
+            ]
+        }
+    ]
+}

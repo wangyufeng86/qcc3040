@@ -1,0 +1,628 @@
+// *****************************************************************************
+// Copyright (c) 2005 - 2017 Qualcomm Technologies International, Ltd.
+// %%version
+// *****************************************************************************
+
+#include "cvc_modules.h"
+#include "audio_proc_library.h"
+#include "cvc_receive_cap_asm.h"
+#include "mem_utils/dynamic_mem_macros.h"
+#include "frame_iir_resamplerv2_asm_defs.h"
+#include "shared_volume_control_asm_defs.h"
+
+#define uses_RCV_FREQPROC  (uses_RCV_NS || uses_AEQ)
+#define uses_RCV_VAD       (uses_RCV_AGC || uses_AEQ)
+
+//*****extra includes and temp fixes start here*****************
+   .CONST   $IIR_RESAMPLEV2_IIR_BUFFER_SIZE      19;
+   .CONST   $IIR_RESAMPLEV2_FIR_BUFFER_SIZE      10;   
+   .CONST   $IIR_RESAMPLEV2_APPENDED_BUFFER_SIZE      ($IIR_RESAMPLEV2_IIR_BUFFER_SIZE+$IIR_RESAMPLEV2_FIR_BUFFER_SIZE);
+   .CONST   $iir_resamplev2.OBJECT_SIZE_SNGL_STAGE    $frame_iir_resamplerv2.iir_resampler_op_struct.STRUC_SIZE + $IIR_RESAMPLEV2_APPENDED_BUFFER_SIZE;
+//*****extra includes and temp fixes end here*******************
+
+
+#define MAX_NUM_PEQ_STAGES             (5)
+
+#define rcv_scratch_dm1 fft_real
+#define aeq_scratch rcv_scratch_dm1
+#define oms_scratch rcv_scratch_dm1
+#define vad_scratch rcv_scratch_dm2
+
+// Placehold for Variables that will be resized by loader
+#define WILL_BE_RESIZED_RCV                      1
+
+
+
+// Constants for Variants
+.CONST $CVC_RCV_VAR.NB.SAMPLES_PER_FRAME        60;
+.CONST $CVC_RCV_VAR.NB.NUM_FREQ_BIN             65;
+.CONST $CVC_RCV_VAR.NB.FFT_BUFFER_SIZE          64;
+.CONST $CVC_RCV_VAR.NB.WINDOW_SIZE              120;
+
+.CONST $CVC_RCV_VAR.WB.SAMPLES_PER_FRAME        120;
+.CONST $CVC_RCV_VAR.WB.NUM_FREQ_BIN             129; 
+.CONST $CVC_RCV_VAR.WB.FFT_BUFFER_SIZE          128;
+.CONST $CVC_RCV_VAR.WB.WINDOW_SIZE              240;
+
+.CONST $CVC_RCV_VAR.SWB.SAMPLES_PER_FRAME       240;
+.CONST $CVC_RCV_VAR.SWB.NUM_FREQ_BIN            257; 
+.CONST $CVC_RCV_VAR.SWB.FFT_BUFFER_SIZE         256;
+.CONST $CVC_RCV_VAR.SWB.WINDOW_SIZE             480;
+
+
+.MODULE $M.CVC_RCV_CAP.data;
+   .DATASEGMENT DM;
+
+   //  ******************  Define Scratch/Shared Memory ************************
+
+   // Frequency Domain Shared working buffers
+   // SP.  D_rcv_real/D_rcv_imag Need extra bins for Freq Extension even in NB
+   .BLOCK/SM1 scratch_dm1;
+      .VAR D_rcv_real[$CVC_RCV_VAR.WB.NUM_FREQ_BIN];
+      // rcv_scratch_dm1: max(oms,aeq,vad)
+      .VAR fft_real[$CVC_RCV_VAR.WB.FFT_BUFFER_SIZE];            
+      .VAR fft_circ[$CVC_RCV_VAR.WB.FFT_BUFFER_SIZE];
+   .ENDBLOCK;
+
+   .BLOCK/SM2 rcv_scratch_dm2;
+      .VAR D_rcv_imag[$CVC_RCV_VAR.WB.NUM_FREQ_BIN];
+      .VAR fft_imag[$CVC_RCV_VAR.WB.FFT_BUFFER_SIZE];             
+   .ENDBLOCK;
+
+   // ********** Parameters and statistics **********************************
+   .BLOCK/DM2 rcv_global;
+      .VAR OneValue  = 1.0;
+      .VAR rcv_variant_bex = RCV_VARIANT_WB;
+      .VAR rcv_variant = 0;
+      .VAR ZeroValue = 0;
+      .VAR cvc_parameters[$M.CVC_RECV.PARAMETERS.STRUCT_SIZE+1];
+   .ENDBLOCK;
+
+   
+   // Array of Status Fields for Capability
+   .VAR  StatusArray[] =
+      &stream_rcvout + $cvc.stream.frmbuffer.PEAK_VALUE_FIELD,
+      &stream_rcvin + $cvc.stream.frmbuffer.PEAK_VALUE_FIELD,
+#if uses_AEQ
+      &AEQ_DataObject + $M.AdapEq.AEQ_GAIN_LOW_FIELD,          // AEQ Gain Low
+      &AEQ_DataObject + $M.AdapEq.AEQ_GAIN_HIGH_FIELD,         // AEQ Gain High
+      &AEQ_DataObject + $M.AdapEq.STATE_FIELD,                 // AEQ State
+      &AEQ_DataObject + $M.AdapEq.AEQ_POWER_TEST_FIELD,        // AEQ Tone Detection
+      &AEQ_DataObject + $M.AdapEq.AEQ_TONE_POWER_FIELD,        // AEQ Tone Power
+#else
+      &ZeroValue,&ZeroValue,&ZeroValue,&ZeroValue,&ZeroValue,
+#endif
+#if uses_RCV_AGC
+      &rcv_agc400_dm + $agc400.OFFSET_INPUT_LEVEL_FIELD,   // AGC Speech Power Level (Q8.16 log2 power)
+      &rcv_agc400_dm + $agc400.OFFSET_G_REAL_FIELD,        // AGC Applied Gain (Q6.17 linear gain [0 - 64.0])
+#else
+      &OneValue,&OneValue,
+#endif
+      &ZeroValue;     // RESERVED
+
+
+// --------------------------------------------
+#if uses_RCV_FREQPROC
+   // Fequency Domain Objects
+
+   .BLOCK/DM;
+      .VAR rcv_harm_obj[$harm100.STRUC_SIZE] =
+         &stream_rcvin,                // $harm100.INP_X_FIELD
+         &rcv_variant,                 // $harm100.VARIANT_FIELD
+         &harm_history,                // $harm100.HISTORY_FIELD
+         0 ...;
+
+      // The three buffers in this object are temporary to FFT and could be shared
+      .VAR fft_obj[$M.filter_bank.fft.STRUC_SIZE] =
+         0,
+         &fft_real,
+         &fft_imag,
+         &fft_circ,
+         cvc_fb_split_table, // PTR_FFTSPLIT
+         0 ...;
+
+       // Analysis Filter Bank Config Block
+      .VAR RcvAnalysisBank[$filter_bank.analysis.STRUC_SIZE] =
+         cvc_analysis_config,             // OFFSET_CONFIG_OBJECT
+         &stream_rcvin,                   // CH1_PTR_FRAME
+         &bufd_rcv_inp,                   // OFFSET_CH1_PTR_HISTORY
+         &fft_obj,                        // FFT_OBJ_FIELD
+         &rcv_X,                          // OFFSET_FREQ_OBJ
+         0;
+
+       // Syntheseis Filter Bank Config Block
+      .VAR RcvSynthesisBank[$filter_bank.synthesis.STRUC_SIZE] =
+         cvc_synthysis_config,            // OFFSET_CONFIG_OBJECT
+         &stream_rcvout,                  // OFFSET_PTR_FRAME
+         &bufdr_outp,                     // OFFSET_PTR_HISTORY
+         &fft_obj,                        // FFT_OBJ_FIELD
+         &rcv_X,                          // OFFSET_FREQ_OBJ
+         1,                               // ZDN_FIELD
+         -1;                              // SP_FIELD
+
+      .VAR rcv_X[] =
+         &D_rcv_real,
+         &D_rcv_imag,
+         &BExp_X;
+
+      .VAR BExp_X;
+   .ENDBLOCK;
+
+   .BLOCK/DM;
+      .VAR harm_history[WILL_BE_RESIZED_RCV];
+      .VAR bufd_rcv_inp[WILL_BE_RESIZED_RCV];
+      .VAR bufdr_outp[WILL_BE_RESIZED_RCV];
+   .ENDBLOCK;
+#endif
+
+
+#if uses_RCV_NS
+   // <start> of memory declared per instance of oms280
+   .VAR rcvoms_state[WILL_BE_RESIZED_RCV];
+   .VAR/DM1 rcvLpX_queue[WILL_BE_RESIZED_RCV];
+
+   .VAR oms280rcv_obj[$M.oms280.STRUC_SIZE] =
+        &rcv_X,                 // Y_FIELD
+        &rcv_X,                 // X_FIELD
+        &rcv_variant,           // PTR_VARIANT_FIELD
+        cvc_oms_config,         // PTR_MODE_FIELD
+        cvc_parameters + $M.CVC_RECV.PARAMETERS.OFFSET_RCV_OMS_HFK_AGGR, // PARAM_FIELD
+        &cvclib_table,          // $M.oms280.PBP_TABLE_FIELD  
+        &rcvLpX_queue,          // $M.oms280.LPX_QUEUE_START_FIELD
+        0,                      // $M.oms280.PTR_G_FIELD
+        0,                      // $M.oms280.PTR_LPXNZ_FIELD,
+        &rcvoms_state,          // $M.oms280.PTR_STATE_FIELD
+        &oms_scratch,           // $M.oms280.PTR_SCRATCH_FIELD
+        
+        0.45,                   // $M.oms280.HARMONICITY_THRESHOLD_FIELD
+        $dms200.MS_DUR,         // $M.oms280.MIN_SEARCH_TIME_FIELD
+        1,                      // $M.oms280.MMSE_LSA_ON_FIELD
+#if uses_AEQ                    // $M.oms280.PTR_TONE_FLAG_FIELD
+        &AEQ_DataObject + $M.AdapEq.AEQ_POWER_TEST_FIELD,
+#else
+        0,
+#endif
+        0 ...;      
+#endif
+
+   // only executed when FE/BEX
+    .VAR/DM1 dac_upsample_dm1[$iir_resamplev2.OBJECT_SIZE_SNGL_STAGE] =
+        &stream_rcvin,        // INPUT_PTR_FIELD
+        &stream_rcvout,       // OUTPUT_PTR_FIELD
+        0,                    // CONVERSION_OBJECT_PTR_FIELD
+        -8,                   // INPUT_SCALE_FIELD
+        8,                    // OUTPUT_SCALE_FIELD
+        0,                    // INTERMEDIATE_CBUF_PTR_FIELD
+        0,                    // INTERMEDIATE_CBUF_LEN_FIELD
+        0 ...;
+
+
+#if uses_DCBLOCK
+   .VAR/DM1 sco_dcblock[PEQ_OBJECT_SIZE(1)] =
+      &stream_rcvin,               // PTR_INPUT_DATA_BUFF_FIELD
+      &stream_rcvin,               // PTR_OUTPUT_DATA_BUFF_FIELD
+      1,                           // MAX_STAGES_FIELD
+      cvc_vad_dc_ceoffs+$M.vad410.DCB_PEQ_COEFF_OFFSET,        // PARAM_PTR_FIELD
+      0 ...;
+#endif
+
+#if uses_RCV_PEQ
+   .VAR/DM1 rcv_peq[PEQ_OBJECT_SIZE(MAX_NUM_PEQ_STAGES)] =
+      stream_rcvout,              // PTR_INPUT_DATA_BUFF_FIELD
+      stream_rcvout,              // PTR_OUTPUT_DATA_BUFF_FIELD
+      MAX_NUM_PEQ_STAGES,         // MAX_STAGES_FIELD
+      cvc_parameters + $M.CVC_RECV.PARAMETERS.OFFSET_RCV_PEQ_CONFIG,  // PARAM_PTR_FIELD
+      0 ...;
+#endif
+
+#if uses_RCV_VAD
+   // Declare a dummy frame buffer structure, intended for linear buffer that
+   // could be used with calls to '$frmbuffer.get_buffer_with_start_address'
+   // between VAD PEQ and VAD processing modules.  $frmbuffer.FRAME_SIZE_FIELD
+   // will be set by VAD PEQ.  Because the buffer is linear the length and
+   // base address are zero.
+
+    .VAR  vad_peq_output[$cvc.stream.frmbuffer.STRUC_SIZE.NO_PEAK]  =
+            &vad_scratch,  // $frmbuffer.FRAME_PTR_FIELD
+            0,             // $frmbuffer.FRAME_SIZE_FIELD
+            0,             // $frmbuffer.BUFFER_SIZE_FIELD
+            0;             // $frmbuffer.BUFFER_START_ADDRESS_FIELD
+            
+   // VAD filter - FE/NB/WB/UWB
+   .VAR/DM1 rcv_vad_peq[PEQ_OBJECT_SIZE(1)] =
+      &stream_rcvin,                            // PTR_INPUT_DATA_BUFF_FIELD
+      &vad_peq_output,                          // INPUT_CIRCBUFF_SIZE_FIELD
+      1,                                        // MAX_STAGES_FIELD
+      cvc_vad_dc_ceoffs+$M.vad410.VAD_PEQ_COEFF_OFFSET,                    // PARAM_PTR_FIELD
+      0 ...;
+
+   // RCV VAD
+   .VAR/DM1 rcv_vad410[$M.vad410.OBJECT_SIZE_FIELD] =
+      &stream_rcvin,   // $M.vad410.INPUT_PTR_FIELD
+      cvc_parameters + $M.CVC_RECV.PARAMETERS.OFFSET_RCV_VAD_ATTACK_TC, // Parameter Ptr
+      &rcv_variant,        // $M.vad410.PTR_VARIANT_FIELD
+      &rcv_vad_peq,        // $M.vad410.PTR_FILTER_FIELD
+      0 ...;
+
+#endif
+
+#if uses_RCV_AGC
+   // RCV AGC
+   .VAR/DM rcv_agc400_dm[$agc400.STRUCT_SIZE] =
+      cvc_parameters + $M.CVC_RECV.PARAMETERS.OFFSET_RCV_AGC_G_INITIAL, // OFFSET_PARAM_PTR_FIELD
+      stream_rcvout,       //OFFSET_PTR_INPUT_FIELD
+      stream_rcvout,       //OFFSET_PTR_OUTPUT_FIELD
+      &rcv_vad410 + $M.vad410.FLAG_FIELD, //OFFSET_PTR_VAD_VALUE_FIELD
+      &rcv_variant,        // PTR_VARIANT_FIELD
+#if uses_AEQ               //OFFSET_PTR_TONE_FLAG_FIELD
+      &AEQ_DataObject + $M.AdapEq.AEQ_POWER_TEST_FIELD,
+#else
+      0,
+#endif
+      0 ...;
+#endif
+
+#if uses_AEQ
+   .VAR/DM aeq_band_pX[$M.AdapEq.Bands_Buffer_Length];
+   .VAR/DM AEQ_DataObject[$M.AdapEq.STRUC_SIZE] =
+      0,                                        // CONTROL_WORD_FIELD
+      $M.CVC_RECV.CONFIG.AEQBYP,      // BYPASS_BIT_MASK_FIELD
+      $M.CVC_RECV.CONFIG.BEXBYP,      // BEX_BIT_MASK_FIELD
+      $CVC_RCV_VAR.WB.NUM_FREQ_BIN,                 // NUM_FREQ_BINS
+      cvc_parameters + $M.CVC_RECV.PARAMETERS.OFFSET_AEQ_ATK_TC, // PTR_PARAMS_FIELD
+      &rcv_X,
+      &rcv_X,
+      0,                                        // AEQ_EQ_COUNTER_FIELD         14
+      267,                                      // AEQ_EQ_INIT_FRAME_FIELD      15
+      0,                                        // AEQ_GAIN_LOW_FIELD           16
+      0,                                        // AEQ_GAIN_HIGH_FIELD          17
+      &rcv_vad410 + $M.vad410.FLAG_FIELD,       // VAD_AGC_FIELD                18
+      0.036805582279178,                        // ALFA_ENV_FIELD               23
+      1.0-0.036805582279178,                    // ONE_MINUS_ALFA_ENV_FIELD     24
+      &aeq_band_pX,                             // PTR_AEQ_BAND_PX_FIELD        25
+      0,                                        // STATE_FIELD                  26
+      ndvc_volume_level+$shared_volume_control._shared_volume_struct.NDVC_NOISE_LEVEL_FIELD,    // PTR_VOL_STEP_UP_FIELD        27
+      0,                                        // AEQ_TONE_POWER_FIELD Q8.16   44
+      0,                                        // AEQ_POWER_TEST_FIELD         47
+      &aeq_scratch,                             // PTR_SCRATCH_G_FIELD
+      0 ...;
+#endif
+
+   // -----------------------------------------------------------------------------
+   .BLOCK;
+      .VAR stream_rcvin[$cvc.stream.frmbuffer.STRUC_SIZE] =
+         &D_rcv_real,
+         ext_frame_in_size,
+         0 ...;
+
+      // initialized by filter_bank analysis init
+      .VAR stream_rcvout[$cvc.stream.frmbuffer.STRUC_SIZE] =
+         0 ...;
+   .ENDBLOCK;
+
+   // -----------------------------------------------------------------------------
+   .VAR/DM hfk_proc_funcsRcv[] =
+      // Function                               r7                      r8
+
+#if uses_DCBLOCK
+      $cvc.peq.process,                         &sco_dcblock,           0,      // Ri --> Ri
+#endif
+
+#if uses_RCV_VAD
+      $vad410.process,                          0,                      &rcv_vad410,
+#endif
+
+#if uses_RCV_FREQPROC
+      $harm100.process,                         0,                      &rcv_harm_obj,                      
+
+      $filter_bank.analysis.process,            0,                      &RcvAnalysisBank,
+
+#if uses_AEQ
+      $M.AdapEq.process.tone_detect,            0,                      &AEQ_DataObject,
+#endif
+
+#if uses_RCV_NS
+      $oms280.process,                          0,                      &oms280rcv_obj,
+      $oms280.apply_gain,                       0,                      &oms280rcv_obj,
+#endif
+
+#if uses_AEQ
+      $M.AdapEq.process.func,                   0,                      &AEQ_DataObject,
+#endif
+
+      $filter_bank.synthesis.process,           0,                      &RcvSynthesisBank,
+#else
+      // No Freq domain processing, need explicit upsampling to 16 kHz
+      // only for FE/BEX
+      $cvc.fe.frame_resample_process,           &dac_upsample_dm1,      cvc_variant ,
+#endif
+
+#if uses_RCV_PEQ
+      // for NB/FE only (not WB)
+      $cvc.rcv_peq.process_nb_bex,              &rcv_peq,               cvc_variant,
+#endif
+
+      $cvc_recv.stream_gain,                    &cvc_parameters,        &stream_rcvout,
+
+#if uses_RCV_AGC
+      $agc400.process,                          0,                      &rcv_agc400_dm,
+#endif
+
+#if uses_RCV_PEQ
+      // for WB only
+      $cvc.rcv_peq.process_wb,                  &rcv_peq,               cvc_variant,
+#endif
+
+      0;                                     // END OF TABLE
+
+   .VAR/DM2 mute_and_gain_ctrl_obj_dm2[] =
+      cvc_current_mode, 
+      cvc_parameters,
+      stream_rcvin,
+      stream_rcvout;
+
+   .VAR/DM copy_proc_funcsRcv[] =
+      // Function                                  r7                         r8
+
+      $cvc_recv.passthrough.mute_and_gain_control, 0,                         &mute_and_gain_ctrl_obj_dm2,
+      $cvc.fe.frame_resample_process,              &dac_upsample_dm1,         cvc_variant,
+
+      0;                                     // END OF TABLE
+
+// -----------------------------------------------------------------------------
+   .VAR  ModeProcTableRcv[$M.CVC_RECV.SYSMODE.MAX_MODES] =
+      &copy_proc_funcsRcv,             // Static
+      &copy_proc_funcsRcv,             // Stand by
+      &hfk_proc_funcsRcv,              // hfk mode
+      &copy_proc_funcsRcv;             // pass-thru mode
+
+
+   // ----------------------------------------------------------------------------
+   .VAR/DM ReInitializeTable[] =
+
+      // Function                                           r7                 r8
+
+      // only executed when FE/BEX
+      $frame.iir_resamplev2.Initialize,                  &dac_upsample_dm1,   0 ,
+
+#if uses_RCV_FREQPROC
+      $filter_bank.analysis.initialize,                     0,          &RcvAnalysisBank,
+      $filter_bank.synthesis.initialize,                    0,          &RcvSynthesisBank,
+      $harm100.initialize,                                  0,          &rcv_harm_obj,
+#if uses_RCV_NS
+      $oms280.initialize,                                   0,          &oms280rcv_obj,
+#endif
+#if uses_AEQ
+     $M.AdapEq.initialize.func,                0,                 &AEQ_DataObject,
+#endif
+#endif
+
+#if uses_DCBLOCK
+      $cvc.peq.initialize,                &sco_dcblock,              0,
+#endif
+
+#if uses_RCV_PEQ
+      $cvc.peq.initialize,                &rcv_peq,                  0,
+#endif
+
+#if uses_RCV_VAD
+      $vad410.initialize,                 0,                   &rcv_vad410,
+#endif
+#if uses_RCV_AGC
+      $agc400.initialize,                 0,                   &rcv_agc400_dm,
+#endif
+
+      0;                                    // END OF TABLE
+
+
+   // -------------------------------------------------------------------------
+   .VAR ModulePointers[] =   
+      &rcv_agc400_dm,      // AGC_PTR_FIELD
+      &oms280rcv_obj,      // OMS_PTR_FIELD
+      &rcv_harm_obj,       // HARM_PTR_FIELD
+      &rcv_vad410,         // VAD_PTR_FIELD
+      &AEQ_DataObject,     // AEQ_PTR_FIELD
+      &stream_rcvin,       // RCVIN_PTR_FIELD
+      &stream_rcvout;      // RCVOUT_PTR_FIELD
+  
+// Place Holder for linker resolved symbols
+.VAR/CONST  DynTable_Linker[] = 0;
+
+
+// Command Data Block
+#if !defined(CAPABILITY_DOWNLOAD_BUILD)
+   .VAR/CONST16  DynTable_Main[] =
+#else
+   .VAR/CONST16 Downloadable.DynTable_Main[] =
+#endif
+
+   // Header
+   DYN_ALLOC_EXTERNAL_FILESYSTEM()
+   DYN_LINKER_RESOLVE(DynTable_Linker),
+   DYN_ALLOC_ROOT($CVC_RCV_CAP.ROOT.INST_ALLOC_PTR_FIELD),
+   DYN_ALLOC_SCRATCH_ROOT($CVC_RCV_CAP.ROOT.SCRATCH_ALLOC_PTR_FIELD),
+
+   // Define Dynamic Memory Block Sizes to use 
+   DYN_BLOCK_SIZE(1032),
+   
+   // Scratch blocks use 3 words for header
+   DYN_SCRATCH_BLOCK_SIZE(1032),
+       
+   
+   // Link to Root Object
+   DYN_SET_ROOT($CVC_RCV_CAP.ROOT.MODE_TABLE_PTR_FIELD,ModeProcTableRcv),
+   DYN_SET_ROOT($CVC_RCV_CAP.ROOT.INIT_TABLE_PTR_FIELD,ReInitializeTable),
+   DYN_SET_ROOT($CVC_RCV_CAP.ROOT.MODULES_PTR_FIELD,ModulePointers),
+   DYN_SET_ROOT($CVC_RCV_CAP.ROOT.STATUS_TABLE_PTR_FIELD,StatusArray),
+   DYN_SET_ROOT($CVC_RCV_CAP.ROOT.UPSAMPLE_PTR_FIELD,dac_upsample_dm1),
+   DYN_SET_ROOT($CVC_RCV_CAP.ROOT.PARAMS_PTR_FIELD,cvc_parameters),
+
+   // Link in shared (externally resolved) memory
+
+   DYN_RESOLVE_EXTERN($CVC_RCV_CAP.ROOT.CVCLIB_TABLE_FIELD,cvclib_table),   
+   DYN_RESOLVE_EXTERN($CVC_RCV_CAP.ROOT.OVR_CONTROL,override_control),
+
+#if uses_RCV_VAD ||  uses_DCBLOCK    
+   DYN_RESOLVE_EXTERN($CVC_RCV_CAP.ROOT.VAD_DCB_COEFFS_PTR_FIELD,cvc_vad_dc_ceoffs), 
+#endif
+#if uses_RCV_NS 
+   DYN_RESOLVE_EXTERN($CVC_RCV_CAP.ROOT.OMS_CONFIG_PTR_FIELD,cvc_oms_config), 
+#endif   
+#if uses_RCV_FREQPROC  
+   DYN_RESOLVE_EXTERN($CVC_RCV_CAP.ROOT.ANAL_FB_CONFIG_PTR_FIELD,cvc_analysis_config), 
+   DYN_RESOLVE_EXTERN($CVC_RCV_CAP.ROOT.SYNTH_FB_CONFIG_PTR_FIELD,cvc_synthysis_config),  
+   DYN_RESOLVE_EXTERN($CVC_RCV_CAP.ROOT.FB_SPLIT_PTR_FIELD,cvc_fb_split_table), 
+#endif
+   DYN_RESOLVE_EXTERN($CVC_RCV_CAP.ROOT.DATA_VARIANT, cvc_variant),
+   DYN_RESOLVE_EXTERN($CVC_RCV_CAP.ROOT.NDVC_SHARE_PTR_FIELD, ndvc_volume_level),
+   DYN_RESOLVE_EXTERN($CVC_RCV_CAP.ROOT.CUR_MODE_PTR_FIELD, cvc_current_mode),   
+   DYN_RESOLVE_EXTERN($CVC_RCV_CAP.ROOT.FRAME_SIZE_IN_FIELD, ext_frame_in_size),
+
+   // **** Variants ******
+   DYN_VARIANT(RCV_VARIANT_NB),
+
+   DYN_SET_VALUE(&rcv_variant, RCV_VARIANT_NB),
+
+   DYN_ALLOC_RESIZE(harm_history, $CVC_RCV_VAR.NB.SAMPLES_PER_FRAME * 3),
+   DYN_ALLOC_RESIZE(bufd_rcv_inp,$CVC_RCV_VAR.NB.WINDOW_SIZE),
+
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.NUM_FREQ_BINS,$CVC_RCV_VAR.NB.NUM_FREQ_BIN),
+
+   // DYN_ALLOC_RESIZE(rcv_scratch_dm1,$M.oms280.narrow_band.SCRATCH_LENGTH), // max(oms,aeq,vad)  
+
+    DYN_ALLOC_RESIZE(rcvoms_state,$M.oms280.narrow_band.STATE_LENGTH),
+    DYN_ALLOC_RESIZE(rcvLpX_queue,$M.oms280.QUE_LENGTH),
+
+   DYN_ALLOC_RESIZE(bufdr_outp,$CVC_RCV_VAR.NB.WINDOW_SIZE+$CVC_RCV_VAR.NB.SAMPLES_PER_FRAME),
+
+   // -----------------------------
+   DYN_VARIANT(RCV_VARIANT_BEX),
+
+   DYN_SET_VALUE(&rcv_variant, RCV_VARIANT_NB),
+
+#if uses_RCV_AGC
+   DYN_SET_VALUE(&rcv_agc400_dm + $agc400.PTR_VARIANT_FIELD, rcv_variant_bex),
+#endif
+
+   DYN_ALLOC_RESIZE(harm_history, $CVC_RCV_VAR.NB.SAMPLES_PER_FRAME * 3),
+   DYN_ALLOC_RESIZE(bufd_rcv_inp,$CVC_RCV_VAR.NB.WINDOW_SIZE),
+
+#if uses_AEQ
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.NUM_FREQ_BINS,$CVC_RCV_VAR.NB.NUM_FREQ_BIN),
+#endif
+
+   // DYN_ALLOC_RESIZE(rcv_scratch_dm1, $M.oms280.wide_band.SCRATCH_LENGTH),     // max(oms,aeq,vad)  
+    
+    DYN_ALLOC_RESIZE(rcvoms_state,$M.oms280.narrow_band.STATE_LENGTH),
+    DYN_ALLOC_RESIZE(rcvLpX_queue,$M.oms280.QUE_LENGTH),
+
+   DYN_ALLOC_RESIZE(bufdr_outp,$CVC_RCV_VAR.WB.WINDOW_SIZE+$CVC_RCV_VAR.WB.SAMPLES_PER_FRAME),
+   
+
+   // -----------------------------
+   DYN_VARIANT(RCV_VARIANT_WB),
+
+   DYN_SET_VALUE(&rcv_variant, RCV_VARIANT_WB),
+
+   DYN_ALLOC_RESIZE(harm_history, $CVC_RCV_VAR.WB.SAMPLES_PER_FRAME * 3),
+   DYN_ALLOC_RESIZE(bufd_rcv_inp,$CVC_RCV_VAR.WB.WINDOW_SIZE),
+
+#if uses_AEQ
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.NUM_FREQ_BINS,$CVC_RCV_VAR.WB.NUM_FREQ_BIN),
+#endif
+
+    // DYN_ALLOC_RESIZE(rcv_scratch_dm1,$M.oms280.wide_band.SCRATCH_LENGTH),   // max(oms,aeq,vad)  
+
+    DYN_ALLOC_RESIZE(rcvoms_state,$M.oms280.wide_band.STATE_LENGTH),
+    DYN_ALLOC_RESIZE(rcvLpX_queue,$M.oms280.QUE_LENGTH),
+
+   DYN_ALLOC_RESIZE(bufdr_outp,$CVC_RCV_VAR.WB.WINDOW_SIZE+$CVC_RCV_VAR.WB.SAMPLES_PER_FRAME),
+
+
+   // -----------------------------
+#ifdef INSTALL_OPERATOR_CVC_24K   
+   DYN_VARIANT(RCV_VARIANT_UWB),
+
+
+   DYN_SET_VALUE(&rcv_variant, RCV_VARIANT_UWB),
+
+   DYN_ALLOC_RESIZE(harm_history, $CVC_RCV_VAR.WB.SAMPLES_PER_FRAME * 4),
+   DYN_ALLOC_RESIZE(bufd_rcv_inp,$CVC_RCV_VAR.WB.WINDOW_SIZE),
+
+#if uses_AEQ // UWB
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.NUM_FREQ_BINS,$CVC_RCV_VAR.WB.NUM_FREQ_BIN),
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.AEQ_EQ_INIT_FRAME_FIELD,400),
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.ALFA_ENV_FIELD,0.02469008797166738500),
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.ONE_MINUS_ALFA_ENV_FIELD,1.0-0.02469008797166738500),
+#endif
+
+    // DYN_ALLOC_RESIZE(rcv_scratch_dm1,$M.oms280.wide_band.SCRATCH_LENGTH),   // max(oms,aeq,vad)  
+
+    DYN_ALLOC_RESIZE(rcvoms_state,$M.oms280.wide_band.STATE_LENGTH),
+    DYN_ALLOC_RESIZE(rcvLpX_queue,$M.oms280.QUE_LENGTH_UWB_FB),
+
+   DYN_ALLOC_RESIZE(bufdr_outp,$CVC_RCV_VAR.WB.WINDOW_SIZE+$CVC_RCV_VAR.WB.SAMPLES_PER_FRAME),
+
+#endif
+
+#ifdef INSTALL_OPERATOR_CVC_32K
+   // -----------------------------
+   DYN_VARIANT(RCV_VARIANT_SWB),
+
+   DYN_SET_VALUE(&rcv_variant, RCV_VARIANT_SWB),
+
+   DYN_ALLOC_RESIZE(harm_history, $CVC_RCV_VAR.SWB.SAMPLES_PER_FRAME * 3),
+   DYN_ALLOC_RESIZE(bufd_rcv_inp,$CVC_RCV_VAR.SWB.WINDOW_SIZE),
+
+#if uses_AEQ
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.NUM_FREQ_BINS,$CVC_RCV_VAR.SWB.NUM_FREQ_BIN),
+#endif
+
+   DYN_ALLOC_RESIZE(fft_real, $CVC_RCV_VAR.SWB.FFT_BUFFER_SIZE),
+   DYN_ALLOC_RESIZE(fft_imag, $CVC_RCV_VAR.SWB.FFT_BUFFER_SIZE),
+   DYN_ALLOC_RESIZE(fft_circ, $CVC_RCV_VAR.SWB.FFT_BUFFER_SIZE),
+   DYN_ALLOC_RESIZE(D_rcv_real, $CVC_RCV_VAR.SWB.NUM_FREQ_BIN),
+   DYN_ALLOC_RESIZE(D_rcv_imag, $CVC_RCV_VAR.SWB.NUM_FREQ_BIN),
+// DYN_ALLOC_RESIZE(rcv_scratch_dm1, $CVC_RCV_VAR.SWB.NUM_FREQ_BIN),   // max(oms,aeq,vad)  
+    
+    DYN_ALLOC_RESIZE(rcvoms_state,$M.oms280.swb.STATE_LENGTH),
+    DYN_ALLOC_RESIZE(rcvLpX_queue,$M.oms280.QUE_LENGTH),
+
+   DYN_ALLOC_RESIZE(bufdr_outp,$CVC_RCV_VAR.SWB.WINDOW_SIZE+$CVC_RCV_VAR.SWB.SAMPLES_PER_FRAME),
+
+#endif
+
+
+#ifdef INSTALL_OPERATOR_CVC_48K
+   // -----------------------------
+   DYN_VARIANT(RCV_VARIANT_FB),
+
+   
+   DYN_SET_VALUE(&rcv_variant, RCV_VARIANT_FB),
+   DYN_ALLOC_RESIZE(harm_history, $CVC_RCV_VAR.SWB.SAMPLES_PER_FRAME * 4),
+   DYN_ALLOC_RESIZE(bufd_rcv_inp,$CVC_RCV_VAR.SWB.WINDOW_SIZE),
+
+#if uses_AEQ // FB
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.NUM_FREQ_BINS,$CVC_RCV_VAR.SWB.NUM_FREQ_BIN),
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.AEQ_EQ_INIT_FRAME_FIELD,400),
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.ALFA_ENV_FIELD,0.02469008797166738500),
+   DYN_SET_VALUE(&AEQ_DataObject + $M.AdapEq.ONE_MINUS_ALFA_ENV_FIELD,1.0-0.02469008797166738500),
+#endif
+
+   DYN_ALLOC_RESIZE(fft_real, $CVC_RCV_VAR.SWB.FFT_BUFFER_SIZE),
+   DYN_ALLOC_RESIZE(fft_imag, $CVC_RCV_VAR.SWB.FFT_BUFFER_SIZE),
+   DYN_ALLOC_RESIZE(fft_circ, $CVC_RCV_VAR.SWB.FFT_BUFFER_SIZE),
+   DYN_ALLOC_RESIZE(D_rcv_real, $CVC_RCV_VAR.SWB.NUM_FREQ_BIN),
+   DYN_ALLOC_RESIZE(D_rcv_imag, $CVC_RCV_VAR.SWB.NUM_FREQ_BIN),
+// DYN_ALLOC_RESIZE(rcv_scratch_dm1, $CVC_RCV_VAR.SWB.NUM_FREQ_BIN),   // max(oms,aeq,vad)  
+
+    DYN_ALLOC_RESIZE(rcvoms_state,$M.oms280.swb.STATE_LENGTH),
+    DYN_ALLOC_RESIZE(rcvLpX_queue,$M.oms280.QUE_LENGTH_UWB_FB),
+
+   DYN_ALLOC_RESIZE(bufdr_outp,$CVC_RCV_VAR.SWB.WINDOW_SIZE+$CVC_RCV_VAR.SWB.SAMPLES_PER_FRAME),
+#endif
+
+   DYN_END();
+
+
+.ENDMODULE;

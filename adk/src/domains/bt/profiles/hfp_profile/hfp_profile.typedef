@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019-2020 Qualcomm Technologies International, Ltd.-->
+
+<types name="hfp_profile">
+    <include_header name="marshal_common.h"/>
+    <include_header name="hfp.h"/>
+    <include_header name="task_list.h"/>
+    <include_header name="battery_monitor.h"/>
+
+    <source>
+#include "domain_marshal_types.h"
+    </source>
+
+    <typedef_header_source>
+    /*! Defines  */
+#define HFP_SLC_STATUS_NOTIFY_LIST_INIT_CAPACITY 1
+#define HFP_STATUS_NOTIFY_LIST_INIT_CAPACITY 6
+
+#define MARSHAL_TYPE_hfp_wbs_codec_mask MARSHAL_TYPE_uint16
+    </typedef_header_source>
+        <source>
+#ifndef HOSTED_TEST_ENVIRONMENT
+COMPILE_TIME_ASSERT(sizeof(hfp_wbs_codec_mask) == sizeof(uint16), hfp_wbs_codec_mask_is_not_the_same_size_as_uint16);
+#endif
+    </source>
+
+    <typedef_struct name="hfpTaskDataBitfields" basic="true" doc="HFP task bitfields data structure">
+        <member marshal="true" doc="AG supports in-band ringing tone">unsigned in_band_ring:1</member>
+        <member marshal="true" doc="volume repeat">unsigned volume_repeat:1</member>
+        <member marshal="true" doc="Voice recognition is active">unsigned voice_recognition_active:1</member>
+        <member marshal="true" doc="Voice recognition pending">unsigned voice_recognition_request:1</member>
+        <member marshal="true" doc="Microphone mute is active">unsigned mute_active:1</member>
+        <member marshal="true" doc="Caller ID is active">unsigned caller_id_active:1</member>
+        <member marshal="true" doc="Flags indicating if we should connect/disconnect silently">unsigned flags:3</member>
+        <member marshal="true" doc="Current call state">hfp_call_state call_state:4</member>
+        <member marshal="true" doc="Flag indicating if we have accepted the call">unsigned call_accepted:1</member>
+        <member marshal="true" doc="Flag indicating if we connect AV after SCO">unsigned sco_av_reconnect:1</member>
+        <member marshal="true" doc="Flag indicating if we need UI indication for SCO">unsigned sco_ui_indication:1</member>
+        <member marshal="true" doc="Flag indicating if ACL is encrypted">unsigned encrypted:1</member>
+        <member marshal="true" doc="Flag indicating that ACL detach is pending">unsigned detach_pending:1</member>
+        <member marshal="true" doc="Flag indicating the disconnect reason">unsigned disconnect_reason:4</member>
+        <member marshal="true" doc="HF indicator assigned number">unsigned hf_indicator_assigned_num:2</member>
+        <member marshal="true" doc="eSCO is connecting">unsigned esco_connecting:1</member>
+    </typedef_struct>
+
+<typedef_enum name="hfpState" basic="true" doc="Application HFP state machine states">
+    /*! Initial state */
+    HFP_STATE_NULL,
+    /*! Initialising HFP instance */
+    HFP_STATE_INITIALISING_HFP,
+    /*! No HFP connection */
+    HFP_STATE_DISCONNECTED,
+    /*! Locally initiated connection in progress */
+    HFP_STATE_CONNECTING_LOCAL,
+    /*! Remotely initiated connection is progress */
+    HFP_STATE_CONNECTING_REMOTE,
+    /* HFP_STATE_CONNECTD (Parent state) */
+    /*! HFP connected, no call in progress */
+    HFP_STATE_CONNECTED_IDLE,
+    /*! HFP connected, outgoing call in progress */
+    HFP_STATE_CONNECTED_OUTGOING,
+    /*! HFP connected, incoming call in progress */
+    HFP_STATE_CONNECTED_INCOMING,
+    /*! HFP connected, active call in progress */
+    HFP_STATE_CONNECTED_ACTIVE,
+    /*! HFP disconnecting in progress */
+    HFP_STATE_DISCONNECTING
+</typedef_enum>
+
+    <typedef_struct name="hfpTaskData" doc="HFP instance structure, contains all the information for an HFP connection">
+        <member marshal="false" doc="HFP task">TaskData task</member>
+        <member marshal="true" doc="Current state">hfpState state</member>
+        <member marshal="false" doc="HFP operation lock, used to serialise HFP operations">uint16 hfp_lock</member>
+        <member marshal="false" doc="Speaker volume">uint8 volume</member>
+        <member marshal="false" doc="Microphone volume/gain">uint8 mic_volume</member>
+        <member marshal="true" doc="HFP bitfields data">hfpTaskDataBitfields bitfields</member>
+        <member marshal="true" doc="Profile currently used">hfp_profile profile</member>
+        <member marshal="true" doc="Bitmap of supported SCO packets by both headset and AG">uint16 sco_supported_packets</member>
+        <member marshal="false" doc="Address of connected AG">bdaddr ag_bd_addr</member>
+        <member marshal="false" doc="Sink for SCO, 0 if no SCO active">Sink sco_sink</member>
+        <member marshal="false" doc="Sink for SLC">Sink slc_sink</member>
+        <member marshal="false" doc="List of tasks to notify of SLC connection status.">TASK_LIST_WITH_INITIAL_CAPACITY(HFP_SLC_STATUS_NOTIFY_LIST_INIT_CAPACITY) slc_status_notify_list</member>
+        <member marshal="false" doc="List of tasks to notify of general HFP status changes">TASK_LIST_WITH_INITIAL_CAPACITY(HFP_STATUS_NOTIFY_LIST_INIT_CAPACITY) status_notify_list</member>
+        <member marshal="false" doc="List of tasks requiring confirmation of HFP connect requests">task_list_with_data_t connect_request_clients</member>
+        <member marshal="false" doc="List of tasks requiring confirmation of HFP disconnect requests">task_list_with_data_t disconnect_request_clients</member>
+        <member marshal="false" doc="Task to handle TWS+ AT commands.">Task at_cmd_task</member>
+        <member marshal="false" doc="Battery client registration form.">batteryRegistrationForm battery_form</member>
+        <member marshal="true" doc="WB-Speech codec bit masks.">hfp_wbs_codec_mask codec</member>
+        <member marshal="true" doc="Wesco reported for the link.">uint8 wesco</member>
+        <member marshal="true" doc="Qualcomm Codec Mode ID Selected - If in Qualcomm Codec Extensions mode.">uint16 qce_codec_mode_id</member>
+        <member marshal="true" doc="Tesco reported for the link.">uint8 tesco</member>
+    </typedef_struct>
+</types>

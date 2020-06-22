@@ -1,0 +1,84 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2013 - 2017 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# definitions for sco builds
+
+%cpp
+#
+# Which components do we want to include on this chip?
+#
+INSTALL_SCO_APTX
+APTXA_DYNAMIC_MEMORY
+FIRMWARE_BUILD_SHARE_TABLES_APTX_APTXHD
+USE_UNPACKER_CFG0
+USE_UNPACKER_ESCO
+USE_PACKER_CFG0
+USE_PACKER_ESCO
+USE_CMFB
+ENABLE_SPEECH
+USE_PLC_MSBC
+ESCO_SUPPORT_ERRORMASK
+NO_ZEAGLE_RX
+
+#
+# Flags used by modules used by SCO
+#
+WBS_DECOUPLED
+
+# SCO-specific extra debug information (e.g. counters)
+SCO_DEBUG 
+#SCO_DEBUG_LOG
+#SCO_DEBUG_ERROR_LOG  
+SCO_DEBUG_STATUS_COUNTERS
+
+#
+# Capabilities we want to include on the chip
+# This list gets turned into a set of defines of the form INSTALL_OPERATOR_XXXX
+#
+%list CFG_CAPABILITIES
+SCO_SEND
+SCO_RCV
+SWBS_ENC
+SWBS_DEC
+
+%build
+# We base this on another variable for unit tests so that sco can be turned on
+# at the top level unit test makefile
+BUILD_SCO=$(if $(TEST_BUILD),$(TEST_BUILD_SCO),true)
+
+# Source directory list, used for places to look for uses of changed CPP symbols
+%list ALL_SRCDIRS
+components/sco_data_mgr
+
+# List of global include paths
+%list ALL_INCDIRS
+components/sco_data_mgr
+../lib/codec
+../lib_private/aptx_adaptive_common
+../lib_private/aptx_adaptive_common/packer
+../lib_private/aptx_adaptive_encode
+../lib_private/aptx_adaptive_decode
+
+# List of libraries to build
+%list CFG_LIBS
+components/sco_data_mgr/sco_data_mgr
+capabilities/sco_fw/sco_fw
+capabilities/sco_nb/sco_nb
+capabilities/swbs/swbs
+# Libraries needed by sco capabilities
+../lib/codec/codec
+../lib_private/aptx_adaptive_common/aptx_adaptive_common
+../lib_private/aptx_adaptive_encode/aptx_adaptive_encode
+../lib_private/aptx_adaptive_decode/aptx_adaptive_decode
+
+
+%list MAXIM_LIBS
+../lib_private/aptx_adaptive_common
+../lib_private/aptx_adaptive_encode
+../lib_private/aptx_adaptive_decode
+
+%list PRIVATE_LIBS
+../lib_private/

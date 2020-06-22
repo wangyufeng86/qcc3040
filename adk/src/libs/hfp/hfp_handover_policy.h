@@ -1,0 +1,32 @@
+/****************************************************************************
+Copyright (c) 2019 Qualcomm Technologies International, Ltd.
+
+
+FILE NAME
+    hfp_handover_policy.h
+
+DESCRIPTION
+    This file defines stream handover policy configuration
+    
+NOTES
+    Builds requiring this should include CONFIG_HANDOVER in the
+    makefile. e.g.
+        CONFIG_FEATURES:=CONFIG_HANDOVER
+*/
+
+
+#ifndef _HFP_HANDOVER_POLICY_H_
+#define _HFP_HANDOVER_POLICY_H_
+
+/*!
+    @brief Used to confgiure the handover policy on the specified source
+
+    @param src Source to configure
+    @param value Value to write to STREAM_SOURCE_HANDOVER_POLICY
+
+    @return FALSE if the request could not be performed, TRUE otherwise
+*/
+bool hfpSourceConfigureHandoverPolicy(Source src, uint32 value);
+
+#endif /* _HFP_HANDOVER_POLICY_H_ */
+

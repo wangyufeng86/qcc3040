@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <ext_id>
+        <uuid>{@@@EXT_ROOT_EXT_ID_UUID@@@}</uuid>
+        <devkit>{@@@DEVKIT_ROOT_ID_UUID@@@}</devkit>
+        <checksum>XXXXXXXX</checksum>
+        <version>@@@DEVKIT_ROOT_ID_VERSION@@@</version>
+        <build>@@@DEVKIT_ROOT_ID_BUILD@@@</build>
+        <target>@@@DEVKIT_ROOT_ID_PLATFORM@@@</target>
+    </ext_id>
+    <ext_info>
+        <name>Extensions to docs</name>
+        <description>Adds document packages</description>
+        <build>64</build>
+    </ext_info>
+    <doc type="move">
+       <folder name="help">./doc/qch/subsystem_config.qch</folder>
+       <folder name="help">./doc/qch/adk.qch</folder>
+       <folder name="help">./doc/qch/apps.qch</folder>
+       <folder name="help">./doc/qch/libs.qch</folder>
+       <folder name="help">./doc/qch/os.qch</folder>
+    </doc>
+</root>

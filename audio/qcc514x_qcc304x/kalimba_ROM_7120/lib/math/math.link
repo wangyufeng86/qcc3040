@@ -1,0 +1,26 @@
+/*****************************************************************************
+* CONFIDENTIAL
+*
+* Copyright (c) 2009 - 2017 Qualcomm Technologies International, Ltd.
+*
+*****************************************************************************/
+/* Linkscript for the MATH library */
+
+/* Real twiddle should go in DM1 for the oxygen/gemini/gordon routines and DM2 for Elvis/Priscilla*/
+segment DM_REAL_TWIDDLE                                            20          DM1_REGION;
+segment DM_IMAG_TWIDDLE                                            20          DM2_REGION;
+
+#ifdef KEEP_PM
+segment FILTER_COEFFCALC_LIB_PM                        keep        40          PM_REGION;
+segment MATH_PM                                        keep        40          PM_REGION;
+segment MATH_FAST_PM                                   keep        40          PM_REGION;
+segment MATH_OPTIONAL_FAST_PM                          keep        40          PM_REGION, flash.code;
+#else
+segment FILTER_COEFFCALC_LIB_PM                                    40          PM_REGION;
+segment MATH_PM                                                    40          PM_REGION;
+segment MATH_FAST_PM                                               40          PM_REGION;
+segment MATH_OPTIONAL_FAST_PM                                      40          PM_REGION, flash.code;
+#endif
+
+segment MATH_BALANCED_DM                               balanced    40          DM1_REGION, DM2_REGION;
+

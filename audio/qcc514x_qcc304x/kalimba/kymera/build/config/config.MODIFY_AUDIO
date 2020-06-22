@@ -1,0 +1,19 @@
+############################################################################
+# Copyright (c) 2019 Qualcomm Technologies International, Ltd.
+############################################################################
+# Audio hardware under direct control of the DSP
+
+%cpp
+INSTALL_AUDIO_MODULE
+
+%build
+BUILD_AUDIO_MODULE=True
+
+%list ALL_SRCDIRS
+components/audio
+
+%list ALL_INCDIRS
+components/audio
+
+%list CFG_LIBS
+components/audio/audio

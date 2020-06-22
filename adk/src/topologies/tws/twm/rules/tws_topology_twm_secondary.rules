@@ -1,0 +1,30 @@
+{
+    "rules_tables": [
+        {
+            "name": "tws_topology_twm_secondary",
+
+            "doc": "TWS Topology TWM rules deciding behaviour in a Secondary role.",
+
+            "include_headers": [
+                "tws_topology_common_secondary_rule_functions.h",
+                "tws_topology_rule_events.h",
+                "tws_topology_secondary_ruleset.h"
+            ],
+
+            "rules": [
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_LINKLOSS",
+                    "rule_function": "ruleTwsTopSecPeerLostFindRole",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE",
+                    "doc": "On linkloss with Primary Earbud, decide if Secondary should run role selection."
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_DISCONNECTED_BREDR",
+                    "rule_function": "ruleTwsTopSecPeerLostFindRole",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE",
+                    "doc": "On BREDR disconnect from Primary Earbud, decide if Secondary should run role selection."
+                }
+            ]
+        }
+    ]
+}

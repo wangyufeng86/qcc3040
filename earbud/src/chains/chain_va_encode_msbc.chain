@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019-2020 Qualcomm Technologies International, Ltd.-->
+<!--Chain for encoding to m-SBC-->
+
+<chain name="CHAIN_VA_ENCODE_MSBC" id="1" generate_operator_roles_enum="False" generate_endpoint_roles_enum="False">
+
+    <include_header name="../earbud_cap_ids.h"/>
+    <include_header name="kymera_chain_roles.h"/>
+   
+    <operator name="OPR_MSBC_ENCODER" id="EB_CAP_ID_ASYNC_WBS_ENC">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+    
+    <input sink="OPR_MSBC_ENCODER.IN" role="EPR_VA_ENCODE_IN"/>
+    <output source="OPR_MSBC_ENCODER.OUT" role="EPR_VA_ENCODE_OUT"/>
+
+</chain>

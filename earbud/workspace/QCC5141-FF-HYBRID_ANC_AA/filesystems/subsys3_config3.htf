@@ -1,0 +1,5 @@
+file=audio3
+
+# add ANC filter key
+IsAncIirFilter16k = true
+

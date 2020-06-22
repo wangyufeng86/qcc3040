@@ -1,0 +1,42 @@
+{
+    "rules_tables": [
+        {
+            "name": "tws_topology_tws_classic_secondary",
+
+            "doc": "Table of TWS Classic specific rules for a TWS Classic earbud in the Secondary role",
+
+            "include_headers": [
+                "tws_topology_tws_classic_secondary_rule_functions.h",
+                "tws_topology_rule_events.h",
+                "tws_topology_secondary_ruleset.h"
+            ],
+
+            "rules": [
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_LINKLOSS",
+                    "rule_function": "ruleTwsTopClassicSecPeerLostFindRole",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE",
+                    "doc": "On linkloss with Primary Earbud, decide if Secondary should run role selection."
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_DISCONNECTED_BREDR",
+                    "rule_function": "ruleTwsTopClassicSecPeerLostFindRole",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE",
+                    "doc": "On BREDR disconnect from Primary Earbud, decide if Secondary should run role selection."
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_STATIC_HANDOVER",
+                    "rule_function": "ruleTwsTopSecStaticHandoverCommand",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_STATIC_HANDOVER",
+                    "doc": "When commanded to role switch by Primary, decide if we should do it"
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_STATIC_HANDOVER_FAILED",
+                    "rule_function": "ruleTwsTopSecStaticHandoverFailedOutCase",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE",
+                    "doc": "If role switch fails, and out of the case start role selection"
+                }
+            ]
+        }
+    ]
+}

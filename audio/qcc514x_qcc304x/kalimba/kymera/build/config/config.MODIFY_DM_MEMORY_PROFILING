@@ -1,0 +1,12 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2020 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Definitions for DM memory profiling (to find dm memory owner)
+
+%cpp
+# Enable memory allocation owner tagging
+INSTALL_DM_MEMORY_PROFILING
+

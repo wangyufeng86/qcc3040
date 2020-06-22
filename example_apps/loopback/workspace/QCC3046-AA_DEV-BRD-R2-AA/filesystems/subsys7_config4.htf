@@ -1,0 +1,4 @@
+file=app4
+
+# Route I2C (SCL, SDA) to PIOs
+I2CPios = [ 14 15 ]

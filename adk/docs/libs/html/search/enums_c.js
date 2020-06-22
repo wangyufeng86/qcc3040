@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['scm_5fstatus',['scm_status',['../scm_8h.html#a167943161f49995f1fac5ddc60b79d80',1,'scm.h']]],
+  ['scmmessageid',['ScmMessageId',['../scm_8h.html#ac259472d551a667d685cc43e502cc4b7',1,'scm.h']]],
+  ['sensor_5ftype_5ft',['sensor_type_t',['../sport__health__hub_8h.html#a089f166159fb19f10d81c65c1d8793a2',1,'sport_health_hub.h']]],
+  ['servicedatatype',['ServiceDataType',['../group__service.html#gafe6286adc3a6d196cda1c1ed3c8cd3d9',1,'service.h']]],
+  ['sh_5fin_5fout_5ftype_5ft',['sh_in_out_type_t',['../sport__health__hub_8h.html#ac41aaa99abe3e977918c1810a7195ce4',1,'sport_health_hub.h']]],
+  ['sh_5fvm_5fbt_5fmode_5ft',['sh_vm_bt_mode_t',['../sport__health__hub_8h.html#a6da66db234018b3e9a2212ca48461a01',1,'sport_health_hub.h']]],
+  ['sh_5fvm_5fmessage_5ft',['sh_vm_message_t',['../sport__health__hub_8h.html#ad59c6a09ef4d85dcb3e54fba4068fb4d',1,'sport_health_hub.h']]],
+  ['sh_5fvm_5fpwr_5fmode_5ft',['sh_vm_pwr_mode_t',['../sport__health__hub_8h.html#acaaf3949af447037213997d277cfb66e',1,'sport_health_hub.h']]],
+  ['spp_5fstart_5fstatus',['spp_start_status',['../spps_8h.html#ae9576886aeb02fe52ed372e72ec0ccbf',1,'spps.h']]],
+  ['spp_5fstop_5fstatus',['spp_stop_status',['../spps_8h.html#a027541e90f19b58b24d8e5d908fdec98',1,'spps.h']]],
+  ['swat_5fresponse_5fcode',['swat_response_code',['../swat_8h.html#ac3de1e8f9dc34055e0ca731e0b07102e',1,'swat.h']]],
+  ['swat_5frole',['swat_role',['../swat_8h.html#a57b38464e32fda2b1ac66de4344fd223',1,'swat.h']]],
+  ['swat_5fstate',['swat_state',['../swat_8h.html#aa49df2d57e1de7939c02d7d2e9a60c87',1,'swat.h']]],
+  ['swat_5fstatus_5fcode',['swat_status_code',['../swat_8h.html#ae6adee323cb11e98e93360c15002afbc',1,'swat.h']]],
+  ['swatmediastate',['swatMediaState',['../swat_8h.html#ac38a40ad5721fd0d960b31e3956d32a6',1,'swat.h']]],
+  ['swatmediatype',['swatMediaType',['../swat_8h.html#ab805e18a4fa0a9090af1ee402007deb6',1,'swat.h']]]
+];

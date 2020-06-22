@@ -1,0 +1,30 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright 2017 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Definitions required to build the downloadable volume control
+
+#
+# Capabilities we want to include on the chip
+# This list gets turned into a set of defines of the form
+# INSTALL_OPERATOR_XXXX
+#
+%cpp
+VOLUME_CONTROL_AUX_TTP_SUPPORT
+VOLUME_CONTROL_AUX_TIMING_TRACE
+
+%list CFG_CAPABILITIES
+VOLUME
+
+
+# List of global include paths
+%list ALL_INCDIRS
+
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/volume_control/volume_control
+support_lib/opmgr/opmgr
+support_lib/timing_trace/timing_trace

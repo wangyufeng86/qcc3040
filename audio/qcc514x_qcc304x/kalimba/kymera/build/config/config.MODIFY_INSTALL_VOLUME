@@ -1,0 +1,29 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2015 - 2020 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Definitions required to build the volume control
+
+#
+# Capabilities we want to include on the chip
+# This list gets turned into a set of defines of the form
+# INSTALL_OPERATOR_XXXX
+#
+%cpp
+VOLUME_CONTROL_AUX_TTP_SUPPORT
+
+%list CFG_CAPABILITIES
+VOLUME
+
+
+# List of global include paths
+%list ALL_INCDIRS
+
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/volume_control/volume_control
+
+

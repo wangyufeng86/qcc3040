@@ -1,0 +1,14 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2018 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# definitions for Streplus sco builds
+
+%include config.MODIFY_SCO_HYDRA
+%include config.MODIFY_SCO_APTX_COMMON
+# For aptX R2 firmare build comment out line above and uncomment
+# the following line
+#%include config.MODIFY_SCO_APTX_R2_COMMON
+

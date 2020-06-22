@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root type="move">
+    <ext_id>
+        <uuid>{@@@EXT_ROOT_EXT_ID_UUID@@@}</uuid>
+        <devkit>{@@@DEVKIT_ROOT_ID_UUID@@@}</devkit>
+        <checksum>XXXXXXXX</checksum>
+        <version>@@@DEVKIT_ROOT_ID_VERSION@@@</version>
+        <build>@@@DEVKIT_ROOT_ID_BUILD@@@</build>
+        <target>@@@DEVKIT_ROOT_ID_PLATFORM@@@</target>
+    </ext_id>
+    <ext_info>
+        <name>Special build option</name>
+        <description>Adds options and env variables to the ubuild commands</description>
+        <build>@@@DEVKIT_ROOT_ID_BUILD@@@</build>
+    </ext_info>	
+
+    <commands type="move">
+        <command type="move" name="build">
+            <env type="move">
+                <item type="move" name="workspace">__WORKSPACE_PATH__=%1</item>
+            </env>
+            <options type="move">
+                <option type="move" name="build_nvscmd">--special "flash=nvscmd"</option>
+            </options>
+        </command>
+        <command type="move" name="clean">
+            <env type="move">
+                <item type="move" name="workspace">__WORKSPACE_PATH__=%1</item>
+            </env>
+            <options type="move" >
+                <option type="move" name="clean_nvscmd">--special "flash=nvscmd"</option>
+            </options>
+        </command>
+        <command type="move" name="deploy">
+            <env type="move">
+                <item type="move" name="workspace">__WORKSPACE_PATH__=%1</item>
+            </env>
+            <options type="move">
+                <option name="all_steps">--special "flash=nvscmd deploy_all=%1"</option>
+            </options>
+        </command>
+    </commands>
+</root>

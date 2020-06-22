@@ -1,0 +1,22 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2017-2018 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+
+# This code segment needs to be explicitly kept
+# because only AAC uses it.
+# AAC is not part of the lite ROM image so if this code
+# segment is not kept it would be garbage collected and won't
+# show up in the ROM. See B-257584, dg 10810589 for details.
+
+%cpp
+EXT_WINDOW_ACCESS_AS_RAM_PM=PM_KEEP
+
+#please refer dg 10912862, Fix for TF-18535,B-277062
+#For ROM Lite configuration - Wrapper, lib and data tables are downloaded, data tables art part of RAM.
+#Later these data tables are mapped to variables instead of coping from ROM which is the desired behaviour for normal ROM congiguration builds.
+#To accomplish this moved AACDEC_TABLE_NO_FLASH_COPY from config.MODIFY_DOWANLOAD_AAC which affects all ROM configurations.
+#Below deifine only applicable ROM Lite configurations.
+AACDEC_TABLE_NO_FLASH_COPY

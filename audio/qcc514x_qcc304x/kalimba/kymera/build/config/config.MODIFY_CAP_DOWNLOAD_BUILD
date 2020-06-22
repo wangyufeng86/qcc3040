@@ -1,0 +1,29 @@
+%build
+CAPABILITY_DOWNLOAD_BUILD=true
+START_GROUP=
+SPECIAL_C_FLAGS=-preinclude $(call ospath,$(BUILD_ROOT)/no_base_binding.c)
+MIBFILES=false
+PROJFILES=false
+REL_EXT_BUILD=FALSE
+RELEASE_BUILD=FALSE
+-BUILD_CAPABILITY_CONSTANT_EXPORT
+
+%cpp
+CAPABILITY_DOWNLOAD_BUILD
+-PATCH_LIBS
+-INCLUDE_PATCHES
+-INSTALL_UNCONDITIONAL_LOG_LEVEL_1
+-INSTALL_UNCONDITIONAL_LOG_LEVEL_2
+
+%list PRIVATE_LIBS
+../lib_private
+support_lib/timing_trace
+support_lib/opmgr
+
+%list CFG_LIBS
+support_lib/audio_pios/audio_pios
+support_lib/cbops/cbops
+
+%list ALL_INCDIRS
+../lib/cbops
+../lib/cbops/operators

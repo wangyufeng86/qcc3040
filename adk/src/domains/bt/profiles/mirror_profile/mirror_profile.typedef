@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019 Qualcomm Technologies International, Ltd.-->
+
+<types name="mirror_profile" standalone="true">
+
+    <inherit header="marshal_common.h" count="NUMBER_OF_COMMON_MARSHAL_OBJECT_TYPES" x_macro_table="MARSHAL_COMMON_TYPES_TABLE"/>
+
+    <include_header name="kymera_adaptation_voice_protected.h"/>
+
+    <typedef_struct name="mirror_profile_hfp_volume_ind_t" basic="true" doc="HFP volume update sent from Primary to Secondary">
+        <member marshal="true" doc="HFP volume">uint8 volume</member>
+    </typedef_struct>
+
+    <typedef_struct name="mirror_profile_hfp_codec_and_volume_ind_t" basic="true" doc="HFP codec type and volume sent from Primary to Secondary">
+        <member marshal="true" doc="HFP codec">hfp_codec_mode_t codec_mode</member>
+        <member marshal="true" doc="HFP volume">uint8 volume</member>
+    </typedef_struct>
+
+    <typedef_struct name="mirror_profile_a2dp_volume_ind_t" basic="true" doc="A2DP volume update sent from Primary to Secondary">
+        <member marshal="true" doc="A2DP volume">uint8 volume</member>
+    </typedef_struct>
+
+    <typedef_struct name="mirror_profile_stream_context_t" doc="A2DP media stream context sent from Primary to Secondary">
+        <member marshal="true" doc="L2CAP CID">uint16 cid</member>
+        <member marshal="true" doc="L2CAP maximum transmission unit">uint16 mtu</member>
+        <member marshal="true" doc="A2DP volume">uint8 volume</member>
+        <member marshal="true" doc="Defines the current audio state - disconnected, connected, active">uint8 audio_state</member>
+        <member marshal="true" doc="Negotiated AVDTP SEID (stream endpoing ID) ">uint8 seid</member>
+        <member marshal="true" doc="">uint8 codec_sub_type</member>
+        <member marshal="true" doc="Codec bitrate bps">uint32 bitrate</member>
+        <member marshal="true" doc="Audio sample rate (/25Hz)">uint16 sample_rate</member>
+        <member marshal="true" doc="Audio sample bit width">uint8 sample_width</member>
+        <member marshal="true" doc="Audio channel type">uint8 channel_type</member>
+        <member marshal="true" doc="Other flags">uint8 flags</member>
+        <member marshal="true" doc="Content protection type">uint16 content_protection_type</member>
+        <member marshal="true" doc="Length of extra CPI (always 0)">uint8 content_protection_information_length</member>
+        <member marshal="true" doc="Q2Q Mode">uint8 q2q_mode</member>
+        <!-- Content protection information is intentionally omitted for simplicity since it it always zero-->
+    </typedef_struct>
+
+</types>

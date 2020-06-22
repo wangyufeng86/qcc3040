@@ -1,0 +1,69 @@
+############################################################################
+# Copyright (c) 2018 - 2019 Qualcomm Technologies International, Ltd.
+############################################################################
+# Base Kalsim configuration, do not attempt to create an image directly from it.
+
+%include config.streplus_rom_common
+
+# Install ISO channels (ISO needs SCO to be included as well)
+%include config.MODIFY_ISO_COMMON
+
+#Install the ringtone generator
+%include config.MODIFY_RINGTONE_GENERATOR
+
+#Install the asynchronous wbs capability
+%include config.MODIFY_ASYNC_WBS
+
+#Install the SBC encoder capability
+%include config.MODIFY_SBC_ENCODE
+
+#Install the IIR_RESAMPLER capability
+%include config.MODIFY_IIR_RESAMPLER
+
+# Install Resampler
+%include config.MODIFY_RESAMPLER
+
+#Install the Programmable EQ capability
+%include config.MODIFY_PEQ
+
+#Install the Bass Enhancement capability
+%include config.MODIFY_DBE
+
+#Install the VSE capability
+%include config.MODIFY_VSE
+
+#Install the crossover capability
+%include config.MODIFY_XOVER
+
+# Add capability download feature
+%include config.MODIFY_CAP_DOWNLOAD_MGR_CRESCENDO
+
+#Install the OP_CLIENT adaptor
+%include config.MODIFY_OP_CLIENT_ADAPTOR
+
+#Install aov interface
+%include config.MODIFY_AOV_INTERFACE
+
+#Install always on voice component
+%include config.MODIFY_CLK_MGR
+
+# Include FILE
+%include config.MODIFY_FILE_HYDRA
+
+#Install the VAD operator
+%include config.MODIFY_VAD
+
+#Install the QVA phrase recognition operator
+%include config.MODIFY_QVA
+
+#Install the VA_GRAPH_MANAGER operator
+%include config.MODIFY_VA_GRAPH_MANAGER
+
+#Install the AUDIO CONVERT capabilities
+%include config.MODIFY_CONVERT_FROM_AUDIO
+%include config.MODIFY_CONVERT_TO_AUDIO
+
+%cpp
+# Remove QVA and VAD licensing for Kalsim. Added initially under config.MODIFY_QVA and _VAD
+-USE_VAD_QVA_CAPS_LICENSING
+

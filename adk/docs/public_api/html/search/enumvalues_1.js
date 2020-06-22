@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['handset_5finit_5fcfm',['HANDSET_INIT_CFM',['../group__handset__service.html#gga12de9b821848655c87ebc157a639f6cda526bd115ce4638f448fa5b93bcb386ca',1,'handset_service.h']]],
+  ['handset_5fservice_5fconnect_5fcfm',['HANDSET_SERVICE_CONNECT_CFM',['../group__handset__service.html#gga12de9b821848655c87ebc157a639f6cdacf3df3e572de14bbc5d80200387f6fee',1,'handset_service.h']]],
+  ['handset_5fservice_5fconnect_5fstop_5fcfm',['HANDSET_SERVICE_CONNECT_STOP_CFM',['../group__handset__service.html#gga12de9b821848655c87ebc157a639f6cdad433f436338d905010daaab594d8d77c',1,'handset_service.h']]],
+  ['handset_5fservice_5fconnected_5find',['HANDSET_SERVICE_CONNECTED_IND',['../group__handset__service.html#gga12de9b821848655c87ebc157a639f6cda719fc5a02cbc1b0ebfc81e69a019eb99',1,'handset_service.h']]],
+  ['handset_5fservice_5fdisconnect_5fcfm',['HANDSET_SERVICE_DISCONNECT_CFM',['../group__handset__service.html#gga12de9b821848655c87ebc157a639f6cda8ae04dd61e5b378f956896bd98952bb3',1,'handset_service.h']]],
+  ['handset_5fservice_5fdisconnected_5find',['HANDSET_SERVICE_DISCONNECTED_IND',['../group__handset__service.html#gga12de9b821848655c87ebc157a639f6cda9d5c60fcb65b69b8dbe5ffc1dfa24690',1,'handset_service.h']]],
+  ['handset_5fservice_5fle_5fconnectable_5find',['HANDSET_SERVICE_LE_CONNECTABLE_IND',['../group__handset__service.html#gga12de9b821848655c87ebc157a639f6cdac78f38212ac28cfc4d855f6f9a02e1b6',1,'handset_service.h']]],
+  ['hdma_5fcancel_5fhandover_5fnotification',['HDMA_CANCEL_HANDOVER_NOTIFICATION',['../group__hdma.html#ggaf6d095482e663e66fbf38c53ed990cb5aec921d702d4d9dbadb6e80fac1fb06bb',1,'hdma.h']]],
+  ['hdma_5fevent',['HDMA_EVENT',['../group__hdma.html#ggaf6d095482e663e66fbf38c53ed990cb5a2e97da1ca418ad5def767380e2e3acc6',1,'hdma.h']]],
+  ['hdma_5fhandover_5fnotification',['HDMA_HANDOVER_NOTIFICATION',['../group__hdma.html#ggaf6d095482e663e66fbf38c53ed990cb5a80368d28e416736790fd18e00f604579',1,'hdma.h']]],
+  ['hdma_5fhandover_5freason_5fbattery_5flevel',['HDMA_HANDOVER_REASON_BATTERY_LEVEL',['../group__hdma.html#gga20cdbbbd7746ffc3a16a641e16e61e5fa8c8cca56497f009ce3818824f3426397',1,'hdma.h']]],
+  ['hdma_5fhandover_5freason_5fexternal',['HDMA_HANDOVER_REASON_EXTERNAL',['../group__hdma.html#gga20cdbbbd7746ffc3a16a641e16e61e5fab2b2585a7ebc21d92306daab5071982b',1,'hdma.h']]],
+  ['hdma_5fhandover_5freason_5fin_5fcase',['HDMA_HANDOVER_REASON_IN_CASE',['../group__hdma.html#gga20cdbbbd7746ffc3a16a641e16e61e5fa5a072c2ab16ecb4b56c0ef6b169d46ac',1,'hdma.h']]],
+  ['hdma_5fhandover_5freason_5finvalid',['HDMA_HANDOVER_REASON_INVALID',['../group__hdma.html#gga20cdbbbd7746ffc3a16a641e16e61e5fab438762cadfbe9df1c744c0fe2923802',1,'hdma.h']]],
+  ['hdma_5fhandover_5freason_5fout_5fof_5fear',['HDMA_HANDOVER_REASON_OUT_OF_EAR',['../group__hdma.html#gga20cdbbbd7746ffc3a16a641e16e61e5fab5f0ddd18b8427d802645c366d3cd074',1,'hdma.h']]],
+  ['hdma_5fhandover_5freason_5fsignal_5fquality',['HDMA_HANDOVER_REASON_SIGNAL_QUALITY',['../group__hdma.html#gga20cdbbbd7746ffc3a16a641e16e61e5faaa67851e123f0c28163ab6c61cd5d397',1,'hdma.h']]],
+  ['hdma_5fhandover_5freason_5fvoice_5fquality',['HDMA_HANDOVER_REASON_VOICE_QUALITY',['../group__hdma.html#gga20cdbbbd7746ffc3a16a641e16e61e5fa91e20b7b3d4d244fdc5c6cdff1792e1f',1,'hdma.h']]],
+  ['hdma_5fhandover_5furgency_5fcritical',['HDMA_HANDOVER_URGENCY_CRITICAL',['../group__hdma.html#ggab82bb39aaa209f4a4389c6375e4d239aac3793cd77ca029b4117e78fe637f00e2',1,'hdma.h']]],
+  ['hdma_5fhandover_5furgency_5fhigh',['HDMA_HANDOVER_URGENCY_HIGH',['../group__hdma.html#ggab82bb39aaa209f4a4389c6375e4d239aa9d47cfe4500e0efc80b10d60bfc833c6',1,'hdma.h']]],
+  ['hdma_5fhandover_5furgency_5finvalid',['HDMA_HANDOVER_URGENCY_INVALID',['../group__hdma.html#ggab82bb39aaa209f4a4389c6375e4d239aa14c7aa9346bd58d39cbb9fea1174a1c9',1,'hdma.h']]],
+  ['hdma_5fhandover_5furgency_5flow',['HDMA_HANDOVER_URGENCY_LOW',['../group__hdma.html#ggab82bb39aaa209f4a4389c6375e4d239aae568b4ef08a516ecc5f25754fe0f526c',1,'hdma.h']]]
+];

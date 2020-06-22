@@ -1,0 +1,17 @@
+var searchData=
+[
+  ['battery',['battery',['../structstate__proxy__data__t.html#a162767cc0f7bb9c2c3c3985db4cc778e',1,'state_proxy_data_t']]],
+  ['battery_5flevel_5fpercent',['battery_level_percent',['../structpeer__find__role__scoring__t.html#ac757a77e9eb7b36efd9c8f8623164f19',1,'peer_find_role_scoring_t']]],
+  ['bd_5faddr',['bd_addr',['../struct_a_v___a2_d_p___c_o_n_n_e_c_t_e_d___i_n_d___t.html#adecb590e3c4caac9afa1bba8cda63897',1,'AV_A2DP_CONNECTED_IND_T::bd_addr()'],['../struct_a_v___a2_d_p___d_i_s_c_o_n_n_e_c_t_e_d___i_n_d___t.html#adecb590e3c4caac9afa1bba8cda63897',1,'AV_A2DP_DISCONNECTED_IND_T::bd_addr()'],['../struct_a_v___a_v_r_c_p___c_o_n_n_e_c_t___i_n_d___t.html#adecb590e3c4caac9afa1bba8cda63897',1,'AV_AVRCP_CONNECT_IND_T::bd_addr()'],['../struct_a_v___a_v_r_c_p___c_o_n_n_e_c_t_e_d___i_n_d___t.html#adecb590e3c4caac9afa1bba8cda63897',1,'AV_AVRCP_CONNECTED_IND_T::bd_addr()'],['../struct_a_v___a_v_r_c_p___d_i_s_c_o_n_n_e_c_t_e_d___i_n_d___t.html#adecb590e3c4caac9afa1bba8cda63897',1,'AV_AVRCP_DISCONNECTED_IND_T::bd_addr()'],['../struct_c_o_n___m_a_n_a_g_e_r___c_o_n_n_e_c_t_i_o_n___i_n_d___t.html#adecb590e3c4caac9afa1bba8cda63897',1,'CON_MANAGER_CONNECTION_IND_T::bd_addr()'],['../struct_a_p_p___h_f_p___c_o_n_n_e_c_t_e_d___i_n_d___t.html#adecb590e3c4caac9afa1bba8cda63897',1,'APP_HFP_CONNECTED_IND_T::bd_addr()'],['../struct_a_p_p___h_f_p___d_i_s_c_o_n_n_e_c_t_e_d___i_n_d___t.html#adecb590e3c4caac9afa1bba8cda63897',1,'APP_HFP_DISCONNECTED_IND_T::bd_addr()'],['../struct_a_p_p___h_f_p___s_l_c___s_t_a_t_u_s___i_n_d___t.html#adecb590e3c4caac9afa1bba8cda63897',1,'APP_HFP_SLC_STATUS_IND_T::bd_addr()'],['../structmirror__profile__acl__t.html#adecb590e3c4caac9afa1bba8cda63897',1,'mirror_profile_acl_t::bd_addr()']]],
+  ['beep',['beep',['../struct_a_v___i_n_t_e_r_n_a_l___r_e_m_o_t_e___i_n_d___t.html#a9724ca063468bf2480fb84eff789539a',1,'AV_INTERNAL_REMOTE_IND_T::beep()'],['../struct_a_v___i_n_t_e_r_n_a_l___r_e_m_o_t_e___r_e_p_e_a_t___t.html#a9724ca063468bf2480fb84eff789539a',1,'AV_INTERNAL_REMOTE_REPEAT_T::beep()']]],
+  ['ble',['ble',['../struct_c_o_n___m_a_n_a_g_e_r___c_o_n_n_e_c_t_i_o_n___i_n_d___t.html#a9f089179b38da461394097a758683a33',1,'CON_MANAGER_CONNECTION_IND_T']]],
+  ['ble_5fconnected',['ble_connected',['../structstate__proxy__data__flags__t.html#a30b1e501316b572d02a4c7844941eafc',1,'state_proxy_data_flags_t']]],
+  ['ble_5fpermission',['ble_permission',['../structpairing_task_data.html#a9e0f672dce30fb94f2c8c55344cad43e',1,'pairingTaskData']]],
+  ['ble_5fvalue',['ble_value',['../structtx__power__data__t.html#af46e1b62ca9513b7f7ed46e00d13c823',1,'tx_power_data_t']]],
+  ['blockingcondition',['blockingCondition',['../structadv__mgr__task__data__t.html#a579a2fb6d76ad2a2b9935fd163c86def',1,'adv_mgr_task_data_t']]],
+  ['bredr_5fconnections_5fallowed',['bredr_connections_allowed',['../structdevice__test__service__data__t.html#a56cb7c875b9d3aa188a0dfa0d9adf0fb',1,'device_test_service_data_t']]],
+  ['bredr_5fvalue',['bredr_value',['../structtx__power__data__t.html#a41a2296603fd7af3860baf2da2b964d1',1,'tx_power_data_t']]],
+  ['buds_5fqhs_5fready',['buds_qhs_ready',['../structmirror__profile__task__data__t.html#a544f0fb5034141eb233b480aac41756d',1,'mirror_profile_task_data_t']]],
+  ['buf',['buf',['../structbattery_task_data.html#acf21b269dcb4e0dfb47c62c5a73a9321',1,'batteryTaskData']]],
+  ['button_5ffeedback',['button_feedback',['../structui__tone__data__t.html#af9b11733b44d94167dbdf91df8e82c71',1,'ui_tone_data_t']]]
+];

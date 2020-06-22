@@ -1,0 +1,52 @@
+# Message sequence charts for the l2cap bit of the connection lib
+
+define HEADING 
+object app1 "APP" 
+object hfp1 "HFP" 
+object cl1 "CL" 
+end 
+
+
+# Init
+define HFP_INIT_SUCCESS
+message app1 hfp1 "HfpInit" 
+message hfp1 cl1 "ConnectionRfcommAllocateChannel()"
+message cl1 hfp1 "CL_RFCOMM_REGISTER_CFM" "status = success"
+message hfp1 cl1 "ConnectionRegisterServiceRecord()"
+message cl1 hfp1 "CL_SDP_REGISTER_CFM" "status = success"
+message hfp1 app1 "HFP_INIT_CFM" "status = hfp_init_success"
+end
+
+define HFP_INIT_FAIL_RFC
+message app1 hfp1 "HfpInit" 
+message hfp1 cl1 "ConnectionRfcommAllocateChannel()"
+message cl1 hfp1 "CL_RFCOMM_REGISTER_CFM" "status = fail"
+message hfp1 app1 "HFP_INIT_CFM" "status = hfp_init_rfc_chan_fail"
+end
+
+define HFP_INIT_FAIL_SDP
+message app1 hfp1 "HfpInit" 
+message hfp1 cl1 "ConnectionRfcommAllocateChannel()"
+message cl1 hfp1 "CL_RFCOMM_REGISTER_CFM" "status = success"
+message hfp1 cl1 "ConnectionRegisterServiceRecord()"
+message cl1 hfp1 "CL_SDP_REGISTER_CFM" "status = fail"
+message hfp1 app1 "HFP_INIT_CFM" "status = hfp_init_sdp_reg_fail"
+end
+
+
+
+# Charts to plots from the sequences defined above 
+chart HfpInitSuccess
+HEADING 
+HFP_INIT_SUCCESS
+end
+
+chart HfpInitFailRfc
+HEADING 
+HFP_INIT_FAIL_RFC
+end
+
+chart HfpInitFailSdp
+HEADING 
+HFP_INIT_FAIL_SDP
+end

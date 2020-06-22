@@ -1,0 +1,5 @@
+../../../adk/tools/packages
+../../../os/src/fw/tools
+../../../os/src/fw/tools/make
+../../../audio/qcc514x_qcc304x/tools/acat
+../../../audio/qcc514x_qcc304x/tools/packages

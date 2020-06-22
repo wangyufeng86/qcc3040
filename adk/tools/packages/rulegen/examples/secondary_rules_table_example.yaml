@@ -1,0 +1,49 @@
+# Copyright (c) 2020 Qualcomm Technologies International, Ltd.
+---
+rules_tables:
+  - name: tws_topology_secondary
+    doc: Table of rules for an earbud in the Secondary role
+    include_headers:
+      - tws_topology_secondary_rules.h
+      - tws_topology_rule_events.h
+    rules: 
+      - 
+        event_mask: TWSTOP_RULE_EVENT_PEER_LINKLOSS
+        rule_function: ruleTwsTopSecPeerLostFindRole
+        output_message_id: TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE
+        doc: On linkloss with Primary Earbud, decide if Secondary should run role selection.
+      - 
+        event_mask: TWSTOP_RULE_EVENT_PEER_DISCONNECTED_BREDR
+        rule_function: ruleTwsTopSecPeerLostFindRole
+        output_message_id: TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE
+        doc: On BREDR disconnect from Primary Earbud, decide if Secondary should run role selection.
+      - 
+        event_mask: TWSTOP_RULE_EVENT_FAILED_PEER_CONNECT
+        rule_function: ruleTwsTopSecFailedConnectFindRole
+        output_message_id: TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE
+        doc: If failed to connect the ACL to the Primary, decide if Secondary should return to no role and restart role selection.
+      - 
+        event_mask: TWSTOP_RULE_EVENT_ROLE_SWITCH
+        rule_function: ruleTwsTopSecRoleSwitchPeerConnect
+        output_message_id: TWSTOP_SECONDARY_GOAL_CONNECT_PEER
+        doc: After switching to secondary role, decide if Secondary Earbud should create BREDR link to Primary Earbud.
+      - 
+        event_mask: TWSTOP_RULE_EVENT_IN_CASE
+        rule_function: ruleTwsTopSecNoRoleIdle
+        output_message_id: TWSTOP_SECONDARY_GOAL_NO_ROLE_IDLE
+        doc: When Earbud put in the case, decide if it should drop links and transition to no role
+      - 
+        event_mask: TWSTOP_RULE_EVENT_DFU_ROLE
+        rule_function: ruleTwsTopSecSwitchToDfuRole
+        output_message_id: TWSTOP_SECONDARY_GOAL_DFU_ROLE
+        doc: When requested to select DFU rules, select them
+      - 
+        event_mask: TWSTOP_RULE_EVENT_STATIC_HANDOVER
+        rule_function: ruleTwsTopSecStaticHandoverCommand
+        output_message_id: TWSTOP_SECONDARY_GOAL_STATIC_HANDOVER
+        doc: When commanded to role switch by Primary, decide if we should do it
+      - 
+        event_mask: TWSTOP_RULE_EVENT_STATIC_HANDOVER_FAILED
+        rule_function: ruleTwsTopSecStaticHandoverFailedOutCase
+        output_message_id: TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE
+        doc: If role switch fails, and out of the case start role selection

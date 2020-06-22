@@ -1,0 +1,15 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2016 - 2019 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+
+%cpp
+INSTALL_EFUSE_FLEXROM_FEATURES
+
+%build
+
+%options
+SUPPORTS_EFUSE_FLEXROM_FEATURES=not UNIT_TEST_BUILD
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project path="">
+    <file path="../../QCC3040-AA_DEV-BRD-R2-AA/filesystems/subsys0_config3.htf"/>
+    <file path="../../QCC3040-AA_DEV-BRD-R2-AA/filesystems/subsys1_config2.htf"/>
+    <file path="../../QCC3040-AA_DEV-BRD-R2-AA/filesystems/subsys7_config3.htf"/>
+    <file path="../../QCC3040-AA_DEV-BRD-R2-AA/filesystems/subsys7_config5.htf"/>
+    <configurations>
+        <configuration name="filesystem" options="build|deploy">
+            <devkitConfiguration>filesystem</devkitConfiguration>
+            <devkitGroup>kitres://{0F0E0182-5E9B-4D6B-88F4-133D2574D14C}</devkitGroup>
+            <deployProject>deploy</deployProject>
+            <property name="TYPE">device_config</property>
+            <property name="system_label">QCC514X_CONFIG</property>
+            <property name="CHIP_TYPE">qcc514x_qcc304x</property>
+            <property name="HYDRACORE_CONFIG_SDB_FILE">../../../../adk/bin/qcc514x_qcc304x/hydracore_config.sdb</property>
+        </configuration>
+    </configurations>
+</project>

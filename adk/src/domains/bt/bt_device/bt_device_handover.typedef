@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2020 Qualcomm Technologies International, Ltd.-->
+
+<types name="bt_device_handover">
+    <include_header name="csrtypes.h"/>
+    <include_header name="marshal_common.h"/>
+    <include_header name="bt_device_typedef.h"/>
+    <include_header name="domain_marshal_types.h"/>
+
+    <source>
+    </source>
+
+    <typedef_struct name="bt_device_handover_t" doc="Device data to marshal during handover">
+
+        <member marshal="true" doc="Persistent device data">bt_device_pdd_t pdd</member>
+        <member marshal="true" doc="Bitmap of currently connected profiles">uint8 connected_profiles</member>
+    </typedef_struct>
+
+</types>

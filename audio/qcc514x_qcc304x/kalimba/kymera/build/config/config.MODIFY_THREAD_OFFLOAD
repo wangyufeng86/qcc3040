@@ -1,0 +1,26 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2016 - 2018 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Definitions required to build and use the audio thread offload feature
+
+%cpp
+INSTALL_THREAD_OFFLOAD
+
+%list ALL_SRCDIRS
+components/thread_offload
+
+# List of global include paths
+%list ALL_INCDIRS
+components/thread_offload
+
+# List of libraries to build
+%list CFG_LIBS
+components/thread_offload/thread_offload
+
+# List of libraries to keep
+%list PM_KEEP_LIBS
+components/thread_offload/thread_offload
+

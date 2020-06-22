@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019 Qualcomm Technologies International, Ltd.-->
+
+<types name="scofwd_profile" standalone="true">
+    <typedef_struct name="scofwd_profile_ota_message_ind_t" basic="true" doc="ScoFwd OTA message with no payload">
+        <member marshal="true" doc="ScoFwd OTA message Id">uint8 ota_msg_id</member>
+    </typedef_struct>
+
+    <typedef_struct name="scofwd_profile_volume_ind_t" basic="true" doc="ScoFwd volume forwarded from peer">
+        <member marshal="true" doc="ScoFwd volume">uint8 volume</member>
+    </typedef_struct>
+
+    <typedef_struct name="scofwd_profile_volume_start_ind_t" basic="true" doc="Start a repeating volume change">
+        <member marshal="true" doc="ScoFwd volume step change">int16 steps</member>
+    </typedef_struct>
+
+    <typedef_struct name="scofwd_profile_volume_stop_ind_t" basic="true" doc="Stop a repeating volume change">
+        <member marshal="true" doc="ScoFwd volume step change">int16 steps</member>
+    </typedef_struct>
+</types>

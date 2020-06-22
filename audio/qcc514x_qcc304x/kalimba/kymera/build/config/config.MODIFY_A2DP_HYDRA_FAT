@@ -1,0 +1,30 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2017 - 2019 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+%list CFG_CAPABILITIES
+AAC_DECODE
+
+# List of global include paths
+%list ALL_INCDIRS
+../lib/aac
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/aac_decode/aac_decode
+
+# Libraries needed by a2dp capabilities
+../lib/aac/aac
+
+%list MAXIM_LIBS
+../lib/aac/aac
+
+%cpp
+#AACDEC_MP4_FILE_TYPE_SUPPORTED
+AACDEC_ADTS_FILE_TYPE_SUPPORTED
+AACDEC_LATM_FILE_TYPE_SUPPORTED
+
+%build
+DOWNLOAD_AAC_LIBS=

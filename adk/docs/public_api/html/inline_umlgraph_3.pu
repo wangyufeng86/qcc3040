@@ -1,0 +1,43 @@
+@startuml
+
+
+    [*] --> NULL
+    NULL --> HFP_STATE_INITIALISING_HFP
+
+    HFP_STATE_INITIALISING_HFP : Initialising HFP instance
+    HFP_STATE_INITIALISING_HFP --> HFP_STATE_DISCONNECTED : HFP_INIT_CFM
+
+    HFP_STATE_DISCONNECTED : No HFP connection
+    state HFP_STATE_CONNECTING {
+        HFP_STATE_CONNECTING_LOCAL : Locally initiated connection in progress
+        HFP_STATE_CONNECTING_REMOTE : Remotely initiated connection is progress
+        HFP_STATE_DISCONNECTED -down-> HFP_STATE_CONNECTING_LOCAL
+        HFP_STATE_DISCONNECTED -down-> HFP_STATE_CONNECTING_REMOTE
+    }
+
+    state HFP_STATE_CONNECTED {
+
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_IDLE : no_call_setup/no_call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_INCOMING : incoming_call_setup/no_call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_OUTGOING : outgoing_call_setup/no_call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_OUTGOING : outgoing_call_alerting_setup/no_call
+
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_ACTIVE : no_call_setup/call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_ACTIVE : incoming_call_setup/call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_ACTIVE : outgoing_call_setup/call
+        HFP_STATE_CONNECTING --> HFP_STATE_CONNECTED_ACTIVE : outgoing_call_alerting_setup/call
+
+        HFP_STATE_CONNECTED_IDLE : HFP connected, no call in progress
+        HFP_STATE_CONNECTED_IDLE -down-> HFP_STATE_CONNECTED_ACTIVE
+        HFP_STATE_CONNECTED_OUTGOING : HFP connected, outgoing call in progress
+        HFP_STATE_CONNECTED_INCOMING -right-> HFP_STATE_CONNECTED_ACTIVE
+        HFP_STATE_CONNECTED_INCOMING : HFP connected, incoming call in progress
+        HFP_STATE_CONNECTED_OUTGOING -left-> HFP_STATE_CONNECTED_ACTIVE
+        HFP_STATE_CONNECTED_ACTIVE : HFP connected, active call in progress
+        HFP_STATE_CONNECTED_ACTIVE -down-> HFP_STATE_DISCONNECTING
+        HFP_STATE_DISCONNECTING :
+
+        HFP_STATE_DISCONNECTING -up-> HFP_STATE_DISCONNECTED
+    }
+
+    @enduml

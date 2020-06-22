@@ -1,0 +1,16 @@
+file=curator5
+
+# PIO 4 needs to be pulled down to enable the audio amplifier in the CH084 and CH128 modules
+# This is only the initial configuration. The application can change this at runtime
+
+# Assign PIOs to Apps (SS 4)
+PioSubsystemAllocationElements = [04 04 ff 04 ff 04 ]
+
+# Set PIO 4 to be an output
+PioDirectionElements = [04 01]
+
+# Set PIO 4 to be low
+PioDriveElements = [04 00]
+
+# Workaround for digital mic issue, to be removed when fixed in hardware.
+PMUForcePWM = 1

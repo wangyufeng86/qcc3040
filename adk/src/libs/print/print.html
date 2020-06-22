@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org">
+
+    <title>Print</title>
+    <link rel="stylesheet" type="text/css" href=
+    "../../sdkdocs/bluelab.css">
+  </head>
+
+  <body>
+    <h1>Print Library</h1>
+
+    <p>This library allows the user to add diagnostic messages to their code
+    and enable/disable them with a single switch in the makefile.</p>
+
+<pre class="code">
+<code>PRINT(("Hello world arg %d", arg));</code>
+</pre>
+
+    <p>This will generate a call to <span class="fn">printf</span> if
+    and only if <span class="macro">DEBUG_PRINT_ENABLED</span> macro
+    was defined when the <span class="h">&lt;print.h&gt;</span> header
+    file was included.</p>
+		
+    <p>The <span class="macro">CPRINT</span> macro is also provided;
+    it expands to call the <span class="fn">cprintf</span> function
+    described in <a href="output.html">debug output</a>.</p>
+		
+  </body>
+</html>
+

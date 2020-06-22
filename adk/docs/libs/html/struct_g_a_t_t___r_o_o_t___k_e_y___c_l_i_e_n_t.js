@@ -1,0 +1,25 @@
+var struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t =
+[
+    [ "app_task", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a015a42213fe1a0deb3b46e7d49bbc68e", null ],
+    [ "challenge_response_needed", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#aaad09b884c65f65cb7ac42b16236c2be", null ],
+    [ "er", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a91ceb03c26e738b2be699402436a64ff", null ],
+    [ "handle_challenge_control", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a37f0ded47610a9e6abd175426c97c824", null ],
+    [ "handle_challenge_control_config", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#ab89039a10a49433778d9b7c0e96c039d", null ],
+    [ "handle_challenge_control_config_found", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a8c2c43ca28ff04b3ff9efc97c9787ba9", null ],
+    [ "handle_challenge_control_end", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a33c5dfb5bddf18181951497447ad77cf", null ],
+    [ "handle_features", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#adf0efa544431b680394318221528c45a", null ],
+    [ "handle_keys_control", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a39a6f30c87390d5c010095c74232aa15", null ],
+    [ "handle_status", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a7a5c54ce9d137c3aefaf4330668d406b", null ],
+    [ "hashA_in", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a411efe091863085f098aee6d2b2ad0db", null ],
+    [ "hashB_out", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#ab59b2e10d1ca952341e592110eee960e", null ],
+    [ "init_response_needed", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#ab9b89e4d31762268664348d882e37913", null ],
+    [ "ir", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#ad1827424bdc14456a1b32873077d948c", null ],
+    [ "lib_task", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a2bae06e137fbfabd628707eadb427136", null ],
+    [ "local_address", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a18ca9b0947af74bd8da2f29eeb7aea4c", null ],
+    [ "local_random", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a6cd87e19449f7b48cf40201a6d35000d", null ],
+    [ "remote_address", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a267c6b4a6cf20ad9cbe95be440bdc0e2", null ],
+    [ "remote_random", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a97547ae2b92349155bebc9ef9c8867eb", null ],
+    [ "secret", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a402d849e72293bcd5340828be659dd24", null ],
+    [ "state", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#a0012a170532a3c10ab464d0c8a7245ec", null ],
+    [ "writekeys_response_needed", "struct_g_a_t_t___r_o_o_t___k_e_y___c_l_i_e_n_t.html#abee803505720fb22bd445ad0f6b59951", null ]
+];

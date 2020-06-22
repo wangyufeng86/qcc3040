@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2018 - 2020 Qualcomm Technologies International, Ltd.-->
+<!--Chain for HFP (Narrowband SCO) -->
+
+<chain name="CHAIN_SCO_NB_2MIC" id="0" generate_operator_roles_enum="False" generate_endpoint_roles_enum="False">
+
+    <include_header name="../earbud_cap_ids.h"/>
+    <include_header name="kymera_chain_roles.h"/>
+
+    <operator name="OPR_SCO_RECEIVE" id="CAP_ID_SCO_RCV" priority="medium">
+        <sink name="SCO_IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_SCO_SEND" id="CAP_ID_SCO_SEND" priority="high">
+        <sink name="IN" terminal="0"/>
+        <source name="SCO_OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_CVC_RECEIVE" id="CAP_ID_CVC_RECEIVE_NB">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_CVC_SEND" id="CAP_ID_CVCHS2MIC_MONO_SEND_NB">
+        <sink name="REFERENCE" terminal="0"/>
+        <sink name="IN1" terminal="1"/>
+        <sink name="IN2" terminal="2"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_SOURCE_SYNC" id="CAP_ID_SOURCE_SYNC">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_VOLUME_CONTROL" id="EB_CAP_ID_VOL_CTRL_VOL">
+        <sink name="MAIN_IN" terminal="0"/>
+        <sink name="AUX_IN" terminal="1"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+
+    <input sink="OPR_SCO_RECEIVE.SCO_IN" role="EPR_SCO_FROM_AIR"/>
+    <input sink="OPR_VOLUME_CONTROL.AUX_IN" role="EPR_VOLUME_AUX"/>
+	<input sink="OPR_CVC_SEND.REFERENCE" role="EPR_CVC_SEND_REF_IN"/>
+	<input sink="OPR_CVC_SEND.IN1" role="EPR_CVC_SEND_IN1"/>
+	<input sink="OPR_CVC_SEND.IN2" role="EPR_CVC_SEND_IN2"/>
+    <output source="OPR_SCO_SEND.SCO_OUT" role="EPR_SCO_TO_AIR"/>
+	<output source="OPR_VOLUME_CONTROL.OUT" role="EPR_SCO_VOL_OUT"/>
+
+    <connection source="OPR_SCO_RECEIVE.OUT" sink="OPR_CVC_RECEIVE.IN"/>
+    <connection source="OPR_CVC_RECEIVE.OUT" sink="OPR_SOURCE_SYNC.IN"/>
+    <connection source="OPR_SOURCE_SYNC.OUT" sink="OPR_VOLUME_CONTROL.MAIN_IN"/>
+    <connection source="OPR_CVC_SEND.OUT" sink="OPR_SCO_SEND.IN"/>
+
+</chain>
+

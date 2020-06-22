@@ -1,0 +1,34 @@
+############################################################################
+# CONFIDENTIAL
+#
+# %%fullcopyright(2016)
+#
+############################################################################
+# definitions for a2d9 builds
+
+%cpp
+
+#
+# Capabilities we want to include on the chip
+# This list gets turned into a set of defines of the form INSTALL_OPERATOR_XXXX
+#
+
+
+%list CFG_CAPABILITIES
+APTX_CLASSIC_DEMUX
+
+
+# List of global include paths
+%list ALL_INCDIRS
+../lib_private/aptx_demux
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/aptx_demux/aptx_demux
+
+# Libraries needed by aptx capabilities
+../lib_private/aptx_demux/aptx_demux
+
+
+%list MAXIM_LIBS
+../lib_private/aptx_demux/aptx_demux

@@ -1,0 +1,38 @@
+@startuml
+
+
+state DISCONNECTED : Handset not connected
+state CONNECTING : Pseudo-state for connecting sub-states.
+state CONNECTED : Handset profile(s) connected
+state DISCONNECTING : Handset profile(s) disconnecting
+
+
+[*] -d-> DISCONNECTED : Create new handset state machine
+
+DISCONNECTED --> CONNECTING : HandsetConnect REQ
+DISCONNECTED --> CONNECTED : Handset connects\nHandsetConnect IND
+DISCONNECTED --> DISCONNECTED : HandsetDisconnect REQ\nHandsetDisconnect CFM (success)
+
+state CONNECTING {
+    state CONNECTING_ACL : ACL connecting
+    state CONNECTING_PROFILES : Handset profile(s) connecting
+
+    CONNECTING_ACL --> CONNECTING_PROFILES : ACL connected
+    CONNECTING_ACL --> DISCONNECTED : CONNECT_STOP_REQ
+}
+
+CONNECTING --> CONNECTING : HandsetConnect REQ
+CONNECTING --> CONNECTED : ACL & Profiles connected\nHandsetConnect CFM (success)
+CONNECTING --> DISCONNECTING : HandsetDisconnect REQ\nHandsetConnect CFM (cancelled)
+CONNECTING --> DISCONNECTED : ACL or Profiles failed\nHandsetConnect CFM (fail)
+
+CONNECTED --> DISCONNECTED : Handset disconnects\nHandsetDisconnect IND
+CONNECTED --> DISCONNECTING : HandsetDisconnect REQ
+CONNECTED --> CONNECTED : HandsetConnect REQ\nHandsetConnect CFM (success)
+
+DISCONNECTING --> CONNECTING : HandsetConnect REQ\nHandsetDisconnect CFM (cancelled)
+DISCONNECTING --> CONNECTED : Profile connected\nHandsetDisconnect CFM (fail)
+DISCONNECTING --> DISCONNECTING : HandsetDisconnect REQ
+DISCONNECTING --> DISCONNECTED : Profiles disconnected\nHandsetDisconnect CFM (success)
+
+@enduml

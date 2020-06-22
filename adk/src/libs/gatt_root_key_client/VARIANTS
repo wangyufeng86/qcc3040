@@ -1,0 +1,4 @@
+VARIANTS := debug
+
+# Include DEBUG
+CFLAGS_debug := -DGATT_ROOT_KEY_CLIENT_DEBUG_LIB

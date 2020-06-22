@@ -1,0 +1,5 @@
+file=curator6
+
+# Configure PIOs internally bonded to the stacked Apps QSPI flash.
+# If more pad control values are to be set, add them to this list or use another config layer
+PioPadControlElements = [2c 01 29 02 28 59 2b 59 2a 59 2d 59]

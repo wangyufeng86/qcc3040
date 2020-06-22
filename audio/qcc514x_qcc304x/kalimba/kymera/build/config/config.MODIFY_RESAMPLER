@@ -1,0 +1,27 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2014 - 2017 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Definitions required to build the resampler
+
+#
+# Capabilities we want to include on the chip
+# This list gets turned into a set of defines of the form INSTALL_OPERATOR_XXXX
+#
+%list CFG_CAPABILITIES
+RESAMPLER
+
+# List of global include paths
+%list ALL_INCDIRS
+../lib/resampler
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/resampler/resampler
+../lib/resampler/resampler
+
+%list MAXIM_LIBS
+../lib/resampler/resampler
+

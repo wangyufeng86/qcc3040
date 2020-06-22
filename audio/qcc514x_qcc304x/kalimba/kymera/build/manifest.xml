@@ -1,0 +1,10 @@
+<config>
+  <image_tree>
+    <name>Audio_STP.SRC.1.0</name>
+    <build_id>Audio_STP.SRC.1.0-00049-PT_GEN_PACK-1</build_id>
+    <branch_point_revision/>
+    <revision>00049</revision>
+    <spin>1</spin>
+    <client>PT_GEN_PACK</client>
+  </image_tree>
+</config>

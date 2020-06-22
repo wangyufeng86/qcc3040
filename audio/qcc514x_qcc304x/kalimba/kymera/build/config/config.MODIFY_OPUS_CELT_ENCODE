@@ -1,0 +1,31 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright 2019 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+
+%cpp
+
+#
+# Capabilities we want to include on the chip
+# This list gets turned into a set of defines of the form INSTALL_OPERATOR_XXXX
+#
+%list CFG_CAPABILITIES
+OPUS_CELT_ENCODE
+
+# List of global include paths
+%list ALL_INCDIRS
+../lib/codec
+../lib_private/opus_celt
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/opus_celt_encode/opus_celt_encode
+# Libraries needed by opus capabilities
+../lib/codec/codec
+../lib_private/opus_celt/opus_celt
+capabilities/encoder/encoder
+
+%list MAXIM_LIBS
+../lib_private/opus_celt/opus_celt

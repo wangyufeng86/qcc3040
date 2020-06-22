@@ -1,0 +1,10 @@
+############################################################################
+# Copyright 2018 Qualcomm Technologies International, Ltd.
+############################################################################
+# StrePlus ROM top-level config for kalsim testing, including kalcmd2
+# (this should eventually be folded into the main _kalsim config)
+
+%include config.streplus_rom_kalsim
+%include config.MODIFY_HYDRA_KALSIM_KALCMD2
+
+%include config.MODIFY_HYDRA_RELEASE

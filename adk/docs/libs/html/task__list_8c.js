@@ -1,0 +1,28 @@
+var task__list_8c =
+[
+    [ "TaskList_AddTask", "task__list_8c.html#a28ef2761c3e88664855aac38e099ffaf", null ],
+    [ "TaskList_AddTaskWithData", "task__list_8c.html#a145d9ea2ff8e7a5389cdc77f2ca75693", null ],
+    [ "TaskList_Create", "task__list_8c.html#abd94542176a288203c7954e441df286e", null ],
+    [ "TaskList_CreateWithCapacity", "task__list_8c.html#aa1cf56e75444775c5154bf68d8f95cfc", null ],
+    [ "TaskList_Destroy", "task__list_8c.html#aeb7fd82b20a344092941676b7fab93ed", null ],
+    [ "TaskList_Duplicate", "task__list_8c.html#a4cfa00cbc9d089758ceec2d2d42d24e9", null ],
+    [ "TaskList_GetDataForTask", "task__list_8c.html#aba6d930308fe50e65d399c9043a9e527", null ],
+    [ "TaskList_GetDataForTaskRaw", "task__list_8c.html#a6ded2cf7ff5026b1437d0ca6440ced7a", null ],
+    [ "TaskList_Init", "task__list_8c.html#aa61430967e52ec29cdededd66cfcc6bf", null ],
+    [ "TaskList_Initialise", "task__list_8c.html#a042a8c88b30606c774c6bacde880e89d", null ],
+    [ "TaskList_InitialiseWithCapacity", "task__list_8c.html#af90512c72e2c065460b01b0d6faaf9b5", null ],
+    [ "TaskList_IsTaskListWithData", "task__list_8c.html#ac1e4dd480b0d14a2d9ecdb2e8384730c", null ],
+    [ "TaskList_IsTaskOnList", "task__list_8c.html#a7c0c290610a2b83e7eb54ea12ef6628b", null ],
+    [ "TaskList_Iterate", "task__list_8c.html#a96026f6d8a723c032f9e0b236b02812c", null ],
+    [ "TaskList_IterateWithData", "task__list_8c.html#a7169d51523daf7dd1874a75119cdebbe", null ],
+    [ "TaskList_IterateWithDataRaw", "task__list_8c.html#a8d99faeb85a95465c43d08eaa3bd75ed", null ],
+    [ "TaskList_IterateWithDataRawFunction", "task__list_8c.html#ae8f2e7b63ccc9a0667d2b6c8c051e8d9", null ],
+    [ "TaskList_MessageSendLaterWithSize", "task__list_8c.html#aa689e99ba76327a73f9aac9bf0e9de57", null ],
+    [ "TaskList_MessageSendWithSize", "task__list_8c.html#ad6beb33c8b6fa5134177a3d02d6702ff", null ],
+    [ "TaskList_RemoveAllTasks", "task__list_8c.html#a998717b8fd76300074cfc6bfce366456", null ],
+    [ "TaskList_RemoveTask", "task__list_8c.html#a4993d11353e96cbdc300c3811f3dd47e", null ],
+    [ "TaskList_SetDataForTask", "task__list_8c.html#a68c0315e6feb871bda6557c1d3883945", null ],
+    [ "TaskList_Size", "task__list_8c.html#a224ad1214c27569fec4d92862bdd1232", null ],
+    [ "TaskList_WithDataCreate", "task__list_8c.html#ad1f2033632edfb749f05f5bf2c5b37f5", null ],
+    [ "TaskList_WithDataInitialise", "task__list_8c.html#a0a28ab9d28c045109d68f12fd8231d52", null ]
+];

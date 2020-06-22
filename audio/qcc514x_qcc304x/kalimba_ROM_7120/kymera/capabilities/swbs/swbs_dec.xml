@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2014 - 2017 Qualcomm Technologies International, Ltd. -->
+<ns1:UnifiedParameterSchema xmlns:ns1="com.csr.cps.4">
+	<Version>
+		<Revision>$Id: //depot/dspsw/private/pm28/crescendo_dev_aptXScalable/kalimba/kymera/capabilities/wbs/swbs_dec.xml#2 $</Revision>
+		<ChangeList>$Change: 2952983 $</ChangeList>
+		<ChangeDate>$DateTime: 2018/02/21 13:22:04 $</ChangeDate>
+		<UserID>$Author: pm28 $</UserID>
+	</Version>
+<!--
+		**************** CAPABILITY ****************
+								 only one per file!
+-->
+	<CodeBase>
+		<BaseName>swbs_dec</BaseName>
+		<CompileConfig>COMPILED_CONFIG</CompileConfig>
+		<ModeStatistic>CUR_MODE_OFFSET</ModeStatistic>
+	</CodeBase>
+<!--
+		***************** VARIANTS ******************
+-->
+	<Capability>
+		<CapabilityID>0x0006</CapabilityID>
+		<AlternativeCapabilityID>0x4064</AlternativeCapabilityID>
+		<VariantID>SWB</VariantID>
+		<CapabilityName>Super Wideband Decode</CapabilityName>
+		<ProductName>SWBS-DEC-100.1</ProductName>
+		<SampleRate>32000</SampleRate>
+		<VersionMajor>1</VersionMajor>
+	</Capability>
+
+	<Parameter>
+		<VariantID/>
+		<Comment/>
+		<Symbol>FORCE_PLC_OFF</Symbol>
+		<Display>Force PLC off</Display>
+		<Default>0</Default>
+		<Precision>0</Precision>
+		<Q>M.0</Q>
+		<Conversion>FORMAT_UINT</Conversion>
+		<Mult/>
+		<Units/>
+		<Min>0</Min>
+		<Max>1</Max>
+		<Description>Set to 1: forces PLC off. Set to 0: PLC is left ON (default)</Description>
+	</Parameter>
+	<Statistic>
+		<VariantID/>
+		<Comment/>
+		<Symbol>SCO_PKT_SIZE</Symbol>
+		<SysMode/>
+		<ShortName>PKT_SIZE</ShortName>
+		<LongName>Sco Pkt Sz</LongName>
+		<Precision>0</Precision>
+		<Q>M.0</Q>
+		<Conversion>FORMAT_UINT</Conversion>
+		<Mult/>
+		<Link/>
+		<Limit>-1</Limit>
+		<Rect>23 0 34 90</Rect>
+		<Description>SCO packet size in octets</Description>
+	</Statistic>
+	<Statistic>
+		<VariantID/>
+		<Comment/>
+		<Symbol>T_ESCO</Symbol>
+		<SysMode/>
+		<ShortName>Te</ShortName>
+		<LongName>T ESco</LongName>
+		<Precision>0</Precision>
+		<Q>M.0</Q>
+		<Conversion>FORMAT_UINT</Conversion>
+		<Mult/>
+		<Link/>
+		<Limit>-1</Limit>
+		<Rect>35 0 46 90</Rect>
+		<Description>T_esco</Description>
+	</Statistic>
+	<Statistic>
+		<VariantID/>
+		<Comment/>
+		<Symbol>FRAME_COUNT</Symbol>
+		<SysMode/>
+		<ShortName>Fcnt</ShortName>
+		<LongName>Frame cnt</LongName>
+		<Precision>0</Precision>
+		<Q>M.0</Q>
+		<Conversion>FORMAT_UINT</Conversion>
+		<Mult/>
+		<Link/>
+		<Limit>-1</Limit>
+		<Rect>76 0 87 90</Rect>
+		<Description>Frame count</Description>
+	</Statistic>
+	<Statistic>
+		<VariantID/>
+		<Comment/>
+		<Symbol>FRAME_ERROR_COUNT</Symbol>
+		<SysMode/>
+		<ShortName>Err</ShortName>
+		<LongName>Err</LongName>
+		<Precision>0</Precision>
+		<Q>M.0</Q>
+		<Conversion>FORMAT_UINT</Conversion>
+		<Mult/>
+		<Link/>
+		<Limit>-1</Limit>
+		<Rect>76 0 87 90</Rect>
+		<Description>Frame Error count</Description>
+	</Statistic>
+	<Statistic>
+		<VariantID/>
+		<Comment/>
+		<Symbol>MD_LATE_PKTS</Symbol>
+		<SysMode/>
+		<ShortName>LPkts</ShortName>
+		<LongName>Pkts Late</LongName>
+		<Precision>0</Precision>
+		<Q>M.0</Q>
+		<Conversion>FORMAT_UINT</Conversion>
+		<Mult/>
+		<Link/>
+		<Limit>-1</Limit>
+		<Rect>88 0 99 11</Rect>
+		<Description>Late packets count</Description>
+	</Statistic>
+	<Statistic>
+		<VariantID/>
+		<Comment/>
+		<Symbol>MD_EARLY_PKTS</Symbol>
+		<SysMode/>
+		<ShortName>EPkts</ShortName>
+		<LongName>Early</LongName>
+		<Precision>0</Precision>
+		<Q>M.0</Q>
+		<Conversion>FORMAT_UINT</Conversion>
+		<Mult/>
+		<Link/>
+		<Limit>-1</Limit>
+		<Rect>88 0 99 90</Rect>
+		<Description>Early packets count</Description>
+	</Statistic>
+	<Statistic>
+		<VariantID/>
+		<Comment/>
+		<Symbol>OUT_OF_TIME_PKT_CNT</Symbol>
+		<SysMode/>
+		<ShortName>OPkts</ShortName>
+		<LongName>OOT</LongName>
+		<Precision>0</Precision>
+		<Q>M.0</Q>
+		<Conversion>FORMAT_UINT</Conversion>
+		<Mult/>
+		<Link/>
+		<Limit>-1</Limit>
+		<Rect>88 0 99 90</Rect>
+		<Description>Out of time packets count</Description>
+	</Statistic>
+	<Statistic>
+		<VariantID/>
+		<Comment/>
+		<Symbol>MD_OUT_OF_TIME_RESET</Symbol>
+		<SysMode/>
+		<ShortName>TRst</ShortName>
+		<LongName>OOT Reset</LongName>
+		<Precision>0</Precision>
+		<Q>M.0</Q>
+		<Conversion>FORMAT_UINT</Conversion>
+		<Mult/>
+		<Link/>
+		<Limit>-1</Limit>
+		<Rect>100 0 111 90</Rect>
+		<Description>Count of how many times out of time packet count was reset (as it went above pre-defined limit)</Description>
+	</Statistic>
+
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>SWBS_DEC_NO_OUTPUT</Symbol>
+    <SysMode/>
+    <ShortName>No decoder output</ShortName>
+    <LongName>SWBS_DEC_NO_OUTPUT</LongName>
+    <Precision>0</Precision>
+    <Q>M.0</Q>
+    <Conversion>STAT_NO_DRAW</Conversion>
+    <Mult/>
+    <Link/>
+    <Limit>-1</Limit>
+    <Rect>0 0 0 0</Rect>
+    <Description>Number of times decoder returned no_output status code</Description>
+  </Statistic>
+
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>SWBS_DEC_FAKE_PKT</Symbol>
+    <SysMode/>
+    <ShortName>Fake pkt</ShortName>
+    <LongName>SWBS_DEC_FAKE_PKT</LongName>
+    <Precision>0</Precision>
+    <Q>M.0</Q>
+    <Conversion>STAT_NO_DRAW</Conversion>
+    <Mult/>
+    <Link/>
+    <Limit>-1</Limit>
+    <Rect>0 0 0 0</Rect>
+    <Description>Number of times decoder returned no_output and PLC faked packet</Description>
+  </Statistic>
+
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>SWBS_DEC_GOOD_OUTPUT</Symbol>
+    <SysMode/>
+    <ShortName>Good decoder output</ShortName>
+    <LongName>SWBS_DEC_GOOD_OUTPUT</LongName>
+    <Precision>0</Precision>
+    <Q>M.0</Q>
+    <Conversion>STAT_NO_DRAW</Conversion>
+    <Mult/>
+    <Link/>
+    <Limit>-1</Limit>
+    <Rect>0 0 0 0</Rect>
+    <Description>Number of times decoder returned good output status code</Description>
+  </Statistic>
+
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>SWBS_DEC_BAD_OUTPUT</Symbol>
+    <SysMode/>
+    <ShortName>Bad decoder output</ShortName>
+    <LongName>SWBS_DEC_BAD_OUTPUT</LongName>
+    <Precision>0</Precision>
+    <Q>M.0</Q>
+    <Conversion>STAT_NO_DRAW</Conversion>
+    <Mult/>
+    <Link/>
+    <Limit>-1</Limit>
+    <Rect>0 0 0 0</Rect>
+    <Description>Number of times decoder returned bad output status code</Description>
+  </Statistic>
+</ns1:UnifiedParameterSchema>
+
+
+

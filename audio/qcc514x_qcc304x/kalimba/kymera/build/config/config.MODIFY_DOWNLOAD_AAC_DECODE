@@ -1,0 +1,26 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright 2017 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+%list CFG_CAPABILITIES
+AAC_DECODE
+
+# List of global include paths
+%list ALL_INCDIRS
+capabilities/a2dp_decode
+../lib/aac
+
+# List of libraries to build
+%list CFG_LIBS
+# The a2dp_decode library must be included in the base image.
+# Including it here would duplicate a2dp_decode functions in the downloadable
+capabilities/aac_decode/aac_decode
+$(DOWNLOAD_AAC_LIBS)
+
+%list MAXIM_LIBS
+$(DOWNLOAD_AAC_LIBS)
+
+
+

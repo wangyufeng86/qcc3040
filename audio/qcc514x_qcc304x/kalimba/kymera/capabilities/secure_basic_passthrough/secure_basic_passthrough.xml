@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2014 - 2017 Qualcomm Technologies International, Ltd. -->
+<ns1:UnifiedParameterSchema xmlns:ns1="com.csr.cps.4">
+	<Version>
+		<Revision>$Id: //depot/dspsw/aura_rom_v02/kalimba/kymera/capabilities/secure_basic_passthrough/secure_basic_passthrough.xml#1 $</Revision>
+		<ChangeList>$Change: 2815177 $</ChangeList>
+		<ChangeDate>$DateTime: 2017/07/05 17:59:25 $</ChangeDate>
+		<UserID>$Author: vs07 $</UserID>
+	</Version>
+<!--
+		**************** CAPABILITY ****************
+								 only one per file!
+-->
+  <CodeBase>
+    <BaseName>secure_basic_passthrough</BaseName>
+    <CompileConfig>COMPILED_CONFIG</CompileConfig>
+    <ModeStatistic>CUR_MODE_OFFSET</ModeStatistic>
+  </CodeBase>
+<!--
+		***************** VARIANTS ******************
+-->
+  <Capability>
+    <CapabilityID>0xC000</CapabilityID>
+    <VariantID>BPT</VariantID>
+    <CapabilityName>Secure Basic Passthrough</CapabilityName>
+    <ProductName>SECURE_BASIC-PT-100.1</ProductName>
+    <SampleRate>0</SampleRate>
+    <VersionMajor>1</VersionMajor>
+  </Capability>
+  <Capability>
+    <CapabilityID>0xC001</CapabilityID>
+    <VariantID>TTP</VariantID>
+    <CapabilityName>Secure TTP Passthrough</CapabilityName>
+    <ProductName>TTP-PT-100.1</ProductName>
+    <SampleRate>0</SampleRate>
+    <VersionMajor>1</VersionMajor>
+  </Capability>
+    <PiecewiseBitField>
+    <Comment/>
+    <Symbol>PM_BYPASS</Symbol>
+    <Value>0x01</Value>
+    <State>1</State>
+    <Display>Bypass Peak Monitoring</Display>
+    <Description/>
+    <ConfigParam>CONFIG</ConfigParam>
+  </PiecewiseBitField>
+  <StatusBitField>
+    <Comment/>
+    <Symbol>SYSMODE.STATIC</Symbol>
+    <Value>0</Value>
+    <VariantID/>
+    <StatRef>CUR_MODE_OFFSET</StatRef>
+    <Indicator>N</Indicator>
+    <Display>Mode: Static</Display>
+    <BitmapID/>
+    <Point/>
+  </StatusBitField>
+  <StatusBitField>
+    <Comment/>
+    <Symbol>SYSMODE.STANDBY</Symbol>
+    <Value>1</Value>
+    <VariantID/>
+    <StatRef>CUR_MODE_OFFSET</StatRef>
+    <Indicator>S</Indicator>
+    <Display>Mode: StandBy</Display>
+    <BitmapID/>
+    <Point/>
+  </StatusBitField>
+  <StatusBitField>
+    <Comment/>
+    <Symbol>SYSMODE.MONITOR</Symbol>
+    <Value>2</Value>
+    <VariantID/>
+    <StatRef>CUR_MODE_OFFSET</StatRef>
+    <Indicator>M</Indicator>
+    <Display>Mode: Monitor</Display>
+    <BitmapID/>
+    <Point/>
+  </StatusBitField>
+  <StatusBitField>
+	<Comment/>
+	<Symbol>CONTROL.MODE_OVERRIDE</Symbol>
+	<VariantID/>
+	<Value>0x2000</Value>
+	<StatRef>OVR_CONTROL</StatRef>
+	<Indicator>M</Indicator>
+	<Display>MODE,</Display>
+	<BitmapID>-1</BitmapID>
+	<Point>0 0</Point>		
+  </StatusBitField>
+  <!--
+		***************** PARAMETERS ******************
+-->
+  <Parameter>
+    <VariantID/>
+    <Comment/>
+    <Symbol>CONFIG</Symbol>
+    <Display>Config</Display>
+    <Default>0x002080</Default>
+    <Precision>1</Precision>
+    <Q>M.0</Q>
+    <Conversion>FORMAT_UINT</Conversion>
+    <Mult/>
+    <Units/>
+    <Min>0</Min>
+    <Max>1</Max>
+    <Description/>
+  </Parameter>
+  <Parameter>
+    <VariantID/>
+    <Comment/>
+    <Symbol>GAIN</Symbol>
+    <Display>Gain</Display>
+    <Default>0x000000</Default>
+    <Precision>2</Precision>
+    <Q>6.N</Q>
+    <Conversion>FORMAT_DOUBLE_MULT</Conversion>
+    <Mult>6.02059991327962</Mult>
+    <Units>dB</Units>
+    <Min>-120</Min>
+    <Max>24</Max>
+    <Description>Applied Gain</Description>
+  </Parameter>
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>CUR_MODE_OFFSET</Symbol>
+    <SysMode/>
+    <ShortName>SysMode</ShortName>
+    <LongName>System Mode</LongName>
+    <Precision>0</Precision>
+    <Q>1.N</Q>
+    <Conversion>SYS_INDICATOR</Conversion>
+    <Mult/>
+    <Link>-1</Link>
+    <Limit>-1</Limit>
+    <Rect>23 113 34 203</Rect>
+    <Description/>
+  </Statistic>
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>PEAK_LEVEL_1</Symbol>
+    <SysMode/>
+    <ShortName>Pk_1</ShortName>
+    <LongName>Peak</LongName>
+    <Precision>2</Precision>
+    <Q>1.N</Q>
+    <Conversion>STAT_FORMAT_DB_PEAK</Conversion>
+    <Mult/>
+    <Link>-1</Link>
+    <Limit>0.9987</Limit>
+    <Rect>0 60 11 71</Rect>
+    <Description/>
+  </Statistic>
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>PEAK_LEVEL_2</Symbol>
+    <SysMode/>
+    <ShortName>Pk_2</ShortName>
+    <LongName>Peak</LongName>
+    <Precision>2</Precision>
+    <Q>1.N</Q>
+    <Conversion>STAT_FORMAT_DB_PEAK</Conversion>
+    <Mult/>
+    <Link>-1</Link>
+    <Limit>0.9987</Limit>
+    <Rect>0 60 11 71</Rect>
+    <Description/>
+  </Statistic>
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>PEAK_LEVEL_3</Symbol>
+    <SysMode/>
+    <ShortName>Pk_3</ShortName>
+    <LongName>Peak</LongName>
+    <Precision>2</Precision>
+    <Q>1.N</Q>
+    <Conversion>STAT_FORMAT_DB_PEAK</Conversion>
+    <Mult/>
+    <Link>-1</Link>
+    <Limit>0.9987</Limit>
+    <Rect>0 60 11 71</Rect>
+    <Description/>
+  </Statistic>
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>PEAK_LEVEL_4</Symbol>
+    <SysMode/>
+    <ShortName>Pk_4</ShortName>
+    <LongName>Peak</LongName>
+    <Precision>2</Precision>
+    <Q>1.N</Q>
+    <Conversion>STAT_FORMAT_DB_PEAK</Conversion>
+    <Mult/>
+    <Link>-1</Link>
+    <Limit>0.9987</Limit>
+    <Rect>0 60 11 71</Rect>
+    <Description/>
+  </Statistic>
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>PEAK_LEVEL_5</Symbol>
+    <SysMode/>
+    <ShortName>Pk_5</ShortName>
+    <LongName>Peak</LongName>
+    <Precision>2</Precision>
+    <Q>1.N</Q>
+    <Conversion>STAT_FORMAT_DB_PEAK</Conversion>
+    <Mult/>
+    <Link>-1</Link>
+    <Limit>0.9987</Limit>
+    <Rect>0 60 11 71</Rect>
+    <Description/>
+  </Statistic>
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>PEAK_LEVEL_6</Symbol>
+    <SysMode/>
+    <ShortName>Pk_6</ShortName>
+    <LongName>Peak</LongName>
+    <Precision>2</Precision>
+    <Q>1.N</Q>
+    <Conversion>STAT_FORMAT_DB_PEAK</Conversion>
+    <Mult/>
+    <Link>-1</Link>
+    <Limit>0.9987</Limit>
+    <Rect>0 60 11 71</Rect>
+    <Description/>
+  </Statistic>
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>PEAK_LEVEL_7</Symbol>
+    <SysMode/>
+    <ShortName>Pk_7</ShortName>
+    <LongName>Peak</LongName>
+    <Precision>2</Precision>
+    <Q>1.N</Q>
+    <Conversion>STAT_FORMAT_DB_PEAK</Conversion>
+    <Mult/>
+    <Link>-1</Link>
+    <Limit>0.9987</Limit>
+    <Rect>0 60 11 71</Rect>
+    <Description/>
+  </Statistic>
+  <Statistic>
+    <VariantID/>
+    <Comment/>
+    <Symbol>PEAK_LEVEL_8</Symbol>
+    <SysMode/>
+    <ShortName>Pk_8</ShortName>
+    <LongName>Peak</LongName>
+    <Precision>2</Precision>
+    <Q>1.N</Q>
+    <Conversion>STAT_FORMAT_DB_PEAK</Conversion>
+    <Mult/>
+    <Link>-1</Link>
+    <Limit>0.9987</Limit>
+    <Rect>0 60 11 71</Rect>
+    <Description/>
+  </Statistic>
+  <Statistic>
+		<VariantID/>
+		<Comment/>
+		<Symbol>OVR_CONTROL</Symbol>
+		<SysMode/>
+		<ShortName>SysCtrl</ShortName>
+		<LongName>System Control</LongName>
+		<Precision>0</Precision>
+		<Q>M.0</Q>
+		<Conversion>STAT_BIT_INDICATOR</Conversion>
+		<Mult/>
+		<Link/>
+		<Limit>-1</Limit>
+		<Rect>20 95 30 155</Rect>
+		<Description/>
+	</Statistic>
+</ns1:UnifiedParameterSchema>

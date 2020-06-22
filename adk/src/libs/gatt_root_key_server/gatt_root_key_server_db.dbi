@@ -1,0 +1,47 @@
+#ifndef __GATT_ROOT_KEY_SERVICE_DB_DBI__
+#define __GATT_ROOT_KEY_SERVICE_DB_DBI__
+
+#include "gatt_root_key_server_uuids.h"
+
+primary_service {
+    uuid : UUID_ROOT_KEY_SERVICE,
+    name : "ROOT_TRANSFER_SERVICE",
+    sdp  : FALSE, # Included as an aide memoire. SDP records only of use for BREDR.
+    characteristic {
+        uuid        : UUID_ROOT_KEY_FEATURES,
+        name        : "ROOT_TRANSFER_SERVICE_FEATURES",
+        flags       : [ FLAG_IRQ, FLAG_ENCR_R],
+        properties  : [ read ],
+        size_value  : 0x02,
+        value       : 0x0000
+    },
+    characteristic {
+        uuid        : UUID_ROOT_KEY_STATUS,
+        name        : "ROOT_TRANSFER_SERVICE_STATUS",
+        flags       : [ FLAG_IRQ, FLAG_ENCR_R],
+        properties  : [ read ],
+        value       : 0x00
+    },
+    characteristic {
+        uuid        : UUID_ROOT_KEY_CHALLENGE_CONTROL,  # Note that this is an Indicate characterisic
+        name        : "ROOT_TRANSFER_SERVICE_MIRROR_CONTROL_POINT",
+        flags       : [ FLAG_IRQ, FLAG_DYNLEN, FLAG_ENCR_W ],
+        properties  : [ write, indicate ],
+        value       : 0x00,
+        client_config
+        {
+            name  : "ROOT_TRANSFER_SERVICE_MIRROR_CONTROL_POINT_CLIENT_CONFIG",
+            flags : [ FLAG_IRQ , FLAG_DYNLEN ]
+        }
+    },
+    characteristic {
+        uuid        : UUID_ROOT_KEY_KEYS_CONTROL,
+        name        : "ROOT_TRANSFER_SERVICE_KEYS_CONTROL",
+        flags       : [ FLAG_IRQ, FLAG_DYNLEN, FLAG_ENCR_W ],
+        properties  : [ write ],
+        value       : 0x00
+    }
+},
+
+#endif /* __GATT_ROOT_KEY_SERVICE_DB_DBI__ */
+

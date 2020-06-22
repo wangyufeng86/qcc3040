@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project path="">
+    <file path="../../../prompts/connected.sbc"/>
+    <file path="../../../prompts/disconnected.sbc"/>
+    <file path="../../../prompts/pairing.sbc"/>
+    <file path="../../../prompts/pairing_failed.sbc"/>
+    <file path="../../../prompts/pairing_successful.sbc"/>
+    <file path="../../../prompts/power_off.sbc"/>
+    <file path="../../../prompts/power_on.sbc"/>
+    <file path="../../../../audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_aec_reference.edkcs"/>
+    <file path="../../../../audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_anc_tuning.edkcs"/>
+    <file path="../../../../audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_aptx_adaptive_decode.edkcs"/>
+    <file path="../../../../audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_opus_celt_encode.edkcs"/>
+    <file path="../../../../audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_switched_passthrough_consumer.edkcs"/>
+    <file path="../../../../audio/qcc514x_qcc304x/kalimba_ROM_7120/kymera/prebuilt_dkcs/streplus_rom_release/download_volume_control.edkcs"/>
+    <configurations>
+        <configuration name="filesystem" options="build|deploy">
+            <devkitConfiguration>filesystem</devkitConfiguration>
+            <devkitGroup>kitres://{0F0E0182-5E9B-4D6B-88F4-133D2574D14C}</devkitGroup>
+            <deployProject>deploy</deployProject>
+            <property name="FS_ROOT">..\customer_ro_filesystem</property>
+            <property name="TYPE">customer_ro</property>
+            <property name="system_label">QCC514X_CONFIG</property>
+            <property name="CHIP_TYPE">qcc514x_qcc304x</property>
+        </configuration>
+    </configurations>
+</project>

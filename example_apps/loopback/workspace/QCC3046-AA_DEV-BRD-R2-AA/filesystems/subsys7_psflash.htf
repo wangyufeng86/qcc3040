@@ -1,0 +1,14 @@
+file=app1
+
+# USR2 Setting for earbud to have a fixed role. 
+# If this key is not set then the earbud will be able to switch roles (recommended)
+# If fixed roles are to be used each earbud pair must have one primary and one secondary. 
+# This setting is currently only supported on ROM based QCC512x parts.
+#USR2 = [ 01 00 ] #Uncomment to set the earbud to always be a primary device
+#USR2 = [ 02 00 ] #Uncomment to set the earbud to always be a secondary device
+
+# USR3 Setting for the earbud to enable device testing. 
+# If this key is not set, or is zero, then the device test service is not available
+# Setting to 01 00 means that the earbud will enter device test mode on boot, 
+# and WILL NOT enter normal operation
+#USR3 = [ 01 00 ] # Uncomment to enable device test mode

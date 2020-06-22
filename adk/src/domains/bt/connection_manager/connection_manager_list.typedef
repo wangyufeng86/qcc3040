@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019 Qualcomm Technologies International, Ltd.-->
+
+<types name="connection_manager_list">
+    <include_header name="marshal_common.h"/>
+    <include_header name="task_list.h"/>
+    <include_header name="connection_manager.h"/>
+    <include_header name="link_policy.h"/>
+    <include_header name="connection_no_ble.h"/>
+
+    <source>
+#include "domain_marshal_types.h"
+    </source>
+
+    <typedef_header_source>
+/*! Flag used on ACL states to indicate if the state represents an activity
+    that will finish. */
+#define ACL_STATE_LOCK (0x08)
+#define MARSHAL_TYPE_lp_power_mode MARSHAL_TYPE_uint8
+    </typedef_header_source>
+	<source>
+#ifndef HOSTED_TEST_ENVIRONMENT 	
+COMPILE_TIME_ASSERT(sizeof(lp_power_mode) == sizeof(uint8), lp_power_mode_is_not_the_same_size_as_uint8);
+#endif
+    </source>
+
+    <typedef_enum name="cm_connection_state_t" basic="true" doc="Internal state for an individual ACL link">
+        /*! The ACL is connecting. Lock variables will clear once connected, or failed */
+        ACL_CONNECTING              = 0 + ACL_STATE_LOCK,
+        /*! The ACL is connected. */
+        ACL_CONNECTED                = 1,
+        /*! The ACL is searching for a matching SDP record. Lock variables will clear
+            once completed. */
+        ACL_CONNECTED_SDP_SEARCH     = 2 + ACL_STATE_LOCK,
+        /*! The ACL is disconnected. */
+        ACL_DISCONNECTED             = 3,
+        /*! The ACL is disconected due to link-loss. */
+        ACL_DISCONNECTED_LINK_LOSS   = 4,
+        /*! The ACL is waiting on LE scan to pause */
+        ACL_CONNECTING_PENDING_PAUSE = 5 + ACL_STATE_LOCK,
+        /*! ACL creation sent internally  */
+        ACL_CONNECTING_INTERNAL = 6 + ACL_STATE_LOCK,
+    </typedef_enum>
+
+    <typedef_struct name="cm_con_bitfields_t" basic="true" doc="Connection Manager Device bitfields">
+        <member marshal="true" doc="State of the device">cm_connection_state_t state:4</member>
+        <member marshal="true" doc="Number of functions interested in this device currently, The count relies on calls to \ref ConManagerCreateAcl and \ref ConManagerReleaseAcl being paired">unsigned users:3</member>
+        <member marshal="true" doc="Flag that indicates if this is an incoming ACL">bool local:1</member>
+        <member marshal="true" doc="Flag to indicate if qlmp connection is established or not">bool qlmp_connected:1</member>
+        <member marshal="true" doc="Flag to indicate if qhs is supported or not">bool qhs_supported:1</member>
+        <member marshal="true" doc="Flag to indicate if qhs is connected or not">bool qhs_connected:1</member>
+    </typedef_struct>
+
+    <typedef_struct name="cm_connection_t" basic="true" doc="Structure used to hold information about a single device, managed by the connection manager. This structure should not be accessed directly.">
+        <member marshal="false" doc="The connection's task">TaskData task_data</member>
+        <member marshal="true" doc="Bluetooth address of the device">tp_bdaddr tpaddr</member>
+        <member marshal="true" doc="A non-zero value indicates that a procedure is operational on the device. It will clear to 0 when complete">uint16 lock</member>
+        <member marshal="true" doc="Connection Manager Device bitfields">cm_con_bitfields_t bitfields</member>
+        <member marshal="true" doc="The current link policy for this connection">lpPerConnectionState lp_state</member>
+        <member marshal="true" doc="The most recently requested QoS for this connection">uint8 qos_list[cm_qos_max]</member>
+        <member marshal="true" doc="The present power mode for this connection">lp_power_mode mode</member>
+        <member marshal="true" doc="The present sniff interval(in slots) for this connection">uint16 sniff_interval</member>
+        <member marshal="true" doc="The present connection interval (in 1.25ms slots) for this connection">uint16 conn_interval</member>
+        <member marshal="true" doc="The present slaves latency (in connection events) for this connection">uint16 slave_latency</member>
+    </typedef_struct>
+</types>

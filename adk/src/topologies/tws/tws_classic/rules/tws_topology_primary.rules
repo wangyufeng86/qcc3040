@@ -1,0 +1,27 @@
+{
+    "rules_tables": [
+        {
+            "name": "tws_topology_primary",
+
+            "doc": "TWS Topology rules deciding behaviour in a Primary role.",
+
+            "include_headers": [
+                "tws_topology_common_primary_rule_functions.h",
+                "tws_topology_tws_classic_primary_rule_functions.h",
+                "tws_topology_rule_events.h",
+                "tws_topology_primary_ruleset.h"
+            ],
+
+            "rules_includes": [
+                {
+                    "file": "../../common/rules/tws_topology_common_primary.rules",
+                    "rules_table_name": "tws_topology_common_primary"
+                },
+                {
+                    "file": "tws_topology_tws_classic_primary.rules",
+                    "rules_table_name": "tws_topology_tws_classic_primary"
+                }
+            ]
+        }
+    ]
+}

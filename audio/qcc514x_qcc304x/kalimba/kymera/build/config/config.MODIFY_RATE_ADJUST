@@ -1,0 +1,34 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2017 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# definitions for including standalone rate adjustment operator
+
+%cpp
+
+# include usb audio endpoint
+INSTALL_OPERATOR_RATE_ADJUST
+
+# include rate adjust capability
+%list CFG_CAPABILITIES
+RATE_ADJUST
+
+%build
+# We base this on another variable for unit tests so that rate_adjust can be turned on
+# at the top level unit test makefile
+BUILD_RATE_ADJUST=$(if $(TEST_BUILD),$(TEST_BUILD_RATE_ADJUST),true)
+
+%list ALL_SRCDIRS
+../lib/cbops
+capabilities/rate_adjust
+
+# List of global include paths
+%list ALL_INCDIRS
+capabilities/rate_adjust
+
+# List of libraries to build
+%list CFG_LIBS
+../lib/cbops/cbops
+capabilities/rate_adjust/rate_adjust

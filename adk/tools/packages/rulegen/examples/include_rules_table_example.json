@@ -1,0 +1,26 @@
+{
+    "rules_tables": [
+        {
+            "name": "included_rules_example",
+            "doc": "Example of including rules from other files into a new table",
+            "include_headers": [
+                "tws_topology_secondary_rules.h",
+                "tws_topology_rule_events.h"
+            ],
+            "rules": [
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_LINKLOSS",
+                    "rule_function": "ruleTwsTopSecPeerLostFindRole",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE",
+                    "doc": "A rule from the top-level rules file."
+                }
+            ],
+            "rules_includes": [
+                {
+                    "file": "secondary_rules_table_example.json",
+                    "rules_table_name": "tws_topology_secondary"
+                }
+            ]
+        }
+    ]
+}

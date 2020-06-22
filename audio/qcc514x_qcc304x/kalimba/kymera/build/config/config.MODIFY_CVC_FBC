@@ -1,0 +1,34 @@
+############################################################################
+#  Copyright (c) 2015 Qualcomm Technologies International, Ltd.
+#  All Rights Reserved.
+#  Qualcomm Technologies International, Ltd. Confidential and Proprietary.
+#  Notifications and licenses are retained for attribution purposes only
+############################################################################
+
+# Definitions required to build the CVC_FBC
+
+%cpp
+# Dianable cVc FBC licensing
+# NONSECURE_CVC_FBC
+
+# Maximum reference delay in samples
+CVC_FBC_REFDLY_MAX=64
+
+# Maximum FBC tail-length in seconds
+CVC_FBC_FILTER_LENGTH_MAX=0.008
+
+#
+# Capabilities to include in the build
+#
+%list CFG_CAPABILITIES
+CVC_FBC
+
+%list ALL_SRCDIRS
+capabilities/cvc_fbc
+
+# List of global include paths
+%list ALL_INCDIRS
+
+# List of libraries to build
+%list CFG_LIBS
+capabilities/cvc_fbc/cvc_fbc

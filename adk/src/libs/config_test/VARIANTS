@@ -1,0 +1,24 @@
+################################################################################
+# Flags to add when building this feature - these will be added to CFLAGS for  #
+# all VARIANTS. For feature X this should be CFLAGS_X. Replacing source files  #
+# should always be used in preference to CFLAGS_X unless replacing source is   #
+# impossible.                                                                  #
+################################################################################
+CFLAGS_TEST_CFLAGS := -DCFLAGS
+
+################################################################################
+# Source files for feature X may be included in the lib/X folder. If a source  #
+# file file.c is in lib it will be removed and replaced with the feature file  #
+# lib/X/file.c. No two features should ever replace the same file or they will #
+# be incompatible.                                                             #
+################################################################################
+
+################################################################################
+# Header files for feature X may be included in the lib/X folder. Always use   #
+# #include <file.h> (not #include "file.h") for these headers. The feature     #
+# headers will be given priority over lib headers, so if two headers have the  #
+# same name the feature header will be used. Two features should never have    #
+# headers with the same name.                                                  #
+#                                                                              #
+# NB. Features may not duplicate/modify the public API header.                 #
+################################################################################

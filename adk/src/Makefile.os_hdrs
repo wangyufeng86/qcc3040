@@ -1,0 +1,7 @@
+# This makefile provides a target to allow creating hydra_os installed libs folder
+# without building all source code.
+# This target will be moved into hydra_os makefile
+
+-include Makefile
+.PHONY: make_os_hdrs
+make_os_hdrs: $(ADK_INTERFACE)

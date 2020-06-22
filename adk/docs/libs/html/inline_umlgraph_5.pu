@@ -1,0 +1,46 @@
+@startuml
+
+
+    note "For clarity not all state transitions shown" as N1
+
+    [*] -down-> UNINITIALISED : Start
+
+    UNINITIALISED : App module and library init
+    UNINITIALISED --> IDLE : GattRootKeyServerInit()
+    UNINITIALISED --> ERROR : Failed to register with Gatt Manager
+
+    DISABLED : Server is disabled. This can occur once devices are paired and the client is not needed.
+
+    IDLE : Initialised, but not yet configured for action !
+    IDLE --> INITIALISED : GattRootKeyServerReadyForChallenge()
+
+    INITIALISED : Handles known, awaiting command
+    INITIALISED --> RESPONDED_RANDOM : Random received from client
+
+    RESPONDED_RANDOM : First stage of challenge sent to the client, awaiting send confirm
+    RESPONDED_RANDOM --> AWAITING_HASH : Send of random indication confirmed
+    RESPONDED_RANDOM --> ERROR : Incorrect message / opcode received
+
+    AWAITING_HASH : Awaiting hash request
+    AWAITING_HASH --> RESPONDED_HASH : Hash received from client
+    AWAITING_HASH --> ERROR : Incorrect message / opcode received
+
+    RESPONDED_HASH : Final stage of challenge sent to the client, awaiting send confirm
+    RESPONDED_HASH --> AUTHENTICATED :Send of hash indication confirmed
+    RESPONDED_HASH --> ERROR : Incorrect HASH received
+
+    AUTHENTICATED : Challenge has been completed successfully
+    AUTHENTICATED --> IR_RECEIVED : IR key received
+
+    IR_RECEIVED : IR key has been received from client
+    IR_RECEIVED --> ER_RECEIVED : ER key received
+
+    ER_RECEIVED : ER key has been received 
+    ER_RECEIVED --> KEYS_EXCHANGED : Command to commit has been receoved
+
+    KEYS_EXCHANGED : Keys have been confirmed
+
+    ERROR : Interaction with the client has failed
+    ERROR --> DISABLED: Only allowed transition from error
+
+@enduml

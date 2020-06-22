@@ -1,0 +1,131 @@
+# Message sequence charts for the l2cap bit of the connection lib
+
+define HEADING 
+object pl1 "PL" 
+object cl1 "CL" 
+object bs1 "L2CAP" 
+object bs2 "L2CAP"
+object cl2 "CL"
+object pl2 "PL"
+end 
+
+
+# Register
+define REGISTER
+message pl1 cl1 "ConnectionL2capRegisterRequest" "(Task appTask, psm_t app_psm)"
+message cl1 bs1 "L2CA_REGISTER_REQ" "psm=app_psm"
+message bs1 cl1 "L2CA_REGISTER_CFM" "psm"
+message cl1 pl1 "CL_L2CAP_REGISTER_CFM" "status = success; psm=psm"
+end
+
+# Fail to register a PSM
+define REGISTER_FAIL 
+message pl1 cl1 "ConnectionL2capRegisterRequest" "(Task appTask, psm_t app_psm)"
+message cl1 pl1 "CL_L2CAP_REGISTER_CFM" "status = fail_psm_registered; psm=app_psm"
+end
+
+# L2CAP connection - success
+define CONNECT_SUCCESS
+message pl1 cl1 "ConnectionL2capConnectRequest" "(appTask, bd_addr, psm_local, psm_remote, l2cap_config)"
+message cl1 bs1 "L2CA_CONNECT_REQ" "psm_local, bd_addr, psm, packet_type"
+message bs1 bs2 "L2CAP_ConnectReq"
+message bs2 bs1 "L2CAP_ConnectRspPnd"
+message bs2 cl2 "L2CA_CONNECT_IND" "identifier, bd_addr, cid, psm"
+message cl2 pl2 "CL_L2CAP_CONNECT_IND" "bd_addr, psm"
+message pl2 cl2 "ConnectionL2capConnectResponse" "(appTask, response, l2cap_config)"
+message cl2 bs2 "L2CA_CONNECT_RSP" "identifier, cid, response=accept"
+message bs2 bs1 "L2CAP_ConnectRsp"
+message bs1 cl1 "L2CA_CONNECT_CFM" "bd_addr, cid, psm, response=accept"
+
+message cl1 bs1 "L2CA_CONFIG_REQ" "cid, options, in_mtu, outflow, outflush_to, more_flag"
+message bs1 bs2 "L2CAP_ConfigReq"
+message bs2 cl2 "L2CA_CONFIG_IND" "cid, identifier, size_options, options, more_flag"
+message cl2 bs2 "L2CA_CONFIG_RSP" "cid, identifier, size_options, options, response, more_flag"
+message bs2 bs1 "L2CAP_ConfigRsp"
+message bs1 cl1 "L2CA_CONFIG_CFM" "cid, response, options, in_mtu, outflow, flush_to, more_flag"
+
+message cl2 bs2 "L2CA_CONFIG_REQ" "cid, options, in_mtu, outflow, outflush_to, more_flag"
+message bs2 bs1 "L2CAP_ConfigReq"
+message bs1 cl1 "L2CA_CONFIG_IND" "cid, identifier, size_options, options, more_flag"
+message cl1 bs1 "L2CA_CONFIG_RSP" "cid, identifier, size_options, options, response, more_flag"
+message bs1 bs2 "L2CAP_ConfigRsp"
+message bs2 cl2 "L2CA_CONFIG_CFM" "cid, response, options, in_mtu, outflow, flush_to, more_flag"
+
+message cl1 pl1 "CL_L2CAP_CONNECT_CFM" "status=accept, addr, cid"
+message cl2 pl2 "CL_L2CAP_CONNECT_CFM" "status=accept, addr, cid"
+end
+
+# L2CAP connection - reject
+define CONNECT_REJECT
+message pl1 cl1 "ConnectionL2capConnectRequest" "(appTask, psm_local, psm_remote, addr, l2cap_config)"
+message cl1 bs1 "L2CA_CONNECT_REQ" "psm_local, bd_addr, psm, packet_type"
+message bs1 bs2 "L2CAP_ConnectReq"
+message bs2 bs1 "L2CAP_ConnectRspPnd"
+message bs2 cl2 "L2CA_CONNECT_IND" "identifier, bd_addr, cid, psm"
+message cl2 pl2 "CL_L2CAP_CONNECT_IND" "addr, psm"
+message pl2 cl2 "ConnectionL2capConnectResponse" "(appTask, response, l2cap_config)"
+message cl2 pl2 "CL_L2CAP_CONNECT_CFM" "status=reject, addr, cid"
+message cl2 bs2 "L2CA_CONNECT_RSP" "identifier, cid, response=reject"
+message bs2 bs1 "L2CAP_ConnectRspNeg"
+message bs1 cl1 "L2CA_CONNECT_CFM" "bd_addr, cid, psm, response=reject"
+message cl1 pl1 "CL_L2CAP_CONNECT_CFM" "status=reject, addr, cid"
+end
+
+
+# L2CAP connection - mtu negotiation
+define CONNECT_MTU_NEGOTIATION_FAIL
+message pl1 cl1 "ConnectionL2capConnectRequest" "(appTask, psm_local, psm_remote, addr, l2cap_config)"
+message cl1 bs1 "L2CA_CONNECT_REQ" "psm_local, bd_addr, psm, packet_type"
+message bs1 bs2 "L2CAP_ConnectReq"
+message bs2 bs1 "L2CAP_ConnectRspPnd"
+message bs2 cl2 "L2CA_CONNECT_IND" "identifier, bd_addr, cid, psm"
+message cl2 pl2 "CL_L2CAP_CONNECT_IND" "addr, psm"
+message pl2 cl2 "ConnectionL2capConnectResponse" "(appTask, response, l2cap_config)"
+message cl2 bs2 "L2CA_CONNECT_RSP" "identifier, cid, response=accept"
+message bs2 bs1 "L2CAP_ConnectRsp"
+message bs1 cl1 "L2CA_CONNECT_CFM" "bd_addr, cid, psm, response=accept"
+
+message cl1 bs1 "L2CA_CONFIG_REQ" "cid, options, in_mtu, outflow, outflush_to, more_flag"
+message bs1 bs2 "L2CAP_ConfigReq"
+message bs2 cl2 "L2CA_CONFIG_IND" "cid, identifier, size_options, options, more_flag"
+message cl2 bs2 "L2CA_CONFIG_RSP" "cid, identifier, size_options, options, response=reject, more_flag"
+message bs2 bs1 "L2CAP_ConfigRspNeg"
+message bs1 cl1 "L2CA_CONFIG_CFM" "cid, response=reject, options, in_mtu, outflow, flush_to, more_flag"
+
+message cl1 bs1 "L2CA_DISCONNECT_REQ" "cid"
+message bs1 bs2 "L2CAP_DisconnectReq"
+message bs2 cl2 "L2CA_DISCONNECT_IND" "identifier, cid"
+message cl2 bs2 "L2CA_DISCONNECT_RSP" "identifier, cid"
+message cl2 pl2 "CL_L2CAP_CONNECT_CFM" "status=fail, addr, cid"
+message bs2 bs1 "L2CAP_DisconnectRsp"
+message bs1 cl1 "L2CA_DISCONNECT_CFM" "cid, result"
+message cl1 pl1 "CL_L2CAP_CONNECT_CFM" "status=fail, addr, cid"
+end
+
+
+# Charts to plots from the sequences defined above 
+chart ConnectionL2capRegisterRequest
+HEADING 
+REGISTER
+end
+
+chart ConnectionL2capRegisterRequest_Fail
+HEADING 
+REGISTER
+REGISTER_FAIL
+end
+
+chart ConnectionL2capConnectRequest
+HEADING
+CONNECT_SUCCESS
+end
+
+chart ConnectionL2capConnectRequest_Reject
+HEADING
+CONNECT_REJECT
+end
+
+chart ConnectionL2capConnectRequest_MTU_Neg_Fail
+HEADING
+CONNECT_MTU_NEGOTIATION_FAIL
+end

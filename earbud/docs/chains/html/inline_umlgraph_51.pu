@@ -1,0 +1,9 @@
+@startuml
+
+    object OPR_OPUS_ENCODER
+    OPR_OPUS_ENCODER : id = EB_CAP_ID_OPUS_ENC
+    object EPR_VA_ENCODE_IN #lightgreen
+    OPR_OPUS_ENCODER "IN(0)" <-- EPR_VA_ENCODE_IN
+    object EPR_VA_ENCODE_OUT #lightblue
+    EPR_VA_ENCODE_OUT <-- "OUT(0)" OPR_OPUS_ENCODER
+@enduml

@@ -1,0 +1,18 @@
+############################################################################
+# CONFIDENTIAL
+# Copyright 2017 Qualcomm Technologies International, Ltd.
+############################################################################
+
+DYN_FILES += $(if $(BUILD_CVC_AUTO_1MIC), cvc_send_auto_1mic.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_AUTO_2MIC), cvc_send_auto_2mic.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_HEADSET_1MIC), cvc_send_headset_1mic.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_HEADSET_2MIC), cvc_send_headset_2mic.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_SPEAKER_1MIC), cvc_send_speaker_1mic.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_SPEAKER_2MIC), cvc_send_speaker_2mic.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_SPEAKER_3MIC), cvc_send_speaker_3mic.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_SPEAKER_CIRC_3MIC), cvc_send_speaker_circ_3mic.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_SPEAKER_CIRC_3MIC_VA), cvc_send_speaker_circ_3mic_va.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_SPEAKER_CIRC_3MIC_VA4B), cvc_send_speaker_circ_3mic_va4b.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_SPEAKER_4MIC), cvc_send_speaker_4mic.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_HEADSET_2MIC_VA_WAKEON), cvc_send_headset_2mic_va_wakeon.dyn,)
+DYN_FILES += $(if $(BUILD_CVC_HEADSET_2MIC_VA_BARGEIN), cvc_send_headset_2mic_va_bargein.dyn,)

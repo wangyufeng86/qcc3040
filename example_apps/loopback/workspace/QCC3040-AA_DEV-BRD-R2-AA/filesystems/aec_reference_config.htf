@@ -1,0 +1,158 @@
+file = audio
+
+# PSID=0x2184, capID=0x0043 (built-in capability), UCID=0x0002 (Wideband VA use case)
+# -> [ 1001 0000 0025 0000 2088 0000 0654 0000 0654 0000 00CF 0000 00CF 0000 00CF 0000 00CF 0000 00CF 0000 00CF 7FFF FFFF 0080 0000 0000 0000 0000 0000 0000 0000 0000 0001 4000 0000 0000 0003 0000 0001 4000 0000 373C C800 9186 6F00 373C C800 2FAE 2600 92BB 0300 373C C800 9186 6F00 373C C800 2FAE 2600 92BB 0300 373C C800 9186 6F00 373C C800 2FAE 2600 92BB 0300 0000 0001 0000 0001 0000 0001 ]
+0x002184 = [ 01 10 00 00 25 00 00 00 88 20 00 00 54 06 00 00 54 06 00 00 CF 00 00 00 CF 00 00 00 CF 00 00 00 CF 00 00 00 CF 00 00 00 CF 00 FF 7F FF FF 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 40 00 00 00 00 03 00 00 00 01 00 00 40 00 00 3C 37 00 C8 86 91 00 6F 3C 37 00 C8 AE 2F 00 26 BB 92 00 03 3C 37 00 C8 86 91 00 6F 3C 37 00 C8 AE 2F 00 26 BB 92 00 03 3C 37 00 C8 86 91 00 6F 3C 37 00 C8 AE 2F 00 26 BB 92 00 03 00 00 01 00 00 00 01 00 00 00 01 00 ]
+
+# PSID=0x200384, capID=0x4007 (downloadable capability), UCID=0x0002 (Wideband VA use case)
+# -> [ 1001 0000 0025 0000 2088 0000 00CF 0000 0654 0000 00CF 0000 0654 0000 00CF 0000 00CF 0000 00CF 0000 00CF 7FFF FFFF 0080 0000 0000 0000 0000 0000 0000 0000 0000 0001 4000 0000 0000 0003 0000 0001 4000 0000 373C C800 9186 6F00 373C C800 2FAE 2600 92BB 0300 373C C800 9186 6F00 373C C800 2FAE 2600 92BB 0300 373C C800 9186 6F00 373C C800 2FAE 2600 92BB 0300 0000 0001 0000 0001 0000 0001  ]
+0x200384 = [ 01 10 00 00 25 00 00 00 88 20 00 00 54 06 00 00 54 06 00 00 CF 00 00 00 CF 00 00 00 CF 00 00 00 CF 00 00 00 CF 00 00 00 CF 00 FF 7F FF FF 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 40 00 00 00 00 03 00 00 00 01 00 00 40 00 00 3C 37 00 C8 86 91 00 6F 3C 37 00 C8 AE 2F 00 26 BB 92 00 03 3C 37 00 C8 86 91 00 6F 3C 37 00 C8 AE 2F 00 26 BB 92 00 03 3C 37 00 C8 86 91 00 6F 3C 37 00 C8 AE 2F 00 26 BB 92 00 03 00 00 01 00 00 00 01 00 00 00 01 00 ]
+
+# HFP Voice Call use cases
+# PSID=0x200380, capID=0x43 (downloadable capability), UCID=0x0000 (Narrowband)
+0x200380 = [ 01 10 01 00 02 00 00 00 00 00 00 00 00 00 ]
+
+# PSID=0x200382, capID=0x43 (downloadable capability), UCID=0x0001 (Wideband)
+0x200382 = [ 01 10 01 00 02 00 00 00 00 00 00 00 00 00 ]
+
+# PSID=0x200386, capID=0x43 (downloadable capability), UCID=0x0003 (Ultra Wideband)
+0x200386 = [ 01 10 01 00 02 00 00 00 00 00 00 00 00 00 ]
+
+# PSID=0x200388, capID=0x43 (downloadable capability), UCID=0x0004 (Super Wideband)
+0x200388 = [ 01 10 01 00 02 00 00 00 00 00 00 00 00 00 ]
+
+#PSID=0x002180 , capID=0x0043,(built-in capability), UCID=0x0000 (Narrowband)
+0x002180 = [ 01 10 01 00 02 00 00 00 00 00 00 00 00 00 ]
+
+# PSID=0x002182 , capID=0x43, (built-in capability), UCID=0x0001 (Wideband)
+0x002182  = [ 01 10 01 00 02 00 00 00 00 00 00 00 00 00 ]
+
+# PSID=0x002186 , capID=0x43, (built-in capability), UCID=0x0003 (Ultra Wideband)
+0x002186  = [ 01 10 01 00 02 00 00 00 00 00 00 00 00 00 ]
+
+# PSID=0x002188 , capID=0x43, (built-in capability), UCID=0x0004 (Super Wideband)
+0x002188  = [ 01 10 01 00 02 00 00 00 00 00 00 00 00 00 ]
+
+# Default AEC_REF mode when leakthrough is not on
+# PSID=0x20038A, capID=0x4007, UCID=6
+0x20038A = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default Standalone or A2DP leakthrough Mode_1 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x20038C, capID=0x4007, UCID=7
+# -> [ 1001 0000 0001 0000 2090  ]
+0x20038C = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default Standalone or A2DP leakthrough Mode_2 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x20038E, capID=0x4007, UCID=8
+# -> [ 1001 0000 0001 0000 2090  ]
+0x20038E = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default Standalone or A2DP leakthrough Mode_3 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x200390, capID=0x4007, UCID=9
+# -> [ 1001 0000 0001 0000 2090  ]
+0x200390 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO WB leakthrough Mode_1 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x200392, capID=0x4007, UCID=10
+# -> [ 1001 0000 0001 0000 2090  ]
+0x200392 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO NB leakthrough Mode_1 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x200394, capID=0x4007, UCID=11
+# -> [ 1001 0000 0001 0000 2090  ]
+0x200394 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO SWB leakthrough Mode_1 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x200396, capID=0x4007, UCID=12
+# -> [ 1001 0000 0001 0000 2090  ]
+0x200396 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO UWB leakthrough Mode_1 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x200398, capID=0x4007, UCID=13
+# -> [ 1001 0000 0001 0000 2090  ]
+0x200398 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO WB leakthrough Mode_2 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x20039A, capID=0x4007, UCID=14
+# -> [ 1001 0000 0001 0000 2090  ]
+0x20039A = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO NB leakthrough Mode_2 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x20039C, capID=0x4007, UCID=15
+# -> [ 1001 0000 0001 0000 2090  ]
+0x20039C = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO SWB leakthrough Mode_2 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x20039E, capID=0x4007, UCID=16
+# -> [ 1001 0000 0001 0000 2090  ]
+0x20039E = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO UWB leakthrough Mode_2 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003A0, capID=0x4007, UCID=17
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003A0 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO WB leakthrough Mode_3 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003A2, capID=0x4007, UCID=18
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003A2 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO NB leakthrough Mode_3 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003A4, capID=0x4007, UCID=19
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003A4 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO SWB leakthrough Mode_3 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003A6, capID=0x4007, UCID=20
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003A6 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default SCO UWB leakthrough Mode_3 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003A8, capID=0x4007, UCID=21
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003A8 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default A2DP 44.1Khz leakthrough Mode_1 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003AA, capID=0x4007, UCID=22
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003AA = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default A2DP 44.1Khz leakthrough Mode_2 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003AC, capID=0x4007, UCID=23
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003AC = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default A2DP 44.1Khz leakthrough Mode_3 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003AE, capID=0x4007, UCID=24
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003AE = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default A2DP 48Khz leakthrough Mode_1 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003B0, capID=0x4007, UCID=25
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003B0 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default A2DP 48Khz leakthrough Mode_2 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003B2, capID=0x4007, UCID=26
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003B2 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default A2DP 48Khz leakthrough Mode_3 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003B4, capID=0x4007, UCID=27
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003B4 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default A2DP leakthrough Mode_1 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003B6, capID=0x4007, UCID=28
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003B6 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default A2DP leakthrough Mode_2 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003B8, capID=0x4007, UCID=29
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003B8 = [ 01 10 00 00 01 00 00 00 80 20 ]
+
+# Default A2DP leakthrough Mode_3 with sidetone path bypassed,Microphone gain at 3dB, PEQ filter disabled, Sidetone Gain at 0dB
+# PSID=0x2003C0, capID=0x4007, UCID=30
+# -> [ 1001 0000 0001 0000 2090  ]
+0x2003C0 = [ 01 10 00 00 01 00 00 00 80 20 ]

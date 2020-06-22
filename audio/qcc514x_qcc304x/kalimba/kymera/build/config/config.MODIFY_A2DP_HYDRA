@@ -1,0 +1,13 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2014 - 2017 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Definitions for A2DP in Hydra builds.
+# Kymera doesn't support shunt on Hydra, so don't include any shunt stuff.
+
+%include config.MODIFY_A2DP_HYDRA_LITE
+%include config.MODIFY_A2DP_HYDRA_FAT
+
+

@@ -1,0 +1,9 @@
+@startuml
+
+    object OPR_SBC_ENCODER
+    OPR_SBC_ENCODER : id = CAP_ID_SBC_ENCODER
+    object EPR_VA_ENCODE_IN #lightgreen
+    OPR_SBC_ENCODER "IN(0)" <-- EPR_VA_ENCODE_IN
+    object EPR_VA_ENCODE_OUT #lightblue
+    EPR_VA_ENCODE_OUT <-- "OUT(0)" OPR_SBC_ENCODER
+@enduml

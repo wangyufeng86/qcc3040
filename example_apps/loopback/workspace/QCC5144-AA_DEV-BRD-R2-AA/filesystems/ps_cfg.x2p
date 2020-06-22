@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project path="">
+    <file path="../../QCC5144-AA_DEV-BRD-R2-AA/filesystems/aec_reference_config.htf"/>
+    <file path="../../QCC5144-AA_DEV-BRD-R2-AA/filesystems/anc_tuning_config.htf"/>
+    <file path="../../QCC5144-AA_DEV-BRD-R2-AA/filesystems/cvc_config.htf"/>
+    <file path="../../QCC5144-AA_DEV-BRD-R2-AA/filesystems/subsys7_psflash.htf"/>
+    <configurations>
+        <configuration name="filesystem" options="build|deploy">
+            <devkitConfiguration>filesystem</devkitConfiguration>
+            <devkitGroup>kitres://{0F0E0182-5E9B-4D6B-88F4-133D2574D14C}</devkitGroup>
+            <deployProject>deploy</deployProject>
+            <property name="TYPE">user_ps</property>
+            <property name="system_label">QCC514X_CONFIG</property>
+            <property name="CHIP_TYPE">qcc514x_qcc304x</property>
+        </configuration>
+    </configurations>
+</project>

@@ -1,0 +1,19 @@
+############################################################################
+#  Copyright (c) 2015 Qualcomm Technologies International, Ltd.
+#  All Rights Reserved.
+#  Qualcomm Technologies International, Ltd. Confidential and Proprietary.
+#  Notifications and licenses are retained for attribution purposes only
+############################################################################
+
+%cpp
+
+# Select rate library implementations of rate matching adaptive responsiveness.
+# Add implementations as follows:
+#   INSTALL_RATE_MATCH_ADAPT_x
+# Define exactly one RATE_MATCH_ADAPT_DEFAULT_...:
+#   RATE_MATCH_ADAPT_DEFAULT_x
+
+RATE_MATCH_ADAPT_DEFAULT_NONE
+
+
+# %build

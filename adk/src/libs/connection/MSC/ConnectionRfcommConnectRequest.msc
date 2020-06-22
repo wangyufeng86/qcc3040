@@ -1,0 +1,98 @@
+# 
+# ConnectionRfcommAllocateChannel.msc
+# 21/03/04
+#
+# Multipoint Connection Library - RFC Connect Request 1
+#
+
+# Object definition
+define HEADING
+ object pl_m  "PL"
+ object cl_m  "CL"
+ object rfc_m "RFC"
+ object rfc_s "RFC"	
+ object cl_s  "CL"
+ object pl_s  "PL"
+end
+
+define LIB_CALL
+ message pl_m cl_m "ConnectionRfcommConnectRequest" "(Task CL_TASK, BD_ADDR_T slave_addr, uint16 remote_server_channel, RFCOMM_CONFIG* config)"
+end
+
+define CONNECT
+ message cl_m rfc_m "RFC_START_REQ" "(phandle=CL_TASK, slave_addr, psm_remote=PE_PSM, frame_size=max_frame_size, port_speed=PORT_SPEED_UNUSED)" 
+ message rfc_s cl_s "DM_ACL_OPENED_IND"
+ message rfc_m cl_m "RFC_START_CFM" "(phandle=CL_TASK, bd_addr, mux_id, result_code=RFC_CONNECTION_PENDING, sys_pars)"
+ message rfc_s cl_s "RFC_START_IND" "(phandle=RFC_TASK, master_addr, mux_id, port_speed, max_frame_size)"
+ message cl_s rfc_s "RFC_START_RES" "(phandle=CL_TASK, mux_id, accept=response, port_speed, max_frame_size)"
+ message rfc_s cl_s "RFC_START_IND" "(phandle=RFC_TASK, master_addr, mux_id, port_speed, max_frame_size)"
+ message cl_s rfc_s "RFC_START_RES" "(phandle=CL_TASK, mux_id, accept=TRUE, port_speed, max_frame_size)"
+ message rfc_s cl_s "RFC_STARTCMP_IND" "(phandle=RFC_TASK, mux_id, result_code=SUCCESS, port_speed, max_frame_size)"
+ message rfc_m rfc_s "RFC_SABM" "(DLCI=0)"
+ message rfc_s rfc_m "RFC_UA" "(DLCI=0)"
+ message rfc_m cl_m "RFC_START_CFM" "(phandle=CL_TASK, bd_addr, mux_id, result_code=SUCCESS, sys_pars)"
+end
+
+define PN
+ # Parameter negotiation
+ message cl_m rfc_m "RFC_PARNEG_REQ" "(mux_id, local_server_channel, remote_server_channel, dlc_pars)"
+ message rfc_m rfc_s "RFC_UIH_PN"
+ message rfc_s cl_s "RFC_PARNEG_IND" "(phandle=RFC_TASK, mux_id, server_channel, dlc_pars)"
+ message cl_s pl_s "CL_RFCOMM_CONNECT_IND" "(status, master_addr, server_channel, frame_size)"
+ message pl_s cl_s "ConnectionRfcommConnectResponse(Task CL_TASK, response=TRUE, local_server_channel, RFCOMM_CONFIG* config)"
+ message cl_s rfc_s "RFC_PARNEG_RES" "(mux_id, server_channel, dlc_pars)"
+ message rfc_s rfc_m "RFC_UIH_PN"
+ message rfc_m cl_m "RFC_PARNEG_CFM" "(phandle=CL_TASK, mux_id, server_channel, dlc_pars)"
+end
+
+define OPEN
+ # Open server channel
+ message cl_m rfc_m "RFC_ESTABLISH_REQ" "(mux_id, local_server_channel, remote_server_channel)"
+ message rfc_m rfc_s "RFC_SABM"
+ message rfc_s cl_s "RFC_ESTABLISH_IND" "(phandle=RFC_TASK, mux_id, local_server_channel)"
+ message cl_m rfc_m "RFC_ESTABLISH_RES" "(accept=TRUE, mux_id, local_server_channel)"
+ message rfc_s rfc_m "RFC_UA"
+ message rfc_m cl_m "RFC_ESTABLISH_CFM" "(phandle=CL_TASK, mux_id, server_channel, result_code=RFC_SUCCESS)"
+end
+
+define MSC
+ # Exchange modem status signals
+ # Master with the slave
+ message cl_m rfc_m "RFC_CONTROL_REQ" "(modem_status, break_signal, mux_id, server_channel)"
+ message rfc_m rfc_s "RFC_UIH" "(command=MSC)"
+ message rfc_s rfc_m "RFC_UIH" "(command=MSC)"
+ message rfc_s cl_s "RFC_CONTROL_IND" "(Task=RFC_TASK, modem_status, break_signal, server_channel, mux_id)"
+ message cl_s pl_s "CL_RFCOMM_CONTROL_IND" "(sink, break_signal, modem_status)"
+
+ # Slave with the master
+ message cl_s rfc_s "RFC_CONTROL_REQ" "(modem_status, break_signal, mux_id, server_channel)"
+ message rfc_s rfc_m "RFC_UIH" "(command=MSC)"
+ message rfc_m rfc_s "RFC_UIH" "(command=MSC)"
+ message rfc_m cl_m "RFC_CONTROL_IND" "(Task=RFC_TASK, modem_status, break_signal, server_channel, mux_id)"
+ message cl_m pl_m "CL_RFCOMM_CONTROL_IND" "(sink, break_signal, modem_status)"
+end
+
+define PORTN
+ # Port Negotiation
+ message cl_m rfc_m "RFC_PORTNEG_REQ" "(mux_id, local_server_channel, remote_server_channel, request, port_pars)"
+ message rfc_m cl_m "RFC_PORTNEG_CFM" "(phandle=CL_TASK, mux_id, server_channel, port_pars)"
+end
+
+define LIB_RESPONSE
+ message cl_m pl_m "CL_RFCOMM_CONNECT_CFM" "(status, server_channel, sink)"
+ message cl_s pl_s "CL_RFCOMM_CONNECT_CFM" "(status, server_channel, sink)"
+end
+
+# Draw
+ chart ConnectionRfcommConnectRequest
+ HEADING
+ LIB_CALL
+ CONNECT
+ PN
+ OPEN
+ MSC
+ LIB_RESPONSE
+end
+
+
+

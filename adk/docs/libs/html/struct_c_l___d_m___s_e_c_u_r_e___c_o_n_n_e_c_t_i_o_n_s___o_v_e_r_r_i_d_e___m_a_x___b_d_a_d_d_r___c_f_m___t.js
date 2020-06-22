@@ -1,0 +1,5 @@
+var struct_c_l___d_m___s_e_c_u_r_e___c_o_n_n_e_c_t_i_o_n_s___o_v_e_r_r_i_d_e___m_a_x___b_d_a_d_d_r___c_f_m___t =
+[
+    [ "max_override_bdaddr", "struct_c_l___d_m___s_e_c_u_r_e___c_o_n_n_e_c_t_i_o_n_s___o_v_e_r_r_i_d_e___m_a_x___b_d_a_d_d_r___c_f_m___t.html#a46fcc411473a620c4c77236f3bf8e9a6", null ],
+    [ "status", "struct_c_l___d_m___s_e_c_u_r_e___c_o_n_n_e_c_t_i_o_n_s___o_v_e_r_r_i_d_e___m_a_x___b_d_a_d_d_r___c_f_m___t.html#a194fc2556a199c206484cbcb85ef14af", null ]
+];

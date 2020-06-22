@@ -1,0 +1,48 @@
+{
+    "rules_tables": [
+        {
+            "name": "tws_topology_common_secondary",
+
+            "doc": "Table of common rules for a TWS Secondary earbud",
+
+            "include_headers": [
+                "tws_topology_common_secondary_rule_functions.h",
+                "tws_topology_rule_events.h",
+                "tws_topology_secondary_ruleset.h"
+            ],
+
+            "rules": [
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_FAILED_PEER_CONNECT",
+                    "rule_function": "ruleTwsTopSecFailedConnectFindRole",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE",
+                    "doc": "If failed to connect the ACL to the Primary, decide if Secondary should return to no role and restart role selection."
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_ROLE_SWITCH",
+                    "rule_function": "ruleTwsTopSecRoleSwitchPeerConnect",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_CONNECT_PEER",
+                    "doc": "After switching to secondary role, decide if Secondary Earbud should create BREDR link to Primary Earbud."
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_IN_CASE",
+                    "rule_function": "ruleTwsTopSecNoRoleIdle",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_NO_ROLE_IDLE",
+                    "doc": "When Earbud put in the case, decide if it should drop links and transition to no role"
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_DFU_ROLE",
+                    "rule_function": "ruleTwsTopSecSwitchToDfuRole",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_DFU_ROLE",
+                    "doc": "When requested to select DFU rules, select them"
+                },
+                {
+                    "event_mask": "TWSTOP_RULE_EVENT_FAILED_SWITCH_SECONDARY",
+                    "rule_function": "ruleTwsTopSecFailedSwitchSecondaryFindRole",
+                    "output_message_id": "TWSTOP_SECONDARY_GOAL_NO_ROLE_FIND_ROLE",
+                    "doc": "If failed to switch to being a secondary, decide if device should return to no role and restart role selection."
+                }
+            ]
+        }
+    ]
+}

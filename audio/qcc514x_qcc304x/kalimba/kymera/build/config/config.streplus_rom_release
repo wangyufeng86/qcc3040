@@ -1,0 +1,9 @@
+#CONFIDENTIAL
+#
+# Copyright (c) 2018 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Streplus top-level config that builds private libraries with obfuscation
+
+%include config.streplus_rom
+%include config.MODIFY_HYDRA_RELEASE

@@ -1,0 +1,23 @@
+@startuml
+
+
+    [*] -down-> NULL
+    NULL -down-> DISCONNECTED
+
+    DISCONNECTED : No AVRCP connection
+    DISCONNECTED -down-> CONNECTING_LOCAL : ConnectReq
+    DISCONNECTED -down-> CONNECTING_LOCAL_WAIT_RESPONSE : ConnectReq/clients to notify
+    DISCONNECTED -down-> CONNECTING_REMOTE_WAIT_RESPONSE : ConnectInd/clients to notify
+    DISCONNECTED -down-> CONNECTING_REMOTE : ConnectInd
+
+    CONNECTING_LOCAL_WAIT_RESPONSE -down-> CONNECTING_LOCAL : client notification complete
+    CONNECTING_REMOTE_WAIT_RESPONSE -down-> CONNECTING_REMOTE : client notification complete
+
+    CONNECTING_LOCAL -down-> CONNECTED : AVRCP_CONNECT_CFM
+    CONNECTING_REMOTE -down-> CONNECTED : AVRCP_CONNECT_CFM
+
+    CONNECTED -left-> DISCONNECTING : Disconnect Req/Ind
+
+    DISCONNECTING -right-> DISCONNECTED
+
+    @enduml

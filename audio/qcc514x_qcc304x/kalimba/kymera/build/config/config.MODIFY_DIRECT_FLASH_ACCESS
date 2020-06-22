@@ -1,0 +1,16 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2016 - 2018 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Enable read-only direct access from the Apps Flash via the TBus
+
+%cpp
+INSTALL_DIRECT_FLASH_ACCESS
+
+%list ALL_SRCDIRS
+components/direct_access
+
+%list CFG_LIBS
+components/direct_access/direct_access

@@ -1,0 +1,11 @@
+--extra-index-url https://devpi.qualcomm.com/qcom/rel/+simple
+
+graphviz==0.8.4                      # optional
+jinja2==2.10.3                       ;python_version > '3' # Documentation
+matplotlib==2.1.1                    # optional
+mock==2.0.0                          ;python_version=='2.7' # Unittest
+pytest-cov==2.5.1
+pytest==3.6.3
+qcomcopyright==0.1.2                 ;python_version > '3' # Documentation
+sphinx-rtqd-theme==0.2.0             ;python_version > '3' # Documentation
+sphinx==2.2.0                        ;python_version > '3' # Documentation

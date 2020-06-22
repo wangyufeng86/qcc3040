@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019 Qualcomm Technologies International, Ltd.-->
+
+<chain name="CHAIN_INPUT_SBC_STEREO_MIX" id="0" generate_endpoint_roles_enum="False" generate_operator_roles_enum="False">
+
+    <include_header name="../earbud_cap_ids.h"/>
+    <include_header name="kymera_chain_roles.h"/>
+
+    <operator name="OPR_RTP_DECODER" id="CAP_ID_RTP_DECODE">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <operator name="OPR_SBC_DECODER" id="CAP_ID_SBC_DECODER">
+        <sink name="IN" terminal="0"/>
+        <source name="OUT_0" terminal="0"/>
+        <source name="OUT_1" terminal="1"/>
+    </operator>
+
+    <operator name="OPR_LEFT_RIGHT_MIXER" id="CAP_ID_MIXER">
+        <sink name="IN_L" terminal="0"/>
+        <sink name="IN_R" terminal="1"/>
+        <source name="OUT" terminal="0"/>
+    </operator>
+
+    <input sink="OPR_RTP_DECODER.IN" role="EPR_SINK_MEDIA"/>
+    <connection source="OPR_RTP_DECODER.OUT" sink="OPR_SBC_DECODER.IN"/>
+    <connection source="OPR_SBC_DECODER.OUT_0" sink="OPR_LEFT_RIGHT_MIXER.IN_L"/>
+    <connection source="OPR_SBC_DECODER.OUT_1" sink="OPR_LEFT_RIGHT_MIXER.IN_R"/>
+    <output source="OPR_LEFT_RIGHT_MIXER.OUT" role="EPR_SOURCE_DECODED_PCM"/>
+
+</chain>
+

@@ -1,0 +1,9 @@
+@startuml
+
+    object OPR_MSBC_ENCODER
+    OPR_MSBC_ENCODER : id = EB_CAP_ID_ASYNC_WBS_ENC
+    object EPR_VA_ENCODE_IN #lightgreen
+    OPR_MSBC_ENCODER "IN(0)" <-- EPR_VA_ENCODE_IN
+    object EPR_VA_ENCODE_OUT #lightblue
+    EPR_VA_ENCODE_OUT <-- "OUT(0)" OPR_MSBC_ENCODER
+@enduml

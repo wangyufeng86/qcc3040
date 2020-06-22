@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <ext_id>
+        <uuid>{@@@EXT_ROOT_EXT_ID_UUID@@@}</uuid>
+        <devkit>{@@@DEVKIT_ROOT_ID_UUID@@@}</devkit>
+        <checksum>XXXXXXXX</checksum>
+        <version>@@@DEVKIT_ROOT_ID_VERSION@@@</version>
+        <build>@@@DEVKIT_ROOT_ID_BUILD@@@</build>
+        <target>@@@DEVKIT_ROOT_ID_PLATFORM@@@</target>
+    </ext_id>
+    <ext_info>
+        <name>PyDbg Tabs</name>
+        <description>Adds pylib debug tabs</description>
+        <build>@@@DEVKIT_ROOT_ID_BUILD@@@</build>
+    </ext_info>
+    <plugins type="move">
+        <tabs type="move">
+            <tab name="Pydbg">
+                <type>commandline</type>
+                <prompt>>>> </prompt>
+                <run>./tools/python27/python.exe</run>
+                <env>
+                    <item name="workspace">__WORKSPACE_PATH__=%1</item>
+                </env>
+                <options>
+                    <option>-i</option>
+                    <option>-m tabs.pydbg_tab</option>
+                    <option name="device">-d %1</option>
+                    <option name="kit">-k %1</option>
+                    <option>-p ./apps/fw/tools/pydbg.py</option>
+                    <option name="workspace">-w %1</option>
+                </options>
+            </tab>
+            <tab name="Bluestack">
+                <type>commandline</type>
+                <prompt>>>> </prompt>
+                <run>./tools/python27/python.exe</run>
+                <env>
+                    <item name="workspace">__WORKSPACE_PATH__=%1</item>
+                </env>
+                <options>
+                    <option>-i</option>
+                    <option>-m tabs.pydbg_tab -t prim_live_log</option>
+                    <option name="device">-d %1</option>
+                    <option name="kit">-k %1</option>
+                    <option>-p ./apps/fw/tools/pydbg.py</option>
+                    <option name="workspace">-w %1</option>
+                </options>
+            </tab>
+            <tab name="Messages">
+                <type>commandline</type>
+                <prompt>>>> </prompt>
+                <run>./tools/python27/python.exe</run>
+                <env>
+                    <item name="workspace">__WORKSPACE_PATH__=%1</item>
+                </env>
+                <options>
+                    <option>-i</option>
+                    <option>-m tabs.pydbg_tab -t trap_live_log</option>
+                    <option name="device">-d %1</option>
+                    <option name="kit">-k %1</option>
+                    <option>-p ./apps/fw/tools/pydbg.py</option>
+                    <option name="workspace">-w %1</option>
+                </options>
+            </tab>
+            <tab name="fw_live_log">
+                <type>commandline</type>
+                <prompt>>>> </prompt>
+                <run>./tools/python27/python.exe</run>
+                <env>
+                    <item name="workspace">__WORKSPACE_PATH__=%1</item>
+                </env>
+                <options>
+                    <option>-i</option>
+                    <option>-m tabs.pydbg_tab -t scripts/fw_live_log.py</option>
+                    <option name="device">-d %1</option>
+                    <option name="kit">-k %1</option>
+                    <option>-p ./apps/fw/tools/pydbg.py</option>
+                    <option name="workspace">-w %1</option>
+                </options>
+            </tab>
+		</tabs>
+    </plugins>
+ </root>

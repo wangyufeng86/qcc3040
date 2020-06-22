@@ -1,0 +1,38 @@
+<project buildenvironment="{84faf732-1340-4049-9094-244167adf571}" executionenvironment="{2b2c6868-a56e-4266-962a-cddf1c979343}" executionenvironmentname="CSR Virtual Machine" buildenvironmentoption="" buildenvironmentname="CSR Virtual Machine" executionenvironmentoption="" >
+ <folder name="C Files" >
+  <extension name="c" />
+  <file path="init.c" />
+  <file path="avrcp_common.c" >
+   <properties>
+    <configuration name="Release" />
+   </properties>
+  </file>
+  <file path="main.c" />
+  <file path="avrcp_connect.c" />
+  <file path="profile_handler.c" />
+  <file path="avrcp_l2cap_handler.c" />
+  <file path="avrcp_send_message.c" />
+  <file path="avrcp_message_handler.c" />
+ </folder>
+ <folder name="Header Files" >
+  <extension name="h" />
+  <file path="avrcp.h" />
+  <file path="avrcp_private.h" />
+  <file path="init.h" />
+  <file path="avrcp_common.h" />
+  <file path="profile_handler.h" />
+  <file path="avrcp_l2cap_handler.h" />
+  <file path="avrcp_message_handler.h" />
+ </folder>
+ <properties currentconfiguration="Release" >
+  <configuration name="Release" >
+   <property key="buildMatch" >(file):(line):</property>
+   <property key="buildtransport" >0</property>
+   <property key="debugtransport" >[SPI|LPT1|No]</property>
+   <property key="defines" >DEBUG_PRINT_ENABLED</property>
+   <property key="libs" >connection</property>
+   <property key="output" ></property>
+   <property key="stacksize" >81</property>
+  </configuration>
+ </properties>
+</project>

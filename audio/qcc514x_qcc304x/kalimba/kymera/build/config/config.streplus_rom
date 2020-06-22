@@ -1,0 +1,82 @@
+############################################################################
+# Copyright (c) 2017 Qualcomm Technologies International, Ltd.
+############################################################################
+# Base configuration, do not attempt to create an image directly from it.
+
+%include config.streplus_rom_common
+
+# Install ISO channels (ISO needs SCO to be included as well)
+%include config.MODIFY_ISO_COMMON
+
+#Install the ringtone generator
+%include config.MODIFY_RINGTONE_GENERATOR
+
+#Install the asynchronous wbs capability
+%include config.MODIFY_ASYNC_WBS
+
+#Install the SBC encoder capability
+%include config.MODIFY_SBC_ENCODE
+
+#Install the IIR_RESAMPLER capability
+%include config.MODIFY_IIR_RESAMPLER
+
+#Install the Programmable EQ capability
+%include config.MODIFY_PEQ
+
+#Install the Bass Enhancement capability
+%include config.MODIFY_DBE
+
+#Install the VSE capability
+%include config.MODIFY_VSE
+
+#Install the crossover capability
+%include config.MODIFY_XOVER
+
+# Add capability download feature
+%include config.MODIFY_CAP_DOWNLOAD_MGR_CRESCENDO
+
+#Install aov interface
+%include config.MODIFY_AOV_INTERFACE
+
+#Install the OP_CLIENT adaptor
+%include config.MODIFY_OP_CLIENT_ADAPTOR
+
+#Install always on voice component
+%include config.MODIFY_AOV
+
+#Install always on voice component
+%include config.MODIFY_CLK_MGR
+
+# Include FILE
+%include config.MODIFY_FILE_HYDRA
+
+# Enable dual core support
+%include config.MODIFY_AURA_DUAL_CORE
+
+#Install the VAD operator
+%include config.MODIFY_VAD
+
+#Install the QVA phrase recognition operator
+%include config.MODIFY_QVA
+
+#install ANC tuning operator
+#%include config.MODIFY_ANC_TUNING
+
+#install efuse
+%include config.MODIFY_EFUSE_FLEXROM_FEATURES
+
+#install DACs' dc offset ramping
+%include config.MODIFY_DAC_DC_OFFSET_REGS_RAMP
+
+#Install ANC
+%include config.MODIFY_ANC
+
+%cpp
+# Write some extra registers to make the S13299 AUDIO card usable
+INSTALL_EMU_AUDIO_SUPPORT
+
+# Install the audio loopback enhancements
+INSTALL_AUDIO_LOOPBACK_ENHANCEMENTS
+
+# Install the ANC clip/threshold enhancements
+INSTALL_ANC_CLIP_THRESHOLD

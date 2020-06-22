@@ -1,0 +1,12 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2018 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# definitions for ISO builds
+
+%cpp
+#
+# Build ISO channels
+INSTALL_ISO_CHANNELS

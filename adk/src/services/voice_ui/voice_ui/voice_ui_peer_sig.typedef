@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2020 Qualcomm Technologies International, Ltd.-->
+
+<types name="voice_ui_peer_sig" standalone="true">
+
+    <typedef_struct name="voice_ui_selected_va_provider_t" basic="true" doc="Voice Assistant Provider update sent from Primary to Secondary">
+        <member marshal="true" doc="Voice Assistant Provider">uint8 va_provider</member>
+        <member marshal="true" doc="Reboot required">uint8 reboot</member>
+    </typedef_struct>
+
+</types>

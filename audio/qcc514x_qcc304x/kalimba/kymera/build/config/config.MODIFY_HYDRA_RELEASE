@@ -1,0 +1,44 @@
+############################################################################
+# CONFIDENTIAL
+#
+# Copyright (c) 2016 - 2018 Qualcomm Technologies International, Ltd.
+#
+############################################################################
+# Modifiers to make a Hydra config suitable for external release.
+
+# Do not include this in releases
+%include config.MODIFY_TEST_STALL_DROP_EXCLUDE
+
+%cpp
+BLD_PRIVATE
+
+%build
+# Build both internal (fully debuggable) and external (censored, for
+# release) .elf files.
+# This has two link steps, so increases build time noticeably.
+REL_EXT_BUILD=TRUE
+
+# It's OK to mention libraries here that are not compiled/linked on all
+# targets. The semantics are, if a library is mentioned in PRIVATE_LIBS
+# then whenever it's built, it'll be built/linked as private.
+%list PRIVATE_LIBS
+components/adaptor
+components/aov
+components/audio
+components/audio_pios
+components/cap_download_mgr
+components/direct_access
+components/hal
+components/hydra_modules
+components/io
+components/ipc
+components/kip_mgr
+components/patch
+components/proc
+components/ps_router
+components/ps_sar
+components/sco_data_mgr
+components/slt
+components/spi
+components/sys_events
+../lib/celt

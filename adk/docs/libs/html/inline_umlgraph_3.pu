@@ -1,0 +1,51 @@
+@startuml
+
+
+    note "For clarity not all state transitions shown" as N1
+
+    [*] -down-> UNINITIALISED : Start
+
+    UNINITIALISED : App module and library init
+    UNINITIALISED --> FINDING_HANDLES : GattRootKeyClientInit()
+    UNINITIALISED --> ERROR : Failed to register with Gatt Manager
+
+    DISABLED : Client service is disabled. This can occur once devices are paired and the client is not needed.
+
+    FINDING_HANDLES : Discovering characteristics of the remote server so that handles are known for commands
+    FINDING_HANDLES --> FINDING_INDICATION_HANDLE : Characteristic discovery completed 
+
+    FINDING_INDICATION_HANDLE : Having found the handle for challenge control, finding the descriptor so that indications can be enabled
+    FINDING_INDICATION_HANDLE --> ENABLING_INDICATIONS : Descriptor search complete, auto-enable indications
+
+    ENABLING_INDICATIONS : Waiting for acknowledgment that indications have been enabled at the server
+    ENABLING_INDICATIONS --> INITIALISED : Characteristic configuration write successful
+
+    INITIALISED : Handles known, awaiting command
+    INITIALISED --> STARTING_CHALLENGE : GattRootKeyClientChallengePeer()
+
+    STARTING_CHALLENGE : First stage of challenge sent to the server
+    STARTING_CHALLENGE --> FINISHING_CHALLENGE : Received random from server, written hash
+    STARTING_CHALLENGE --> ERROR : Incorrect message / opcode received
+
+    FINISHING_CHALLENGE : Final stage of challenge sent to the server
+    FINISHING_CHALLENGE --> AUTHENTICATED :Hash received from server and verified
+    FINISHING_CHALLENGE --> ERROR : Incorrect HASH received
+
+    AUTHENTICATED : Challenge has been completed successfully
+    AUTHENTICATED --> WRITING_IR : GattRootKeyClientWriteKey()
+
+    WRITING_IR : IR key has been sent to server
+    WRITING_IR --> WRITING_ER : IR write successful
+
+    WRITING_ER : ER key has been sent to server
+    WRITING_ER --> COMMITTING : Write of ER confirmed, requested write of keys
+
+    COMMITTING : Keys have been sent, asking server to apply changes
+    COMMITTING --> EXCHANGED: Acknowledgment that keys applied
+
+    EXCHANGED : Keys have been confirmed
+
+    ERROR : Interaction with the server has failed
+    ERROR --> DISABLED: Only allowed transition from error
+
+@enduml

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright (c) 2018 Qualcomm Technologies International, Ltd.-->
+
+<message_map>
+
+    <message_group name="default_message_group">
+
+		<message>
+            <messageName>APP_ANC_TOGGLE_ON_OFF</messageName>
+            <buttonEvent>DOUBLE_CLICK</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>1000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_ANC_ENABLE</messageName>
+            <buttonEvent>DOUBLE_CLICK</buttonEvent>
+            <activePinFriendlyName>VOL_MINUS</activePinFriendlyName>
+            <timeout_ms>1000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_ANC_DISABLE</messageName>
+            <buttonEvent>DOUBLE_CLICK</buttonEvent>
+            <activePinFriendlyName>VOL_PLUS</activePinFriendlyName>
+            <timeout_ms>1000</timeout_ms>
+        </message>	
+
+        <message>
+            <messageName>APP_ANC_SET_NEXT_MODE</messageName>
+            <buttonEvent>DOUBLE_CLICK</buttonEvent>
+            <activePinFriendlyName>FORWARD</activePinFriendlyName>
+            <timeout_ms>1000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_MFB_BUTTON_SINGLE_CLICK</messageName>
+            <buttonEvent>SINGLE_CLICK</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_MFB_BUTTON_HELD_RELEASE_1SEC</messageName>
+            <buttonEvent>HELD_RELEASE</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>1000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_MFB_BUTTON_HELD_1SEC</messageName>
+            <buttonEvent>HELD</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>1000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_MFB_BUTTON_HELD_3SEC</messageName>
+            <buttonEvent>HELD</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>3000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_MFB_BUTTON_HELD_RELEASE_6SEC</messageName>
+            <buttonEvent>HELD_RELEASE</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>6000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_MFB_BUTTON_HELD_6SEC</messageName>
+            <buttonEvent>HELD</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>6000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_MFB_BUTTON_HELD_RELEASE_8SEC</messageName>
+            <buttonEvent>HELD_RELEASE</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>8000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_MFB_BUTTON_HELD_8SEC</messageName>
+            <buttonEvent>HELD</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>8000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_DFU</messageName>
+            <buttonEvent>HELD_RELEASE</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>12000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_HELD_DFU</messageName>
+            <buttonEvent>HELD</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>12000</timeout_ms>
+        </message>
+
+        <message device_specific="true">
+            <messageName>APP_BUTTON_FACTORY_RESET</messageName>
+            <buttonEvent>HELD_RELEASE</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>15000</timeout_ms>
+        </message>
+
+        <message device_specific="true">
+            <messageName>APP_BUTTON_HELD_FACTORY_RESET</messageName>
+            <buttonEvent>HELD</buttonEvent>
+            <activePinFriendlyName>SYS_CTRL</activePinFriendlyName>
+            <timeout_ms>15000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_VOLUME_UP_DOWN</messageName>
+            <buttonEvent>RELEASE</buttonEvent>
+            <activePinFriendlyName>VOL_PLUS</activePinFriendlyName>
+            <activePinFriendlyName>VOL_MINUS</activePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_VOLUME_DOWN</messageName>
+            <buttonEvent>ENTER</buttonEvent>
+            <activePinFriendlyName>VOL_MINUS</activePinFriendlyName>
+            <negatePinFriendlyName>VOL_PLUS</negatePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_VOLUME_UP</messageName>
+            <buttonEvent>ENTER</buttonEvent>
+            <activePinFriendlyName>VOL_PLUS</activePinFriendlyName>
+            <negatePinFriendlyName>VOL_MINUS</negatePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_VOLUME_DOWN_RELEASE</messageName>
+            <buttonEvent>RELEASE</buttonEvent>
+            <activePinFriendlyName>VOL_MINUS</activePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_VOLUME_UP_RELEASE</messageName>
+            <buttonEvent>RELEASE</buttonEvent>
+            <activePinFriendlyName>VOL_PLUS</activePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_BACKWARD</messageName>
+            <buttonEvent>RELEASE</buttonEvent>
+            <activePinFriendlyName>BACK</activePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_BACKWARD_HELD</messageName>
+            <buttonEvent>HELD</buttonEvent>
+            <activePinFriendlyName>BACK</activePinFriendlyName>
+            <timeout_ms>500</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_BACKWARD_HELD_RELEASE</messageName>
+            <buttonEvent>HELD_RELEASE</buttonEvent>
+            <activePinFriendlyName>BACK</activePinFriendlyName>
+            <timeout_ms>500</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_FORWARD</messageName>
+            <buttonEvent>RELEASE</buttonEvent>
+            <activePinFriendlyName>FORWARD</activePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_FORWARD_HELD</messageName>
+            <buttonEvent>HELD</buttonEvent>
+            <activePinFriendlyName>FORWARD</activePinFriendlyName>
+            <timeout_ms>500</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_BUTTON_FORWARD_HELD_RELEASE</messageName>
+            <buttonEvent>HELD_RELEASE</buttonEvent>
+            <activePinFriendlyName>FORWARD</activePinFriendlyName>
+            <timeout_ms>500</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_VA_BUTTON_DOWN</messageName>
+            <buttonEvent>ENTER</buttonEvent>
+            <activePinFriendlyName>MFB</activePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_VA_BUTTON_RELEASE</messageName>
+            <buttonEvent>RELEASE</buttonEvent>
+            <activePinFriendlyName>MFB</activePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_VA_BUTTON_SINGLE_CLICK</messageName>
+            <buttonEvent>SINGLE_CLICK</buttonEvent>
+            <activePinFriendlyName>MFB</activePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_VA_BUTTON_HELD_RELEASE</messageName>
+            <buttonEvent>HELD_RELEASE</buttonEvent>
+            <activePinFriendlyName>MFB</activePinFriendlyName>
+            <timeout_ms>1000</timeout_ms>
+        </message>
+
+        <message>
+            <messageName>APP_VA_BUTTON_DOUBLE_CLICK</messageName>
+            <buttonEvent>DOUBLE_CLICK</buttonEvent>
+            <activePinFriendlyName>MFB</activePinFriendlyName>
+        </message>
+
+        <message>
+            <messageName>APP_VA_BUTTON_HELD_1SEC</messageName>
+            <buttonEvent>HELD</buttonEvent>
+            <activePinFriendlyName>MFB</activePinFriendlyName>
+            <timeout_ms>1000</timeout_ms>
+        </message>
+
+    </message_group>
+
+</message_map>
+

@@ -1,0 +1,19 @@
+@startuml
+
+    object OPR_AEC
+    OPR_AEC : id = EB_CAP_ID_AEC_REF
+    object EPR_AEC_INPUT1 #lightgreen
+    OPR_AEC "INPUT1(0)" <-- EPR_AEC_INPUT1
+    object EPR_AEC_MIC1_IN #lightgreen
+    OPR_AEC "MIC1_IN(2)" <-- EPR_AEC_MIC1_IN
+    object EPR_AEC_MIC2_IN #lightgreen
+    OPR_AEC "MIC2_IN(3)" <-- EPR_AEC_MIC2_IN
+    object EPR_AEC_REFERENCE_OUT #lightblue
+    EPR_AEC_REFERENCE_OUT <-- "REFERENCE_OUT(0)" OPR_AEC
+    object EPR_AEC_SPEAKER1_OUT #lightblue
+    EPR_AEC_SPEAKER1_OUT <-- "SPEAKER1_OUT(1)" OPR_AEC
+    object EPR_AEC_MIC1_OUT #lightblue
+    EPR_AEC_MIC1_OUT <-- "MIC1_OUT(3)" OPR_AEC
+    object EPR_AEC_MIC2_OUT #lightblue
+    EPR_AEC_MIC2_OUT <-- "MIC2_OUT(4)" OPR_AEC
+@enduml

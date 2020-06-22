@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019 Qualcomm Technologies International, Ltd.-->
+
+<types name="a2dp">
+    <include_header name="marshal_common.h"/>
+    <include_header name="audio_sync.h"/>
+
+    <source>
+#include "domain_marshal_types.h"
+    </source>
+
+    <typedef_struct name="a2dpTaskDataBitfields" basic="true" doc="A2DP task bitfields data structure">
+        <member marshal="true" doc="General connection flags">unsigned flags:6</member>
+        <member marshal="false" doc="Number of supported SEIDs">unsigned num_seids:3</member>
+        <member marshal="false" doc="Number of connection retries">unsigned connect_retries:3</member>
+        <member marshal="false" doc="Flag to indicate if connection was locally initiated">unsigned local_initiated:1</member>
+        <member marshal="false" doc="Reason for disconnect">unsigned disconnect_reason:4</member>
+    </typedef_struct>
+
+<typedef_enum name="avA2dpState" basic="true" doc="AV suspend reason enum">
+    /*! Initial state */
+    A2DP_STATE_NULL = 0x00,
+    /*! No A2DP connection */
+    A2DP_STATE_DISCONNECTED = 0x01,
+    /*! Locally initiated connection in progress */
+    A2DP_STATE_CONNECTING_LOCAL = 0x02,
+    /*! Remotely initiated connection is in progress */
+    A2DP_STATE_CONNECTING_REMOTE = 0x03,
+    /*! Locally and remotely initiated connection is in progress */
+    A2DP_STATE_CONNECTING_CROSSOVER = 0x04,
+    /*! Signalling channel connected */
+    A2DP_STATE_CONNECTED_SIGNALLING = 0x10,
+    /*! Locally initiated media channel connection in progress */
+    A2DP_STATE_CONNECTING_MEDIA_LOCAL = 0x11,
+    /*! Remotely initiated media channel connection in progress */
+    A2DP_STATE_CONNECTING_MEDIA_REMOTE_SYNC = 0x12,
+    /*! Media channel connected (parent-pseudo state) */
+    A2DP_STATE_CONNECTED_MEDIA = 0x30,
+    /*! Media channel streaming */
+    A2DP_STATE_CONNECTED_MEDIA_STREAMING = 0x31,
+    /*! Media channel streaming but muted (suspend failed) */
+    A2DP_STATE_CONNECTED_MEDIA_STREAMING_MUTED = 0x32,
+    /* Locally initiated media channel suspend in progress */
+    A2DP_STATE_CONNECTED_MEDIA_SUSPENDING_LOCAL = 0x33,
+    /*! Media channel suspended */
+    A2DP_STATE_CONNECTED_MEDIA_SUSPENDED = 0x34,
+    /*! Media channel suspended, reconfiguring the codec */
+    A2DP_STATE_CONNECTED_MEDIA_RECONFIGURING = 0x35,
+    /*! Locally initiated media channel start in progress, syncing slave */
+    A2DP_STATE_CONNECTED_MEDIA_STARTING_LOCAL_SYNC = 0x70,
+    /*! Remotely initiated media channel start in progress, syncing slave */
+    A2DP_STATE_CONNECTED_MEDIA_STARTING_REMOTE_SYNC = 0x71,
+    /*! Locally initiated media channel disconnection in progress */
+    A2DP_STATE_DISCONNECTING_MEDIA = 0x13,
+    /*! Disconnecting signalling and media channels */
+    A2DP_STATE_DISCONNECTING = 0x0A
+</typedef_enum>
+
+<typedef_enum name="avSuspendReason" basic="true" doc="AV suspend reason enum">
+    /*! Suspend AV due to active SCO link */
+    AV_SUSPEND_REASON_SCO = (1 &lt;&lt; 0),
+    /*! Suspend AV due to HFP activity */
+    AV_SUSPEND_REASON_HFP = (1 &lt;&lt; 1),
+    /*! Suspend AV due to AV activity */
+    AV_SUSPEND_REASON_AV = (1 &lt;&lt; 2),
+    /*! Suspend AV due to master suspend request */
+    AV_SUSPEND_REASON_RELAY = (1 &lt;&lt; 3),
+    /*! Suspend AV due to remote request */
+    AV_SUSPEND_REASON_REMOTE = (1 &lt;&lt; 4),
+    /*! Suspend AV due to SCO forwarding */
+    AV_SUSPEND_REASON_SCOFWD = (1 &lt;&lt; 5),
+    /*! Suspend AV due to VA activity */
+    AV_SUSPEND_REASON_VA = (1 &lt;&lt; 6)
+</typedef_enum>
+
+    <typedef_struct name="a2dpTaskData" doc="A2DP task data structure">
+        <member marshal="true" doc="Current state of A2DP state machine">avA2dpState state</member>
+        <member marshal="false" doc="A2DP operation lock, used to serialise A2DP operations">uint16 lock</member>
+        <member marshal="false" doc="A2DP device identifier from A2DP library">uint8 device_id</member>
+        <member marshal="false" doc="A2DP stream identifier from A2DP library">uint8 stream_id</member>
+        <member marshal="false" doc="Sink for A2DP media (streaming)">Sink media_sink</member>
+        <member marshal="true" doc="Currently active SEID">uint8 current_seid</member>
+        <member marshal="true" doc="Last known SEID, unlike current_seid this doesn't get cleared on disconnect">uint8 last_known_seid</member>
+        <member marshal="true" doc="Used as sync counter and provides sync ids">uint8 sync_counter</member>
+        <member marshal="true" doc="Bitmap of active suspend reasons">avSuspendReason suspend_state</member>
+        <member marshal="true" doc="A2DP bitfields data">a2dpTaskDataBitfields bitfields</member>
+        <member marshal="false" doc="AV instance to sync with, e.g. a peer earbud">audio_sync_t *sync_inst</member>
+        <member marshal="false" doc="The interface to register with an AV instance that wants to sync with this one">audio_sync_t sync_if</member>
+    </typedef_struct>
+</types>

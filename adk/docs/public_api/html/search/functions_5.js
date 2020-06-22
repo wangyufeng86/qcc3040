@@ -1,0 +1,8 @@
+var searchData=
+[
+  ['keysync_5finit',['KeySync_Init',['../group__key__sync.html#ga5d5098e4adb0b5899bd3635bbb5c25a2',1,'KeySync_Init(Task init_task):&#160;key_sync.c'],['../group__key__sync.html#ga5d5098e4adb0b5899bd3635bbb5c25a2',1,'KeySync_Init(Task init_task):&#160;key_sync.c']]],
+  ['keysync_5fsync',['KeySync_Sync',['../group__key__sync.html#gaefd18cc70cde5bff8ed76a8b6ec0ba54',1,'KeySync_Sync(void):&#160;key_sync.c'],['../group__key__sync.html#gaefd18cc70cde5bff8ed76a8b6ec0ba54',1,'KeySync_Sync(void):&#160;key_sync.c']]],
+  ['kymeraadaptation_5fconnect',['KymeraAdaptation_Connect',['../group__kymera__adaptation.html#gaed4fb4406d9258684d24f568953b703f',1,'KymeraAdaptation_Connect(connect_parameters_t *params):&#160;kymera_adaptation.c'],['../group__kymera__adaptation.html#gaed4fb4406d9258684d24f568953b703f',1,'KymeraAdaptation_Connect(connect_parameters_t *params):&#160;kymera_adaptation.c']]],
+  ['kymeraadaptation_5fdisconnect',['KymeraAdaptation_Disconnect',['../group__kymera__adaptation.html#ga5ea6de644636ee604780a034624e4868',1,'KymeraAdaptation_Disconnect(disconnect_parameters_t *params):&#160;kymera_adaptation.c'],['../group__kymera__adaptation.html#ga5ea6de644636ee604780a034624e4868',1,'KymeraAdaptation_Disconnect(disconnect_parameters_t *params):&#160;kymera_adaptation.c']]],
+  ['kymeraadaptation_5fsetvolume',['KymeraAdaptation_SetVolume',['../group__kymera__adaptation.html#gaea024486f66b21451071020543cb70d0',1,'KymeraAdaptation_SetVolume(volume_parameters_t *params):&#160;kymera_adaptation.c'],['../group__kymera__adaptation.html#gaea024486f66b21451071020543cb70d0',1,'KymeraAdaptation_SetVolume(volume_parameters_t *params):&#160;kymera_adaptation.c']]]
+];

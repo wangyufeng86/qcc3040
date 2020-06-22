@@ -1,0 +1,66 @@
+@startuml
+
+            skinparam roundcorner 20
+            hide footbox
+
+            participant "Application" as app
+            participant "Input Event Manager" as iem
+            participant "Logical Input Switch" as lis
+            participant "UI" as ui
+            participant "Role Selection Service" as rss
+            participant "Peer Signalling" as ps
+
+            group Initialisation
+            note over app
+                This is the same for both peer devices
+            end note
+
+            app->lis: LogicalInputSwitch_Init()
+            app->lis: LogicalInputSwitch_SetLogicalInputIdRange(min_id, max_id)
+            app->iem: InputEventManagerInit(LogicalInputSwitch_GetTask())
+
+            end group
+
+            group Peer Role Selection
+            note over rss
+                TWS Topology set-up occurs, one peer
+                device shall become the Primary. This
+                shall recieve all the Logical Inputs
+                and generate all the UI Inputs.
+
+                At Primary:
+            end note
+
+            rss->lis: LogicalInputSwitch_SetRerouteToPeer(TRUE)
+
+            note over rss
+                At Secondary:
+            end note
+
+            rss->lis: LogicalInputSwitch_SetRerouteToPeer(FALSE)
+            end group
+
+            group Button Press at Secondary
+
+            iem->lis: MessageSend(Logical_Input_MFB_Press)
+            lis->ps: PeerSig_MarshalledMsgChannelTx(logical_input_ind)
+
+            note over ps
+                The Logical Input is marshalled between
+                the two peer devices. It is delivered
+                to the Primary and applied to the UI:
+            end note
+
+            ps->lis: MessageSend(PEER_SIG_MARSHALLED_MSG_CHANNEL_RX_IND)
+            lis->ui: MessageSend(Ui_GetUiTask(),Logical_Input_MFB_Press)
+
+            end group
+
+            group Button Press at Primary
+
+            iem->lis: MessageSend(Logical_Input_MFB_Press)
+            lis->ui: MessageSend(Ui_GetUiTask(),Logical_Input_MFB_Press)
+
+            end group
+
+            @enduml

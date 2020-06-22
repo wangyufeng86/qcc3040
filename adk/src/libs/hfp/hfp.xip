@@ -1,0 +1,71 @@
+<project buildenvironment="{84faf732-1340-4049-9094-244167adf571}" executionenvironment="{2b2c6868-a56e-4266-962a-cddf1c979343}" executionenvironmentname="CSR Virtual Machine" buildenvironmentoption="" buildenvironmentname="CSR Virtual Machine" executionenvironmentoption="" >
+ <folder name="C Files" >
+  <extension name="c" />
+  <file path="hfp_audio.c" />
+  <file path="hfp_call.c" />
+  <file path="hfp_caller_id.c" />
+  <file path="hfp_common.c" />
+  <file path="hfp_dial.c" />
+  <file path="hfp_dtmf.c" />
+  <file path="hfp_hs.c" />
+  <file path="hfp_indicators_handler.c" />
+  <file path="hfp_multiple_calls.c" />
+  <file path="hfp_nrec.c" />
+  <file path="hfp_ok.c" />
+  <file path="hfp_parse.c" />
+  <file path="hfp_receive_data.c" />
+  <file path="hfp_rfc.c" />
+  <file path="hfp_sdp.c" />
+  <file path="hfp_send_data.c" />
+  <file path="hfp_slc.c" />
+  <file path="hfp_slc_handler.c" />
+  <file path="hfp_sound.c" />
+  <file path="hfp_voice.c" />
+  <file path="hfp_voice_tag.c" />
+  <file path="init.c" />
+  <file path="main.c" />
+  <file path="profile_handler.c" />
+  <file path="hfp_multiple_calls_handler.c" />
+  <file path="hfp_hs_handler.c" />
+  <file path="hfp_ring_handler.c" />
+  <file path="hfp_audio_handler.c" />
+  <file path="hfp_call_handler.c" />
+  <file path="hfp_dial_handler.c" />
+ </folder>
+ <folder name="Header Files" >
+  <extension name="h" />
+  <file path="profile_handler.h" />
+  <file path="hfp_common.h" />
+  <file path="hfp_enum.h" />
+  <file path="hfp_ok.h" />
+  <file path="hfp_parse.h" />
+  <file path="hfp_private.h" />
+  <file path="hfp_receive_data.h" />
+  <file path="hfp_rfc.h" />
+  <file path="hfp_sdp.h" />
+  <file path="hfp_send_data.h" />
+  <file path="hfp_service_record.h" />
+  <file path="hfp_slc_handler.h" />
+  <file path="hsp_service_record.h" />
+  <file path="init.h" />
+  <file path="hfp.h" />
+  <file path="hfp_multiple_calls_handler.h" />
+  <file path="hfp_hs_handler.h" />
+  <file path="hfp_ring_handler.h" />
+  <file path="hfp_audio_handler.h" />
+  <file path="hfp_call_handler.h" />
+  <file path="hfp_dial_handler.h" />
+ </folder>
+ <file path="hfp_parse.parse" />
+ <properties currentconfiguration="Release" >
+  <configuration name="Release" >
+   <property key="buildMatch" >(file):(line):</property>
+   <property key="buildtransport" >0</property>
+   <property key="debugtransport" >[SPI|LPT1|Yes]</property>
+   <property key="defines" ></property>
+   <property key="libs" >connection, service, region</property>
+   <property key="output" ></property>
+   <property key="stacksize" >81</property>
+  </configuration>
+ </properties>
+</project>

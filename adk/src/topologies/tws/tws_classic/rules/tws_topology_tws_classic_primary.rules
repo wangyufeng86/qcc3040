@@ -1,0 +1,82 @@
+{
+    "rules_tables": [
+        {
+            "name": "tws_topology_tws_classic_primary",
+
+            "doc": "TWS Topology classic rules deciding behaviour in a Primary role.",
+
+            "include_headers": [
+                "tws_topology_tws_classic_primary_rule_functions.h",
+                "tws_topology_rule_events.h",
+                "tws_topology_primary_ruleset.h"
+            ],
+
+            "rules": [
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_STATIC_HANDOVER_FAILED",
+                    "rule_function": "ruleTwsTopClassicPriNoRoleIdle",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_NO_ROLE_IDLE",
+                    "doc": "If static handover fails, decide if should this Earbud needs to run no_role_idle script."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_STATIC_HANDOVER_FAILED",
+                    "rule_function": "ruleTwsTopClassicPriFindRole",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_FIND_ROLE",
+                    "doc": "If static handover fails when not in the case, decide if this Earbud needs to start role selection."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_OUT_CASE",
+                    "rule_function": "ruleTwsTopClassicPriFindRole",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_FIND_ROLE",
+                    "doc": "When Earbud is taken out of the case, decide if role selection should be executed."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_LINKLOSS",
+                    "rule_function": "ruleTwsTopClassicPriPeerLostFindRole",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_PRIMARY_FIND_ROLE",
+                    "doc": "When peer BREDR link is lost, decide if Primary Earbud should start role selection.",
+                    "_comment": "\\todo need a variant of this to do a find role with no timeout when we're already paging the handset"
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_PEER_DISCONNECTED_BREDR",
+                    "rule_function": "ruleTwsTopClassicPriPeerLostFindRole",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_PRIMARY_FIND_ROLE",
+                    "doc": "When peer BREDR link is disconnected, decide if Primary Earbud should start role selection."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_FAILED_PEER_CONNECT",
+                    "rule_function": "ruleTwsTopClassicPriPeerLostFindRole",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_PRIMARY_FIND_ROLE",
+                    "doc": "When Secondary fails to connect BREDR ACL after role selection, decide if Primary Earbud should restart role selection."
+                },
+
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_HANDSET_DISCONNECTED_BREDR",
+                    "rule_function": "ruleTwsTopClassicPriEnableConnectableHandset",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_CONNECTABLE_HANDSET",
+                    "doc": "When handset BREDR link is disconnected, decide if the Primary Earbud should enable page scan."
+                },
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_IN_CASE",
+                    "rule_function": "ruleTwsTopClassicPriNoRoleIdle",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_NO_ROLE_IDLE",
+                    "doc": "When Primary Earbud goes in the case, device which peer profiles should be disconnected."
+                },
+
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_ROLE_SWITCH",
+                    "rule_function": "ruleTwsTopClassicPriEnableConnectableHandset",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_CONNECTABLE_HANDSET",
+                    "doc": "When role switch completed, decide if page scan should be enabled for handset connections."
+                },
+
+                { 
+                    "event_mask": "TWSTOP_RULE_EVENT_HANDOVER",
+                    "rule_function": "ruleTwsTopClassicPriHandoverStart",
+                    "output_message_id": "TWSTOP_PRIMARY_GOAL_HANDOVER_START",
+                    "doc": "After HDMA recommendation, decide whether to initiate Handover."
+                }
+            ]
+        }
+    ]
+}

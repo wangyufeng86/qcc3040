@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019 Qualcomm Technologies International, Ltd.-->
+
+<types name="peer_ui" standalone="true">
+    <include_header name="peer_ui.h"/>
+    <include_header name="peer_signalling.h"/>
+    <include_header name="ui_inputs.h"/>
+
+    <inherit header="marshal_common.h" count="NUMBER_OF_COMMON_MARSHAL_OBJECT_TYPES" x_macro_table="MARSHAL_COMMON_TYPES_TABLE"/>
+
+    <typedef_header_source>#define MARSHAL_TYPE_ui_input_t MARSHAL_TYPE_uint16</typedef_header_source>
+
+    <source>
+#ifndef HOSTED_TEST_ENVIRONMENT
+COMPILE_TIME_ASSERT(sizeof(ui_input_t) == sizeof(uint16), ui_input_t_is_not_the_same_size_as_uint16);
+#endif
+    </source>
+
+    <typedef_struct name="peer_ui_event_t" doc="Structure has ui_event and timestamp to send across to secondary">
+        <member marshal="true" doc="UI Indication type">uint16 indication_type</member>
+        <member marshal="true" doc="UI Indication index">uint16 indication_index</member>
+        <member marshal="true" doc="Absolute time in microseconds when UI Event should be handled in secondary EB">marshal_rtime_t timestamp</member>
+    </typedef_struct>
+
+    <typedef_struct name="peer_ui_input_t" doc="Structure has ui_input and timestamp to send across to secondary">
+        <member marshal="true" doc="UI input sent from Primary EB to Secondary EB">ui_input_t ui_input</member>
+        <member marshal="true" doc="Absolute time in microseconds when UI Input should be handled in secondary EB">marshal_rtime_t timestamp</member>
+        <member marshal="true" doc="Data to be sent over to Secondary">uint8 data</member>
+    </typedef_struct>
+</types>

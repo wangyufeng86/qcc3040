@@ -1,0 +1,4 @@
+VARIANTS :=
+
+CFLAGS_debug := -DPIO_MONITOR_DEBUG_LIB
+

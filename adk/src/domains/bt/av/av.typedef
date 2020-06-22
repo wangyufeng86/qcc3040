@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2019 Qualcomm Technologies International, Ltd.-->
+
+<types name="av">
+    <include_header name="marshal_common.h"/>
+    <include_header name="task_list.h"/>
+
+    <source>
+#include "domain_marshal_types.h" 
+    </source>
+
+    <typedef_header_source>
+#include "avrcp_typedef.h"
+#include "a2dp_typedef.h"
+
+/*! Maximum number of AV connections for TWS */
+#define AV_MAX_NUM_TWS (1)
+/*! Maximum number of AV connections for audio Sinks */
+#define AV_MAX_NUM_SNK (1)
+
+/*! \brief Maximum number of AV connections
+
+    Defines the maximum number of simultaneous AV connections that are allowed.
+
+    This is based on the number of links we want as TWS or as a standard Sink.
+
+    Expectation is a value of 1 for a standard AV headset, or 2 for a True Wireless
+    headset.
+*/
+#define AV_MAX_NUM_INSTANCES (AV_MAX_NUM_TWS + AV_MAX_NUM_SNK)
+    </typedef_header_source>
+
+    <typedef_struct name="avInstanceTaskData" doc="AV Instance task data structure">
+        <member marshal="false" doc="Task/Message information for this instance">TaskData av_task</member>
+        <member marshal="true" doc="Bluetooth Address of remote device">bdaddr bd_addr</member>
+        <member marshal="false" doc="Flag indicating if the instance is about to be detatched">bool detach_pending</member>
+        <member marshal="true" doc="Delay timer for establishing AVRCP connection post handover">uint32 connect_avrcp_post_handover</member>
+        <member marshal="true" doc="AVRCP task data">avrcpTaskData avrcp</member>
+        <member marshal="true" doc="A2DP task data">a2dpTaskData a2dp</member>
+    </typedef_struct>
+
+    <typedef_struct name="avTaskDataBitfields" basic="true" doc="AV task bitfields data structure">
+        <member marshal="false" doc="Current state of AV state machine">unsigned state:2</member>
+        <member marshal="false" doc="Volume repeat">unsigned volume_repeat:1</member>
+    </typedef_struct>
+
+    <typedef_struct name="avTaskData" doc="AV Task data structure">
+        <member marshal="false" doc="Task for messages">TaskData task</member>
+        <member marshal="false" doc="AV Task data bitfields">avTaskDataBitfields bitfields</member>
+        <member marshal="true" doc="Bitmap of active suspend reasons">avSuspendReason suspend_state</member>
+        <member marshal="false" doc="The AV volume">uint8 volume</member>
+        <member marshal="false" doc="Enable play on connect if connect to this device">bool play_on_connect</member>
+        <member marshal="false" doc="AV Instances">avInstanceTaskData *av_inst[AV_MAX_NUM_INSTANCES]</member>
+        <member marshal="false" doc="List of tasks registered via \ref appAvAvrcpClientRegister">task_list_t avrcp_client_list</member>
+        <member marshal="false" doc="List of tasks registered via \ref appAvStatusClientRegister. These receive indications for AVRCP, A2DP and A2DP streaming">task_list_t av_status_client_list</member>
+        <member marshal="false" doc="List of tasks registered for UI events">task_list_t av_ui_client_list</member>
+        <member marshal="false" doc="A2DP connect request clients">task_list_with_data_t a2dp_connect_request_clients</member>
+        <member marshal="false" doc="A2DP disconnect request clients">task_list_with_data_t a2dp_disconnect_request_clients</member>
+        <member marshal="false" doc="AVRCP connect request clients">task_list_with_data_t avrcp_connect_request_clients</member>
+        <member marshal="false" doc="AVRCP disconnect request clients">task_list_with_data_t avrcp_disconnect_request_clients</member>
+    </typedef_struct>
+</types>
